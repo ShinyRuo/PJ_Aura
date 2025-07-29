@@ -4,6 +4,7 @@
 #include "Chararctor/AuraEnemy.h"
 #include <PJ_AURA/PJ_AURA.h>
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
@@ -80,4 +81,10 @@ void AAuraEnemy::InitAbilityActorInfo()
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 	InitializeDefaultAttributes();
+}
+
+void AAuraEnemy::InitializeDefaultAttributes() const
+{
+	// 默认Enemy不会动态升级
+	UAuraAbilitySystemLibrary::InitalizeDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
 }
