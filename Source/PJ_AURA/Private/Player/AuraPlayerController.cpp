@@ -13,6 +13,9 @@
 #include "Components/SplineComponent.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/EnemyInterface.h"
+#include "GameFramework/Character.h"
+#include "UI/Widget/DamageTextComponent.h"
+
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -28,6 +31,30 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 
 	AutoRun();
 }
+
+void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
+{
+	if (IsValid(TargetCharacter) && DamageTextComponentClass)
+	{
+		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
+		DamageText->RegisterComponent();//不在构造函数中创建CDO的组件就得这样动态注册
+		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		/*按需构造” 机制
+		* 即使不手动调用 InitWidget()，当满足以下条件时，WidgetComponent 会自动触发 Widget 的构造并显示 UI：
+		*	组件已通过 RegisterComponent() 注册到世界中。
+		*	组件的可见性已开启（SetVisibility(true)）。
+		*	组件进入摄像机的视锥体范围（即镜头能 “看到” 该组件所在的 3D 位置）。
+		*	此时，引擎会在渲染时检测到该组件需要显示，自动调用内部逻辑构造 Widget 并渲染到屏幕上。
+		* 手动调用 InitWidget() 的作用
+		*	手动调用 InitWidget() 的核心价值是强制提前构造 Widget，确保在以下场景中 UI 能正常工作：
+		*	需要在组件进入视锥体前就初始化 Widget 数据（如提前设置文本、进度条值）。
+		*	组件位置可能始终在视锥体之外，但需要通过代码访问 Widget 实例（如获取子控件）。
+		*/
+		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+		DamageText->SetDamageText(DamageAmount);
+	}
+}
+
 void AAuraPlayerController::AutoRun()
 {
 	if (!bAutoRunning) return;

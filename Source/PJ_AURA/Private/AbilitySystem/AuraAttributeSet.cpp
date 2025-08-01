@@ -9,6 +9,9 @@
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
+#include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/AuraPlayerController.h"
 
 //map [ tags ] = UAuraAttributeSet::GetxxxAttribute
 #define BIND_ATTRIBUTE_SIGNATURE(SecTag,AttributeName)\
@@ -109,11 +112,11 @@ void UAuraAttributeSet::SetEffectProperties(const  FGameplayEffectModCallbackDat
 {
 	// Source = causer of the effect, Target = target of the effect(owner of this AS)
 	Props.EffectContextHandle = Data.EffectSpec.GetContext();
-	Props.SourceASC = Props.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
+	Props.SourceASC = Props.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();//这里直接get了源头的ASC 省掉了很多细节
 	if (IsValid(Props.SourceASC) && Props.SourceASC->AbilityActorInfo.IsValid() && Props.SourceASC->AbilityActorInfo->AvatarActor.IsValid())
 	{
 		Props.SourceAvatarActor = Props.SourceASC->AbilityActorInfo->AvatarActor.Get();
-		Props.SourceController = Props.SourceASC->AbilityActorInfo->PlayerController.Get();
+		Props.SourceController = Props.SourceASC->AbilityActorInfo->PlayerController.Get();//通过SourceASC获取的Actor 和 Controller 所以创建特效的时候不用AddSource这里也能找到 我觉得应该是Props.EffectContextHandle.GetSourceObject()
 		if (Props.SourceController == nullptr && Props.SourceAvatarActor != nullptr)
 		{
 			if (const APawn* Pawn = Cast<APawn>(Props.SourceAvatarActor))
@@ -136,6 +139,18 @@ void UAuraAttributeSet::SetEffectProperties(const  FGameplayEffectModCallbackDat
 	}
 }
 
+void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Properties, float Damage)const
+{
+	if (Properties.SourceCharacter != Properties.TargetCharacter)
+	{
+		AAuraPlayerController* PC = Cast<AAuraPlayerController>(Properties.SourceController);
+		if (PC && Properties.TargetCharacter)
+		{
+			PC->ShowDamageNumber(Damage, Properties.TargetCharacter);
+		}
+	}
+}
+
 void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
@@ -146,7 +161,34 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Changed Health On %s,Health:%f"), *Properties.TargetAvatarActor->GetName(), GetHealth());
 	}
-	
+	if (Data.EvaluatedData.Attribute ==  GetIncomingDamageAttribute())
+	{
+		const float LocalIncomingDamage = GetIncomingDamage();
+		SetIncomingDamage(0.f);
+		if (LocalIncomingDamage > 0.f)
+		{
+			const float NewHealth = GetHealth() - LocalIncomingDamage;
+			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
+
+			const bool bFatal = NewHealth <= 0.f;
+			if (bFatal)
+			{
+				ICombatInterface* CombatInterface = Cast<ICombatInterface>(Properties.TargetAvatarActor);
+				if (CombatInterface)
+				{
+					CombatInterface->Die();
+				}
+			}
+			else
+			{
+				FGameplayTagContainer TagContainer;
+				TagContainer.AddTag(FAuraGameplayTags::Get().Effect_HitReact);
+				Properties.TargetASC->TryActivateAbilitiesByTag(TagContainer);//激活拥有这个tag的技能
+			}
+			//floating text
+			ShowFloatingText(Properties, LocalIncomingDamage);
+		}
+	}
 }
 
 void UAuraAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const

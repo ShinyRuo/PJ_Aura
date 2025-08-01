@@ -29,4 +29,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent,BlueprintCallable)
 	void UpdateFacingTarget(const FVector& FacingTargetLocation) ;
 
+	//将它的Implementation版本设置为virtual 即可做到在蓝图和c++都可以override
+	UFUNCTION(BlueprintNativeEvent,BlueprintCallable)
+	UAnimMontage* GetHitReactMontage();
+
+	virtual void Die() = 0;
 };
