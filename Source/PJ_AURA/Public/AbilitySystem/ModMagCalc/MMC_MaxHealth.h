@@ -7,7 +7,7 @@
 #include "MMC_MaxHealth.generated.h"
 
 /**
- * 
+ * 只能修改一个属性值 想要修改多个用Execution Calculation
  */
 UCLASS()
 class PJ_AURA_API UMMC_MaxHealth : public UGameplayModMagnitudeCalculation
