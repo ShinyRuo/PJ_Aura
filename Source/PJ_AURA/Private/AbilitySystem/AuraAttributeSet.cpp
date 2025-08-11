@@ -8,6 +8,7 @@
 #include "AuraGameplayTags.h"
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
@@ -139,14 +140,14 @@ void UAuraAttributeSet::SetEffectProperties(const  FGameplayEffectModCallbackDat
 	}
 }
 
-void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Properties, float Damage)const
+void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Properties, float Damage,bool bBlockedHit, bool bCriticalHit)const
 {
 	if (Properties.SourceCharacter != Properties.TargetCharacter)
 	{
 		AAuraPlayerController* PC = Cast<AAuraPlayerController>(Properties.SourceController);
 		if (PC && Properties.TargetCharacter)
 		{
-			PC->ShowDamageNumber(Damage, Properties.TargetCharacter);
+			PC->ShowDamageNumber(Damage, Properties.TargetCharacter, bBlockedHit, bCriticalHit);
 		}
 	}
 }
@@ -186,7 +187,10 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 				Properties.TargetASC->TryActivateAbilitiesByTag(TagContainer);//激活拥有这个tag的技能
 			}
 			//floating text
-			ShowFloatingText(Properties, LocalIncomingDamage);
+			const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit(Properties.EffectContextHandle);
+			const bool bCritical = UAuraAbilitySystemLibrary::IsCriticalHit(Properties.EffectContextHandle);
+
+			ShowFloatingText(Properties, LocalIncomingDamage, bBlock, bCritical);
 		}
 	}
 }

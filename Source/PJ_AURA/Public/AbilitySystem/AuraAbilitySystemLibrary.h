@@ -28,4 +28,12 @@ public:
 	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC);
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefault")
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffect")
+	static bool IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffect")
+	static bool IsCriticalHit(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffect")//UPARAM(ref) 告诉蓝图该参数是输入节点 默认的非const引用是输出节点
+	static void SetIsBlockedHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,bool bValue);
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffect")
+	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bValue);
 };

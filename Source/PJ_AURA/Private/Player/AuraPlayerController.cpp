@@ -32,7 +32,7 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	AutoRun();
 }
 
-void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
+void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit)
 {
 	if (IsValid(TargetCharacter) && DamageTextComponentClass)
 	{
@@ -51,7 +51,7 @@ void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, 
 		*	组件位置可能始终在视锥体之外，但需要通过代码访问 Widget 实例（如获取子控件）。
 		*/
 		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-		DamageText->SetDamageText(DamageAmount);
+		DamageText->SetDamageText(DamageAmount,  bBlockedHit,  bCriticalHit);
 	}
 }
 

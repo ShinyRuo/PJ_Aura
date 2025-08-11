@@ -4,6 +4,7 @@
 #include "AbilitySystem/ExecCalc/ExecCalc_Damage.h"
 
 #include "AbilitySystemComponent.h"
+#include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
@@ -75,7 +76,14 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	float  Armor = 0.f;
 	//Get Damage Set by Caller Magnitude
-	float Damage = Spec.GetSetByCallerMagnitude(FAuraGameplayTags::Get().Damage);
+	float Damage = 0;
+	for ( FGameplayTag DamageTypeTag : FAuraGameplayTags::Get().DamageTypes)
+	{
+		const float DamageTypeValue = Spec.GetSetByCallerMagnitude(DamageTypeTag);
+		Damage += DamageTypeValue;
+	}
+
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 
 	//Capture BlockChance On Target , and determine if there was a successful Block
 	//If Block, halve the damage.
@@ -86,6 +94,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	{
 		Damage /= 2.f;
 	}
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
 
 	//ArmorPenetration ignores a percentage of the Target's Armor
 	DEFINE_GETATTR(Target, Armor);
@@ -109,14 +118,18 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	DEFINE_GETATTR(Source, CriticalHitChance);
 	DEFINE_GETATTR(Source, CriticalHitDamage);
 	DEFINE_GETATTR(Target, CriticalHitResistance);
+
 	if (FRealCurve* CriticalHitResistanceCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("CriticalHitResistance"), FString()))
 	{
 		const float CriticalHitResistanceCurveCoefficient = CriticalHitResistanceCurve->Eval(SourceCombatInterface->GetPlayerLevel());
 		const float EffectiveCriticalHitChance = SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCurveCoefficient;
 		const bool bCriticalHit = FMath::RandRange(1, 100) < EffectiveCriticalHitChance;
 		Damage = bCriticalHit ? 2.f * Damage + SourceCriticalHitDamage : Damage;
+		UAuraAbilitySystemLibrary::SetIsCriticalHit(EffectContextHandle, bCriticalHit);
 	}
-	
+
+
+	//给Target的incomingDamage 属性 加上值 
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(),EGameplayModOp::Additive, Damage);
 
 	OutExecutionOutput.AddOutputModifier(EvaluatedData);

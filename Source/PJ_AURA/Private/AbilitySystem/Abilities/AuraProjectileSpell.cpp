@@ -41,10 +41,25 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetPos)
 		// to give the projectile a gameplay effect Spec for causing damage
 		const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
 		FGameplayEffectContextHandle EffectContext = SourceASC->MakeEffectContext();
-		EffectContext.AddSourceObject(GetAvatarActorFromActorInfo());
+
+		EffectContext.SetAbility(this);
+		EffectContext.AddSourceObject(Projectile);
+		TArray<TWeakObjectPtr<AActor>> Actors;
+		Actors.Add(Projectile);
+		EffectContext.AddActors(Actors);
+		FHitResult HitResult;
+		HitResult.Location = TargetPos;
+		EffectContext.AddHitResult(HitResult);
+
 		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContext);
-		float ScaledDamage =  Damage.GetValueAtLevel(GetAbilityLevel());
-		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, FAuraGameplayTags::Get().Damage, ScaledDamage);
+
+		const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
+		for (auto& Pair : DamageTypes)
+		{
+			float ScaledDamage = Pair.Value.GetValueAtLevel(GetAbilityLevel());//damage value
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, ScaledDamage);//damage tag
+		}
+
 		Projectile->DamageEffectSpecHandle = SpecHandle;
 
 		Projectile->FinishSpawning(SpawnTransform);
