@@ -101,6 +101,9 @@ public:
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor);
 	UFUNCTION()//在变量复制时自动调用  参数默认传入旧值 OnRep_只在客户端上调用
 	void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
+	/*
+	 * Secondary Attributes
+	 */
 	// Armor属性
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Armor, Category = "Combat Attributes")
 	FGameplayAttributeData Armor;
@@ -144,18 +147,44 @@ public:
 	void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
 
 	// HealthRegeneration属性
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthRegeneration, Category = "Vital Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthRegeneration, Category = "Combat Attributes")
 	FGameplayAttributeData HealthRegeneration;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, HealthRegeneration);
 	UFUNCTION()
 	void OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const;
 
 	// ManaRegeneration属性
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaRegeneration, Category = "Vital Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaRegeneration, Category = "Combat Attributes")
 	FGameplayAttributeData ManaRegeneration;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ManaRegeneration);
 	UFUNCTION()
 	void OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const;
+
+	// Resistance_Fire属性
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resistance_Fire, Category = "Combat Attributes")
+	FGameplayAttributeData Resistance_Fire;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resistance_Fire);
+	UFUNCTION()
+	void OnRep_Resistance_Fire(const FGameplayAttributeData& OldResistance_Fire) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resistance_Arcane, Category = "Combat Attributes")
+	FGameplayAttributeData Resistance_Arcane;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resistance_Arcane);
+	UFUNCTION()
+	void OnRep_Resistance_Arcane(const FGameplayAttributeData& OldResistance_Arcane) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resistance_Lighting, Category = "Combat Attributes")
+	FGameplayAttributeData Resistance_Lighting;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resistance_Lighting);
+	UFUNCTION()
+	void OnRep_Resistance_Lighting(const FGameplayAttributeData& OldResistance_Lighting) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resistance_Physical, Category = "Combat Attributes")
+	FGameplayAttributeData Resistance_Physical;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resistance_Physical);
+	UFUNCTION()
+	void OnRep_Resistance_Physical(const FGameplayAttributeData& OldResistance_Physical) const;
+
 	/*
 	 * Vital Attributes
 	 */

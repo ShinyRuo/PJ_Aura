@@ -5,6 +5,8 @@
 #include "AuraGameplayTags.h"
 #include <AbilitySystemGlobals.h>
 
+FSimpleMulticastDelegate UAuraAssetManager::OnAuraAssetManagerManagerCreatedDelegate;
+
 UAuraAssetManager& UAuraAssetManager::Get()
 {
 	check(GEngine);
@@ -19,6 +21,7 @@ void UAuraAssetManager::StartInitialLoading()
 	FAuraGameplayTags::InitializeNativeGameplayTags();
 
 	//TargetDataCache 会在这里面初始化
-	UAbilitySystemGlobals::Get().InitGlobalData();
+	UAbilitySystemGlobals::Get().InitGlobalData(); 
 
+	OnAuraAssetManagerManagerCreatedDelegate.Broadcast();
 }

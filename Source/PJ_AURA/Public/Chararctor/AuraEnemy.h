@@ -9,6 +9,8 @@
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "AuraEnemy.generated.h"
 
+class AAuraAIController;
+class UBehaviorTree;
 class UWidgetComponent;
 /**
  * 
@@ -19,6 +21,8 @@ class PJ_AURA_API AAuraEnemy : public AAuraCharacterBase,public IEnemyInterface
 	GENERATED_BODY()
 public:
 	AAuraEnemy();
+
+	virtual void PossessedBy(AController* NewController) override;
 
 	/** Enemy Interface*/
 	virtual void HighlightActor() override;
@@ -47,6 +51,12 @@ public:
 
 	virtual void Die() override;
 
+	UPROPERTY(BlueprintReadWrite,Category = "Combat")
+	TWeakObjectPtr<AActor> CombatTarget;
+
+	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
+	virtual AActor* GetCombatTarget_Implementation() const override;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo() override;
@@ -60,4 +70,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
+
+	UPROPERTY(EditAnywhere,Category="AI")
+	TObjectPtr<UBehaviorTree> BehaviorTree;
+	UPROPERTY()
+	TObjectPtr<AAuraAIController> AuraAIController;
 };

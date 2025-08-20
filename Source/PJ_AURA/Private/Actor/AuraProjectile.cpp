@@ -16,6 +16,7 @@
 
 AAuraProjectile::AAuraProjectile()
 {
+	//bReplicates = true 是 Actor 能够进行网络复制的前提，但具体哪些成员变量会被同步，取决于是否使用 Replicated 标记并在 GetLifetimeReplicatedProps 中注册。这种机制让开发者可以精确控制网络同步的数据，避免不必要的网络流量开销。
 	bReplicates = true;
 
 	PrimaryActorTick.bCanEverTick = false;
@@ -37,7 +38,7 @@ AAuraProjectile::AAuraProjectile()
 
 void AAuraProjectile::BeginPlay()
 {
-	Super::BeginPlay();
+ 	Super::BeginPlay();
 	SetLifeSpan(LifeSpan);
 	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AAuraProjectile::OnSphereOverlap);
 	LoopingSoundComponent = UGameplayStatics::SpawnSoundAttached(LoopingSound, GetRootComponent());
@@ -56,7 +57,7 @@ void AAuraProjectile::Destroyed()
 		//所以 只有2 需要在这个时候播放声音
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
-		LoopingSoundComponent->Stop();
+		if(LoopingSoundComponent)LoopingSoundComponent->Stop();
 
 	}
 	Super::Destroyed();
@@ -65,9 +66,17 @@ void AAuraProjectile::Destroyed()
 void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if(DamageEffectSpecHandle.Data.IsValid() && DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor)
+	{
+		//和自己重叠了todo 碰撞
+		return;
+	}
 	UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
-	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
-	LoopingSoundComponent->Stop();
+	if (!bHit)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
+		if (LoopingSoundComponent)LoopingSoundComponent->Stop();
+	}
 	if (HasAuthority())
 	{
 		if (UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))

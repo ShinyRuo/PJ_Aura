@@ -15,6 +15,9 @@ class PJ_AURA_API UAuraAssetManager : public UAssetManager
 	GENERATED_BODY()
 public:
 	static UAuraAssetManager& Get();
+	static FSimpleMulticastDelegate OnAuraAssetManagerManagerCreatedDelegate;
+
 protected:
 	virtual void StartInitialLoading() override;
+
 };

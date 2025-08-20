@@ -29,7 +29,6 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetPos)
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
 		FTransform SpawnTransform;
 		FRotator Rotation = (TargetPos - SocketLocation).Rotation();
-		Rotation.Pitch = 0.f;
 		SpawnTransform.SetLocation(SocketLocation);
 		SpawnTransform.SetRotation(Rotation.Quaternion());
 		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(
@@ -50,6 +49,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetPos)
 		FHitResult HitResult;
 		HitResult.Location = TargetPos;
 		EffectContext.AddHitResult(HitResult);
+
 
 		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContext);
 
