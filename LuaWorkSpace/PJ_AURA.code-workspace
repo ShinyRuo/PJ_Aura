@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../Content/Script"
+		},
+		{
+			"path": "../Plugins/UnLua/Intermediate/IntelliSense"
+		},
+	],
+	"settings": {
+		"lua.targetVersion": "5.3"
+	}
+}
