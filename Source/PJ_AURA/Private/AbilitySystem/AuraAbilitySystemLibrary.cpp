@@ -123,6 +123,48 @@ void UAuraAbilitySystemLibrary::SetIsCriticalHit(FGameplayEffectContextHandle& E
 	}
 }
 
+void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldContextObject,
+	TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius,
+	const FVector& SphereOrigin)
+{
+	FCollisionQueryParams SphereParams;
+	SphereParams.AddIgnoredActors(ActorsToIgnore);
+
+	TArray<FOverlapResult> Overlaps;
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	{
+		World->OverlapMultiByObjectType(Overlaps, SphereOrigin, FQuat::Identity, FCollisionObjectQueryParams(FCollisionObjectQueryParams::InitType::AllDynamicObjects), FCollisionShape::MakeSphere(Radius), SphereParams);
+		for (FOverlapResult& Overlap : Overlaps)
+		{
+			if (const bool ImplementsCombatInterface = Overlap.GetActor()->Implements<UCombatInterface>())
+			{
+				if (const bool IsAlive = !ICombatInterface::Execute_IsDead(Overlap.GetActor()))
+				{
+					OutOverlappingActors.AddUnique(ICombatInterface::Execute_GetAvatar(Overlap.GetActor()));
+				}
+			}
+		}
+	}
+}
+
+bool UAuraAbilitySystemLibrary::IsFriend(AActor* FirstActor, AActor* SecondActor)
+{
+	if (FirstActor && SecondActor)
+	{
+		if (FirstActor->ActorHasTag(FName("Player")) && SecondActor->ActorHasTag(FName("Player")))
+		{
+			return true;
+		}
+		if (FirstActor->ActorHasTag(FName("Enemy")) && SecondActor->ActorHasTag(FName("Enemy")))
+		{
+			return true;
+		}
+
+		return false;
+	}
+	return true;
+}
+
 void UAuraAbilitySystemLibrary::SetIsBlockedHit(FGameplayEffectContextHandle& EffectContextHandle, bool bValue)
 {
 	if ( FAuraGameplayEffectContext* EffectContext = static_cast< FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
