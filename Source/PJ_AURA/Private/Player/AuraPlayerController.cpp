@@ -10,6 +10,7 @@
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Chararctor/AuraCharacter.h"
 #include "Components/SplineComponent.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/EnemyInterface.h"
@@ -103,6 +104,11 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB) )
 	{
+		if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_RMB))
+		{
+			CameraRotatingHoldingSec  = 0.f;
+			SetIsRotatingCamera(false);
+		}
 		if (GetASC())
 		{
 			GetASC()->AbilityInputTagReleased(InputTag);
@@ -135,6 +141,14 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB) || bTargeting || bShiftKeyDown)
 	{
+		if(InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_RMB))
+		{
+			CameraRotatingHoldingSec += GetWorld()->GetDeltaSeconds();
+			if (CameraRotatingHoldingSec >= CameraRotatingThresholdSeconds)
+			{
+				SetIsRotatingCamera(true);
+			}
+		}
 		if (GetASC())
 		{
 			GetASC()->AbilityInputTagHeld(InputTag);
@@ -156,6 +170,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		}
 	}
 }
+
 
 UAuraAbilitySystemComponent* AAuraPlayerController::GetASC()
 {
@@ -198,20 +213,38 @@ void AAuraPlayerController::SetupInputComponent()
 	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &AAuraPlayerController::ShiftPressed);
 	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed,this,&AAuraPlayerController::ShiftReleased);
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
+	AuraInputComponent->BindAction(MouseMoveAction, ETriggerEvent::Triggered,this, &AAuraPlayerController::OnMouseXY);
 }
 
+void AAuraPlayerController::OnMouseXY(const FInputActionValue& InputActionValue)
+{
+	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
+
+	if (GetIsRotatingCamera() )
+	{
+		if (APawn* ControlledPawn = GetPawn<APawn>())
+		{
+			if(AAuraCharacter* AuraCharacter = Cast<AAuraCharacter>(ControlledPawn))
+			{
+				AuraCharacter->OnRotatingCamera(InputAxisVector.X * RotationSpeed, InputAxisVector.Y * RotationSpeed);
+			}
+		}
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("InputAxisVector.Y:%f"), InputAxisVector.Y));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("InputAxisVector.X:%f"), InputAxisVector.X));
+	}
+}
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>(); 
-	const FRotator Rotation = GetControlRotation();
-	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
-	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 	if (APawn* ControlledPawn = GetPawn<APawn>())
 	{
-		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
-		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
+		if (AAuraCharacter* AuraCharacter = Cast<AAuraCharacter>(ControlledPawn))
+		{
+			AuraCharacter->AddMove(InputAxisVector.Y, InputAxisVector.X);
+		}
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("InputAxisVector.Y:%f"), InputAxisVector.Y));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("InputAxisVector.X:%f"), InputAxisVector.X));
 	}
 }
 

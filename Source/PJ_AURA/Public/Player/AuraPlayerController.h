@@ -45,6 +45,18 @@ private:
 	void ShiftPressed() { bShiftKeyDown = true; }
 	void ShiftReleased() { bShiftKeyDown = false; }
 	bool bShiftKeyDown = false;
+	UPROPERTY(EditAnywhere, Category = "input")
+	TObjectPtr<UInputAction> MouseMoveAction;
+	UPROPERTY(EditDefaultsOnly)
+	float CameraRotatingThresholdSeconds = 0.5;
+	float CameraRotatingHoldingSec = 0.f;
+	UPROPERTY(VisibleAnywhere, Category = "Camera")
+	bool bRotatingCamera = false;
+	UPROPERTY(EditAnywhere, Category = "Camera", meta = (ClampMin = 0.1, ClampMax = 5.0))
+	float RotationSpeed = 2.0f; // Ðý×ªÁéÃô¶È
+
+	void SetIsRotatingCamera(bool Value) { bRotatingCamera = Value; }
+	bool GetIsRotatingCamera()const { return bRotatingCamera; }
 
 	void Move(const FInputActionValue& InputActionValue);
 
@@ -56,6 +68,7 @@ private:
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
+	void OnMouseXY(const FInputActionValue& InputActionValue);
 
 	UPROPERTY(EditDefaultsOnly,Category="Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;

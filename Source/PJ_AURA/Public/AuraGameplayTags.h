@@ -58,10 +58,17 @@ public:
 	FGameplayTag Effect_HitReact;
 
 	FGameplayTag Abilities_Attack;
+	FGameplayTag Abilities_Summon;
 
-	FGameplayTag Montage_Attack_Weapon;
-	FGameplayTag Montage_Attack_RightHand;
-	FGameplayTag Montage_Attack_LeftHand;
+	FGameplayTag CombatSocket_Weapon;
+	FGameplayTag CombatSocket_RightHand;
+	FGameplayTag CombatSocket_LeftHand;
+	FGameplayTag CombatSocket_Hit; //ghoul的左右手位置 动画同步到client总是有问题 加个socket始终摆在他正中间试试
+
+	FGameplayTag Montage_Attack_1;
+	FGameplayTag Montage_Attack_2;
+	FGameplayTag Montage_Attack_3;
+	FGameplayTag Montage_Attack_4;
 
 private:
 	static FAuraGameplayTags GameplayTags;

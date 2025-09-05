@@ -19,15 +19,20 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	
 }
 
-void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetPos)
+void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetPos, const FGameplayTag& SocketTag,bool bOverridePitch , float PitchOverride )
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
-	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo(),FAuraGameplayTags::Get().Montage_Attack_Weapon);
+	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo(), SocketTag);
 	FTransform SpawnTransform;
 	FRotator Rotation = (TargetPos - SocketLocation).Rotation();
+	if (bOverridePitch)
+	{
+		Rotation.Pitch = PitchOverride;
+	}
 	SpawnTransform.SetLocation(SocketLocation);
 	SpawnTransform.SetRotation(Rotation.Quaternion());
+
 	AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(
 		ProjectileClass,
 		SpawnTransform,
@@ -46,6 +51,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetPos)
 	FHitResult HitResult;
 	HitResult.Location = TargetPos;
 	EffectContext.AddHitResult(HitResult);
+	EffectContext.Get()->SetEffectCauser(GetAvatarActorFromActorInfo());
 
 
 	const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContext);

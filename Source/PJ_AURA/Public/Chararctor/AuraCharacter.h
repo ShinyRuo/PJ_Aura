@@ -20,6 +20,11 @@ public:
 	/** Combat Interface*/
 	virtual int32 GetPlayerLevel() override;
 	/** end Combat Interface*/
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRotatingCamera(float DeltaX, float DeltaY);
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddMove(float ForwardScale, float RightScale);
 protected:
 	virtual void InitAbilityActorInfo() override;
 };

@@ -8,6 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
+class UNiagaraSystem;
 class UGameplayAbility;
 class UGameplayEffect;
 class UAbilitySystemComponent;
@@ -35,6 +36,10 @@ public:
 	virtual AActor* GetAvatar_Implementation()  override;
 	virtual UAnimMontage* GetHitReactMontage_Implementation();
 	virtual  TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
+	virtual UNiagaraSystem* GetHitEffect_Implementation() override;
+	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) override;
+	virtual int32 GetMinionCount_Implementation() override;
+	virtual  void IncrementMinionCount_Implementation(int32 Amount) override;
 	/** end Combat Interface*/
 
 	UPROPERTY(EditAnywhere,Category = "Combat")
@@ -45,7 +50,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere,Category = "combat")
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
 	UPROPERTY(EditAnywhere, Category = "combat")
@@ -57,6 +62,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "combat")
 	FName RightHandSocketName;
 
+	UPROPERTY(EditAnywhere, Category = "combat")
+	FName HitSocketName;
 
 
 	UPROPERTY()
@@ -92,13 +99,23 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartWeaponDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "combat")
 	TObjectPtr<UMaterialInstance> CharDissolveMaterialInstance;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "combat")
 	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
 
 	bool bDead = false;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "combat")
+	UNiagaraSystem* BloodEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "combat")
+	USoundBase* DeathSound;
+
+	/* Minions */
+	int32 MinionCount = 0;
+
 private:
 	UPROPERTY(EditAnywhere,Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;

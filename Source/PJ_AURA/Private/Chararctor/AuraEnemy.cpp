@@ -53,6 +53,8 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 	{
 		AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"), false);
 	}
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), false);
+
 }
 
 void AAuraEnemy::HighlightActor()
@@ -80,6 +82,7 @@ void AAuraEnemy::Die()
 {
 	SetLifeSpan(LifeSpan);
 	Super::Die();
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
 }
 
 void AAuraEnemy::SetCombatTarget_Implementation(AActor* InCombatTarget)
