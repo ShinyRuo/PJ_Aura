@@ -5,6 +5,9 @@
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/Data/AbilityInfo.h"
+#include "AbilitySystem/Data/LevelUpInfo.h"
+#include "Player/AuraPlayerState.h"
 
 void UOverlayWidgetController::BroadcastInitalValue()
 {
@@ -19,6 +22,10 @@ void UOverlayWidgetController::BroadcastInitalValue()
 }
 void UOverlayWidgetController::BindCallbackToDependencies()
 {
+	AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	AuraPlayerState->OnExpChangedDelegate.AddUObject(this, &UOverlayWidgetController::OnExpChanged);
+
+
 	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
 	// 委托1  OnRep_xxx -> GAMEPLAYATTRIBUTE_REPNOTIFY 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetHealthAttribute())
@@ -50,20 +57,72 @@ void UOverlayWidgetController::BindCallbackToDependencies()
 				OnMaxManaChanged.Broadcast(Data.NewValue);
 			}
 		);
-	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		[this](const FGameplayTagContainer& AssetTags)
+	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		if (AuraASC->bStartupAbilitiesGiven)
 		{
-			for (const FGameplayTag Tag : AssetTags)
-			{
-				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
-				if (!Tag.MatchesTag(MessageTag)) continue;
+			//先bind委托 或是先GiveAbility 的时机不确定
+			//BindCallbackToDependencies 实在初始化UOverlayWidgetController时候才执行的
+			OnInitializeStartupAbilities(AuraASC);
+		}
+		else
+		{
+			AuraASC->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::OnInitializeStartupAbilities);
+		}
 
-				//GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, FString::Printf(TEXT("GE Tag %s"), *Tag.ToString()));;
-				const FUIWidgetRow* Row = this->GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
-				if (Row)
-					MessageWidgetRowDelegate.Broadcast(*Row);
+
+		AuraASC->EffectAssetTags.AddLambda(
+			[this](const FGameplayTagContainer& AssetTags)
+			{
+				for (const FGameplayTag Tag : AssetTags)
+				{
+					FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+					if (!Tag.MatchesTag(MessageTag)) continue;
+
+					//GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, FString::Printf(TEXT("GE Tag %s"), *Tag.ToString()));;
+					const FUIWidgetRow* Row = this->GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
+					if (Row)
+						MessageWidgetRowDelegate.Broadcast(*Row);
+				}
 			}
+		);
+	}
+}
+
+void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC)
+{
+	if (!AuraASC || !AuraASC->bStartupAbilitiesGiven) return;
+
+	FForEachAbility BroadcastDelegate;//当作匿名函数用
+	BroadcastDelegate.BindLambda([this](const FGameplayAbilitySpec& AbilitySpec)
+		{
+			FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(UAuraAbilitySystemComponent::GetAbilityTagFromSpec(AbilitySpec));
+			Info.InputTag = UAuraAbilitySystemComponent::GetAbilityInputTagFromSpec(AbilitySpec);
+			AbilityInfoDelegate.Broadcast(Info);
 		}
 	);
+	AuraASC->ForEachAbility(BroadcastDelegate);
+}
+
+void UOverlayWidgetController::OnExpChanged(int32 NewExp) const
+{
+	AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	const ULevelUpInfo* LevelUpInfo = AuraPlayerState->LevelUpInfo;
+	checkf(LevelUpInfo, TEXT("Unable to find LevelUpInfo,Please fill out AuraPlayerState Blueprint"));
+
+	int32 Level = LevelUpInfo->FindLevelForXp(NewExp);
+	int32 MaxLevel = LevelUpInfo->LevelUpInformation.Num() - 1;
+
+	if (Level <= MaxLevel && Level > 0)
+	{
+		const int32  LevelUpRequirement = LevelUpInfo->LevelUpInformation[Level].LevelUpRequirement;
+		const int32  PreviousLevelUpRequirement = LevelUpInfo->LevelUpInformation[Level-1].LevelUpRequirement;
+		const int32  DeltaLevelUpRequirement = LevelUpRequirement - PreviousLevelUpRequirement;
+		const int32  XPForThisLevel = NewExp - PreviousLevelUpRequirement;
+
+		const float ExpBarPercent = static_cast<float>(XPForThisLevel) / static_cast<float>(DeltaLevelUpRequirement);
+
+		OnExpPercentChangedDelegate.Broadcast(ExpBarPercent);
+	}
 }
 
