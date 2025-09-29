@@ -23,6 +23,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetPos, const FGame
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
+	//优先执行蓝图重写的实现，若无则执行 C++ 的 _Implementation 实现
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo(), SocketTag);
 	FTransform SpawnTransform;
 	FRotator Rotation = (TargetPos - SocketLocation).Rotation();

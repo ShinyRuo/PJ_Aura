@@ -63,7 +63,7 @@ void UWaitCooldownChange::OnActiveEffectAdded(UAbilitySystemComponent* TargetASC
 		FGameplayEffectQuery Query = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(CooldownTag.GetSingleTagContainer());
 		TArray<float> TimesRemaining =  ASC->GetActiveEffectsTimeRemaining(Query);
 		float TimeRemaining = -1.f;
-		for (int32 num : TimesRemaining)
+		for (float num : TimesRemaining)
 		{
 			if (TimeRemaining < 0.f)
 			{

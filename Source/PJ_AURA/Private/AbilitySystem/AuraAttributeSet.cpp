@@ -11,7 +11,7 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
-#include "Kismet/GameplayStatics.h"
+#include "Interaction/PlayerInterface.h"
 #include "Player/AuraPlayerController.h"
 
 //map [ tags ] = UAuraAttributeSet::GetxxxAttribute
@@ -119,6 +119,12 @@ void UAuraAttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribu
 	}
 }
 
+void UAuraAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+{
+	Super::PostAttributeChange(Attribute, OldValue, NewValue);
+
+}
+
 
 void UAuraAttributeSet::SetEffectProperties(const  FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
@@ -172,16 +178,33 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Properties, fl
 	}
 }
 
+void UAuraAttributeSet::SendExpEvent(const FEffectProperties& Properties)
+{
+	if (Properties.TargetAvatarActor && Properties.TargetAvatarActor->Implements<UCombatInterface>())
+	{
+		int32 TargetLevel = ICombatInterface::Execute_GetPlayerLevel(Properties.TargetAvatarActor);
+		ECharacterClass CharacterClass = ICombatInterface::Execute_GetCharacterClass(Properties.TargetAvatarActor);
+
+		const int32 ExpReward = UAuraAbilitySystemLibrary::GetExpRewardForClassAndLevel(Properties.TargetCharacter, CharacterClass, TargetLevel);
+
+		const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+		FGameplayEventData Payload;
+		Payload.EventTag = GameplayTags.Attributes_Meta_IncomingExp;
+		Payload.EventMagnitude = ExpReward;
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Properties.SourceAvatarActor, GameplayTags.Attributes_Meta_IncomingExp, Payload);
+	}
+}
+
 void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 	FEffectProperties Properties;
 	SetEffectProperties(Data, Properties);
 
-	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	/*if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Changed Health On %s,Health:%f"), *Properties.TargetAvatarActor->GetName(), GetHealth());
-	}
+	}*/
 	if (Data.EvaluatedData.Attribute ==  GetIncomingDamageAttribute())
 	{
 		const float LocalIncomingDamage = GetIncomingDamage();
@@ -199,6 +222,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 				{
 					CombatInterface->Die();
 				}
+				SendExpEvent(Properties);
 			}
 			else
 			{
@@ -211,6 +235,40 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 			const bool bCritical = UAuraAbilitySystemLibrary::IsCriticalHit(Properties.EffectContextHandle);
 
 			ShowFloatingText(Properties, LocalIncomingDamage, bBlock, bCritical);
+		}
+	}
+	else if(Data.EvaluatedData.Attribute == GetIncomingExpAttribute())
+	{
+		const float LocalIncomingExp = GetIncomingExp();
+		SetIncomingExp(0.f);
+		//UE_LOG(LogTemp, Warning, TEXT("Changed Exp On %s,Exp:%f"), *Properties.TargetAvatarActor->GetName(), LocalIncomingExp);
+		if (Properties.SourceCharacter->Implements<UPlayerInterface>() && Properties.SourceCharacter->Implements<UCombatInterface>())
+		{
+			const int32 CurrentLevel = ICombatInterface::Execute_GetPlayerLevel(Properties.SourceCharacter);
+			const int32 CurrentExp = IPlayerInterface::Execute_GetExp(Properties.SourceCharacter);
+			const int32 NewLevel = IPlayerInterface::Execute_FindLevelForExp(Properties.SourceCharacter, CurrentExp + LocalIncomingExp);
+			const int32 NumLevelUps = NewLevel - CurrentLevel;
+
+			if (NumLevelUps > 0)
+			{
+				const int32 AttributePointsRewards = IPlayerInterface::Execute_GetAttributePointsRewards(Properties.SourceCharacter, CurrentLevel);
+				const int32 SpellPointsRewards =  IPlayerInterface::Execute_GetSpellPointsRewards(Properties.SourceCharacter, CurrentLevel);
+				IPlayerInterface::Execute_AddToPlayerLevel(Properties.SourceCharacter, NumLevelUps);
+				IPlayerInterface::Execute_AddToAttributePoints(Properties.SourceCharacter, AttributePointsRewards);
+				IPlayerInterface::Execute_AddToSpellPoints(Properties.SourceCharacter, SpellPointsRewards);
+
+				SetVigor(GetVigor());
+				SetIntelligence(GetIntelligence());//用来触发MaxHealth 与 MaxMana 的MMC 
+
+				SetHealth(GetMaxHealth());
+				SetMana(GetMaxMana());
+				
+
+				IPlayerInterface::Execute_LevelUp(Properties.SourceCharacter);
+
+			}
+			IPlayerInterface::Execute_AddToExp(Properties.SourceCharacter, LocalIncomingExp);
+
 		}
 	}
 }

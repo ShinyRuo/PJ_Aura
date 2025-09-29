@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/OverlayWidgetController.h"
 
+#include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/AbilityInfo.h"
@@ -11,7 +12,7 @@
 
 void UOverlayWidgetController::BroadcastInitalValue()
 {
-	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+	const UAuraAttributeSet* AuraAttributeSet = GetAuraAS();
 	//委托2 UOverlayWidgetController -> 蓝图UI
 	OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
@@ -22,11 +23,16 @@ void UOverlayWidgetController::BroadcastInitalValue()
 }
 void UOverlayWidgetController::BindCallbackToDependencies()
 {
-	AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	AAuraPlayerState* AuraPlayerState = GetAuraPS();
 	AuraPlayerState->OnExpChangedDelegate.AddUObject(this, &UOverlayWidgetController::OnExpChanged);
+	AuraPlayerState->OnLevelChangedDelegate.AddLambda(
+		[this](int32 NewLevel)
+		{
+			OnPlayerLevelChangedDelegate.Broadcast(NewLevel);
+		}
+	);
 
-
-	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+	const UAuraAttributeSet* AuraAttributeSet =GetAuraAS();
 	// 委托1  OnRep_xxx -> GAMEPLAYATTRIBUTE_REPNOTIFY 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetHealthAttribute())
 		.AddLambda(
@@ -57,19 +63,20 @@ void UOverlayWidgetController::BindCallbackToDependencies()
 				OnMaxManaChanged.Broadcast(Data.NewValue);
 			}
 		);
-	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	if (UAuraAbilitySystemComponent* AuraASC = GetAuraASC())
 	{
 		if (AuraASC->bStartupAbilitiesGiven)
 		{
 			//先bind委托 或是先GiveAbility 的时机不确定
 			//BindCallbackToDependencies 实在初始化UOverlayWidgetController时候才执行的
-			OnInitializeStartupAbilities(AuraASC);
+			BroadcastAbilityInfo();
 		}
 		else
 		{
-			AuraASC->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::OnInitializeStartupAbilities);
+			AuraASC->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::BroadcastAbilityInfo);
 		}
 
+		AuraASC->AbilityEquipped.AddUObject(this, &UOverlayWidgetController::OnAbilityEquipped);
 
 		AuraASC->EffectAssetTags.AddLambda(
 			[this](const FGameplayTagContainer& AssetTags)
@@ -89,24 +96,24 @@ void UOverlayWidgetController::BindCallbackToDependencies()
 	}
 }
 
-void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC)
-{
-	if (!AuraASC || !AuraASC->bStartupAbilitiesGiven) return;
 
-	FForEachAbility BroadcastDelegate;//当作匿名函数用
-	BroadcastDelegate.BindLambda([this](const FGameplayAbilitySpec& AbilitySpec)
-		{
-			FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(UAuraAbilitySystemComponent::GetAbilityTagFromSpec(AbilitySpec));
-			Info.InputTag = UAuraAbilitySystemComponent::GetAbilityInputTagFromSpec(AbilitySpec);
-			AbilityInfoDelegate.Broadcast(Info);
-		}
-	);
-	AuraASC->ForEachAbility(BroadcastDelegate);
+void UOverlayWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& Status,
+	const FGameplayTag& Slot, const FGameplayTag& PrevSlot, int32 AbilityLevel)
+{
+	FAuraAbilityInfo LastSlotInfo;
+	LastSlotInfo.InputTag = PrevSlot;
+	LastSlotInfo.AbilityType = FAuraGameplayTags::Get().Abilities_Type_None;
+	AbilityInfoDelegate.Broadcast(LastSlotInfo);
+
+
+	FAuraAbilityInfo CurSlotInfo = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
+	CurSlotInfo.InputTag = Slot;
+	AbilityInfoDelegate.Broadcast(CurSlotInfo);
 }
 
-void UOverlayWidgetController::OnExpChanged(int32 NewExp) const
+void UOverlayWidgetController::OnExpChanged(int32 NewExp) 
 {
-	AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	AAuraPlayerState* AuraPlayerState = GetAuraPS();
 	const ULevelUpInfo* LevelUpInfo = AuraPlayerState->LevelUpInfo;
 	checkf(LevelUpInfo, TEXT("Unable to find LevelUpInfo,Please fill out AuraPlayerState Blueprint"));
 

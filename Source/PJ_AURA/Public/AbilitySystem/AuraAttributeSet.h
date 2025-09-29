@@ -64,6 +64,8 @@ public:
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const override;
+
+	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
 	
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
@@ -219,8 +221,17 @@ public:
 	FGameplayAttributeData IncomingDamage;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingDamage);
 
+	UPROPERTY(BlueprintReadOnly, Category = "Meta Attributes")
+	FGameplayAttributeData IncomingExp;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingExp);
+
 private:
 	void SetEffectProperties(const  FGameplayEffectModCallbackData& Data, FEffectProperties& Props)const;
 
 	void ShowFloatingText(const FEffectProperties& Properties, float Damage,bool bBlockedHit=false, bool bCriticalHit = false)const;
+
+	void SendExpEvent(const FEffectProperties& Properties);
+
+	bool ToppleHealth = false;
+	bool ToppleMana = false;
 };

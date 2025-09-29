@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "Chararctor/AuraCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
@@ -30,7 +29,7 @@ public:
 	/** end Enemy Interface*/
 
 	/** Combat Interface*/
-	virtual int32 GetPlayerLevel() override;
+	virtual int32 GetPlayerLevel_Implementation() override;
 	/** end Combat Interface*/
 
 	UPROPERTY(BlueprintAssignable)
@@ -62,8 +61,7 @@ protected:
 	virtual void InitAbilityActorInfo() override;
 	virtual void InitializeDefaultAttributes() const override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Charater Class Defaults")
-	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = "Charater Class Defaults")
 	int32 Level = 1;

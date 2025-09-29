@@ -7,8 +7,11 @@
 #include "Engine/DataAsset.h"
 #include "AbilityInfo.generated.h"
 
+class UGameplayAbility;
 
-USTRUCT(BlueprintType)
+USTRUCT
+
+(BlueprintType)
 struct FAuraAbilityInfo
 {
 	GENERATED_BODY()
@@ -16,8 +19,14 @@ struct FAuraAbilityInfo
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag AbilityTag = FGameplayTag();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FGameplayTag AbilityType = FGameplayTag();
+
 	UPROPERTY(BlueprintReadOnly)
-	FGameplayTag InputTag = FGameplayTag();
+	FGameplayTag InputTag = FGameplayTag(); //broadcast的 info里设置了inputtag 后 spellmenu 的equipGlobe 会自己根据对应的tag填充
+
+	UPROPERTY(BlueprintReadOnly)
+	FGameplayTag StatusTag = FGameplayTag();
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	FGameplayTag CooldownTag = FGameplayTag();
@@ -28,6 +37,14 @@ struct FAuraAbilityInfo
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UMaterialInterface> BackgroundMaterial = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 LevelRequirement = 1;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UGameplayAbility> Ability;
+
+	UPROPERTY( BlueprintReadOnly)
+	int32 AbilityLevel = 1;
 };
 
 /**

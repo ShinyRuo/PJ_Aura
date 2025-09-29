@@ -27,6 +27,9 @@ struct FCharacterClassDefaultInfo
 
 	UPROPERTY(EditDefaultsOnly, Category = "Class Default")
 	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Class Default")
+	FScalableFloat ExpReward = FScalableFloat();
 };
 
 /**

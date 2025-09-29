@@ -16,4 +16,14 @@ class PJ_AURA_API UAuraGameplayAbility : public UGameplayAbility
 public:
 	UPROPERTY(EditDefaultsOnly,Category="Input")
 	FGameplayTag StartUpInputTag;
+
+	UFUNCTION(BlueprintNativeEvent)
+	FText MakeAbilityDesc(const FText& InFormat,const int32 Level);
+
+protected:
+
+	UFUNCTION(BlueprintCallable)
+	float GetManaCost(float InLevel = 1.f) const;
+	UFUNCTION(BlueprintCallable)
+	float GetCooldown(float InLevel = 1.f) const;
 };

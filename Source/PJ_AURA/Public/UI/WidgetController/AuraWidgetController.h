@@ -3,11 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "AuraWidgetController.generated.h"
 
+class UAbilityInfo;
 class UAbilitySystemComponent;
 class UAttributeSet;
+class UAuraAttributeSet;
+class AAuraPlayerController;
+class UAuraAbilitySystemComponent;
+class AAuraPlayerState;
+
+
+
 USTRUCT(BlueprintType)
 struct FWidgetContorllerParams
 {
@@ -26,6 +33,13 @@ struct FWidgetContorllerParams
 	TObjectPtr<UAttributeSet> AttributeSet = nullptr;
 };
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature_Float, float, NewValue);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature_Int32, int32, NewValue);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAbilityInfoSignature, const FAuraAbilityInfo&, Info);
+
 /**
  * 
  */
@@ -42,6 +56,13 @@ public:
 	virtual void BroadcastInitalValue();
 
 	virtual void BindCallbackToDependencies();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
+	TObjectPtr<UAbilityInfo> AbilityInfo;
+
+
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
+	FAbilityInfoSignature AbilityInfoDelegate;
 protected:
 	UPROPERTY(BlueprintReadOnly,Category="WidgetController")
 	TObjectPtr<APlayerController> PlayerController;
@@ -54,4 +75,24 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly,Category="WidgetController")
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	UPROPERTY(BlueprintReadOnly, Category = "WidgetController")
+	TObjectPtr<AAuraPlayerController> KeptAuraPlayerController;
+
+	UPROPERTY(BlueprintReadOnly, Category = "WidgetController")
+	TObjectPtr<AAuraPlayerState> KeptAuraPlayerState;
+
+	UPROPERTY(BlueprintReadOnly, Category = "WidgetController")
+	TObjectPtr<UAuraAbilitySystemComponent> KeptAuraAbilitySystemComponent;
+
+	UPROPERTY(BlueprintReadOnly, Category = "WidgetController")
+	TObjectPtr<UAuraAttributeSet> KeptAuraAttributeSet;
+
+	AAuraPlayerController* GetAuraPC();
+	AAuraPlayerState* GetAuraPS();
+	UAuraAbilitySystemComponent* GetAuraASC();
+	UAuraAttributeSet* GetAuraAS();
+
+	virtual void BroadcastAbilityInfo();
+
 };

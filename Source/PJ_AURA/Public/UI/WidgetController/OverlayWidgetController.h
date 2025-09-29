@@ -11,7 +11,6 @@
 
 struct FAuraAbilityInfo;
 class UAuraAbilitySystemComponent;
-class UAbilityInfo;
 
 USTRUCT()
 struct FUIWidgetRow : public FTableRowBase
@@ -32,11 +31,8 @@ struct FUIWidgetRow : public FTableRowBase
 };
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature_Float, float, NewValue);
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAbilityInfoSignature, const FAuraAbilityInfo&, Info);
 
 /**
  * 
@@ -64,11 +60,16 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "GAS|EXP")
 	FOnAttributeChangedSignature_Float OnExpPercentChangedDelegate;
 
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Level")
+	FOnAttributeChangedSignature_Int32 OnPlayerLevelChangedDelegate;
+	
+
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 
-	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
-	FAbilityInfoSignature AbilityInfoDelegate;
+	void OnAbilityEquipped(const FGameplayTag& AbilityTag,
+		const FGameplayTag& Status, const FGameplayTag& Slot, const FGameplayTag& PrevSlot, int32 AbilityLevel);
+
 
 protected:
 
@@ -77,12 +78,8 @@ protected:
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
-	TObjectPtr<UAbilityInfo> AbilityInfo;
 
-	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC);
-
-	void OnExpChanged(int32 NewExp)const;
+	void OnExpChanged(int32 NewExp);
 };
 
 template <typename T>

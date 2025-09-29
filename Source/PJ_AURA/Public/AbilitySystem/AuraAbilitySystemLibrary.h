@@ -7,6 +7,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+struct FWidgetContorllerParams;
+class USpellMenuWidgetController;
 class UAbilitySystemComponent;
 class UAttributeMenuWidgetController;
 class UOverlayWidgetController;
@@ -18,16 +20,22 @@ class PJ_AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController")
+	static bool MakeWidgetControllerParams(const UObject* WorldContextObject, FWidgetContorllerParams& OutParam);
 	UFUNCTION(BlueprintPure,Category="AuraAbilitySystemLibrary|WidgetController")
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController")
 	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController")
+	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintCallable,Category = "AuraAbilitySystemLibrary|CharacterClassDefault")
 	static void InitalizeDefaultAttributes(const UObject* WorldContextObject,ECharacterClass CharacterClass, float Level,UAbilitySystemComponent* ASC);
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefault")
 	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC, ECharacterClass CharacterClass);
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefault")
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|AbilityInfo")
+	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffect")
 	static bool IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle);
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffect")
@@ -40,4 +48,6 @@ public:
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject,TArray<AActor*>& OutOverlappingActors,const TArray<AActor*>& ActorsToIgnore,float Radius, const FVector& SphereOrigin);
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayMechanic")
 	static bool IsFriend(AActor* FirstActor, AActor* SecondActor);
+
+	static int32 GetExpRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, int32 Level);
 };
