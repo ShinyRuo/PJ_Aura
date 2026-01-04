@@ -6,6 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "AuraHUD.generated.h"
 
+class UInventoryWidgetController;
 class USpellMenuWidgetController;
 class UAttributeMenuWidgetController;
 class UOverlayWidgetController;
@@ -29,9 +30,23 @@ public:
 
 	USpellMenuWidgetController* GetSpellMenuWidgetController(const FWidgetContorllerParams& WCParams);
 
+	UInventoryWidgetController* GetInventoryWidgetController(const FWidgetContorllerParams& WCParams);
 
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
-	
+
+	/*
+	 * UI Pool
+	 */
+	 // 获取或创建 Widget
+	UAuraUserWidget* GetOrCreateWidget(const FName& WidgetName, TSubclassOf<UAuraUserWidget> WidgetClass);
+
+	// 通过 FName 获取 Widget
+	UAuraUserWidget* GetWidgetByName(const FName& WidgetName) const;
+
+	// 释放 Widget
+	void ReleaseWidget(const FName& WidgetName);
+
+
 private:
 	UPROPERTY()
 	TObjectPtr<UAuraUserWidget> OverlayWidget;
@@ -56,5 +71,15 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<USpellMenuWidgetController> SpellMenuWidgetControllerClass;
+
+	UPROPERTY()
+	TObjectPtr<UInventoryWidgetController> InventoryWidgetController;
+
+	UPROPERTY(EditAnywhere)	
+	TSubclassOf<UInventoryWidgetController> InventoryWidgetControllerClass;
+
+	// Widget 池，使用 FName 作为索引
+	UPROPERTY()
+	TMap<FName, TObjectPtr<UAuraUserWidget>> WidgetPool;
 
 };

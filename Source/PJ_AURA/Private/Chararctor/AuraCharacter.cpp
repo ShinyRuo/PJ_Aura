@@ -5,12 +5,23 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystemComponent.h"
+#include "AuraGameplayTags.h"
 #include "NiagaraComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
+#include "Actor/PickUpItem.h"
 #include "Camera/CameraComponent.h"
+#include "Game/AuraGameInstance.h"
+#include "Game/AuraGameModeBase.h"
+#include "Game/LoadScreenSaveGame.h"
 #include "Player/AuraPlayerController.h"
 #include "UI/HUD/AuraHUD.h"
+#include "Inventory/InventoryComponent.h"
+#include "Kismet/GameplayStatics.h"
+
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -52,8 +63,38 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	//Init ablity actor info for the Server
 	InitAbilityActorInfo();
 	//我选择在server执行 然后rep所有属性到client
-	InitializeDefaultAttributes();
-	AddCharacterAbilities();
+	// todo load saved data here
+	LoadProgress();
+}
+
+void AAuraCharacter::LoadProgress()
+{
+	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
+		if (!SaveData)
+		{
+			return;
+		}
+		if (SaveData->bFirstTimeLoadIn)
+		{
+			//第一次加载 使用初始属性值
+			InitializeDefaultAttributes();
+			AddCharacterAbilities();
+		}
+		else
+		{
+			//todo Load abilities
+			if (AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>())
+			{
+				AuraPlayerState->SetPlayerLevel(SaveData->PlayerLevel);
+				AuraPlayerState->SetPlayerExp(SaveData->PlayerXP);
+				AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
+				AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
+			}
+			UAuraAbilitySystemLibrary::InitalizeDefaultAttributesForSaveData(this, AbilitySystemComponent, SaveData);
+		}
+	}
 }
 
 void AAuraCharacter::OnRep_PlayerState()
@@ -62,6 +103,48 @@ void AAuraCharacter::OnRep_PlayerState()
 	//Init ablity actor info for the Client
 	InitAbilityActorInfo();
 }
+
+void AAuraCharacter::OnRep_Stunned()
+{
+	if(UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+		if (bIsStunned)
+		{
+			AuraASC->AddLooseGameplayTag(GameplayTags.Player_Block_InputPressed);
+			AuraASC->AddLooseGameplayTag(GameplayTags.Player_Block_InputReleased);
+			AuraASC->AddLooseGameplayTag(GameplayTags.Player_Block_InputHeld);
+			AuraASC->AddLooseGameplayTag(GameplayTags.Player_Block_CursorTrace);
+			StunDebuffComponent->Activate();
+		}
+		else
+		{
+			AuraASC->RemoveLooseGameplayTag(GameplayTags.Player_Block_InputPressed);
+			AuraASC->RemoveLooseGameplayTag(GameplayTags.Player_Block_InputReleased);
+			AuraASC->RemoveLooseGameplayTag(GameplayTags.Player_Block_InputHeld);
+			AuraASC->RemoveLooseGameplayTag(GameplayTags.Player_Block_CursorTrace);
+			StunDebuffComponent->Deactivate();
+		}
+	}
+}
+
+void AAuraCharacter::OnRep_Burned()
+{
+	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+		if (bIsBurned)
+		{
+			BurnDebuffComponent->Activate();
+		}
+		else
+		{
+			BurnDebuffComponent->Deactivate();
+		}
+	}
+}
+
+
 
 int32 AAuraCharacter::GetPlayerLevel_Implementation()
 {
@@ -170,6 +253,64 @@ int32 AAuraCharacter::GetAttributePoints_Implementation() const
 	return AuraPlayerState->GetAttributePoints();
 }
 
+void AAuraCharacter::ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial)
+{
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		AuraPlayerController->ShowMagicCircle(DecalMaterial);
+		AuraPlayerController->bShowMouseCursor = false;
+	}
+}
+
+void AAuraCharacter::HideMagicCircle_Implementation()
+{
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		AuraPlayerController->HideMagicCircle();
+		AuraPlayerController->bShowMouseCursor = true;
+	}
+}
+
+void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag)
+{
+	if(AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
+		if (!SaveData)
+		{
+			return;
+		}
+		SaveData->PlayerStartTag = CheckPointTag;
+		SaveData->bFirstTimeLoadIn = false;
+
+		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+		{
+			SaveData->PlayerLevel = AuraPlayerState->GetPlayerLevel();
+			SaveData->PlayerXP = AuraPlayerState->GetPlayerExp();
+			SaveData->AttributePoints = AuraPlayerState->GetAttributePoints();
+			SaveData->SpellPoints = AuraPlayerState->GetSpellPoints();
+		}
+		SaveData->Strength = UAuraAttributeSet::GetStrengthAttribute().GetNumericValue(GetAttributeSet());
+		SaveData->Intelligence = UAuraAttributeSet::GetIntelligenceAttribute().GetNumericValue(GetAttributeSet());
+		SaveData->Resilience = UAuraAttributeSet::GetResilienceAttribute().GetNumericValue(GetAttributeSet());
+		SaveData->Vigor = UAuraAttributeSet::GetVigorAttribute().GetNumericValue(GetAttributeSet());
+
+		
+		AuraGameMode->SaveInGameProgressData(SaveData);
+	}
+}
+
+
+void AAuraCharacter::OnPickUpItem(APickUpItem* ItemToPickUp)
+{
+	
+	if (!ItemToPickUp)
+	{
+		return;
+	}
+	ItemToPickUp->OnInteracted(this);
+
+}
 
 void AAuraCharacter::InitAbilityActorInfo()
 {
@@ -179,6 +320,17 @@ void AAuraCharacter::InitAbilityActorInfo()
 	Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
+	OnAscRegistered.Broadcast(AbilitySystemComponent);
+
+	AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(
+		this,
+		&ThisClass::StunTagChanged
+	);
+	AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Burn, EGameplayTagEventType::NewOrRemoved).AddUObject(
+		this,
+		&ThisClass::BurnTagChanged
+	);
+	
 
 	//在server上 是有所有AAuraCharacter的Controller的 在client上只有自己的 拿不到其他AAuraCharacter的Controller
 	//所以这里不做check判断 

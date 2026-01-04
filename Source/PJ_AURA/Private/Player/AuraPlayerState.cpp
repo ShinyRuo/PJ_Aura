@@ -4,6 +4,7 @@
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "Inventory/InventoryComponent.h"
 #include "Net/UnrealNetwork.h"
 
 AAuraPlayerState::AAuraPlayerState()
@@ -13,6 +14,9 @@ AAuraPlayerState::AAuraPlayerState()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
+
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("InventoryComponent");
+	InventoryComponent->SetIsReplicated(false);
 
 	NetUpdateFrequency = 100.f;
 }
@@ -37,17 +41,18 @@ UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
 void AAuraPlayerState::SetPlayerLevel(int32 inLevel)
 {
 	Level = inLevel;
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level,false);
 }
+
 
 void AAuraPlayerState::AddPlayerLevel(int32 inLevel)
 {
 	Level += inLevel;
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level, true);
 }
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)const
 {
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level,true); //todo rep如何知道是否触发升级特效
 }
 
 

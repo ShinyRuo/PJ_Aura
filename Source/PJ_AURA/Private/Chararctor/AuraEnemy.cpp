@@ -34,6 +34,8 @@ AAuraEnemy::AAuraEnemy()
 
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetRootComponent());
+
+	BaseWalkSpeed = 250.f;
 }
 
 void AAuraEnemy::PossessedBy(AController* NewController)
@@ -78,10 +80,10 @@ int32 AAuraEnemy::GetPlayerLevel_Implementation()
 	return Level;
 }
 
-void AAuraEnemy::Die()
+void AAuraEnemy::Die(const FVector& DeathImpulse)
 {
 	SetLifeSpan(LifeSpan);
-	Super::Die();
+	Super::Die(DeathImpulse);
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
 }
 
@@ -151,6 +153,15 @@ void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCou
 void AAuraEnemy::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	OnAscRegistered.Broadcast(AbilitySystemComponent);
+	AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(
+		this,
+		&ThisClass::StunTagChanged
+	);
+	AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Burn, EGameplayTagEventType::NewOrRemoved).AddUObject(
+		this,
+		&ThisClass::BurnTagChanged
+	);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 	if (HasAuthority())
 	{
@@ -162,4 +173,11 @@ void AAuraEnemy::InitializeDefaultAttributes() const
 {
 	// 默认Enemy不会动态升级
 	UAuraAbilitySystemLibrary::InitalizeDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
+}
+
+void AAuraEnemy::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	Super::StunTagChanged(CallbackTag, NewCount);
+	if (AuraAIController && AuraAIController->GetBlackboardComponent())
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Stunned"), bIsStunned);
 }

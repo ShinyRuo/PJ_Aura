@@ -231,6 +231,9 @@ private:
 	void ShowFloatingText(const FEffectProperties& Properties, float Damage,bool bBlockedHit=false, bool bCriticalHit = false)const;
 
 	void SendExpEvent(const FEffectProperties& Properties);
+	void HandleIncomingDamage(const FEffectProperties& Properties);
+	void HandleIncomingExp(const FEffectProperties& Properties);
+	void Debuff(const FEffectProperties& Properties);
 
 	bool ToppleHealth = false;
 	bool ToppleMana = false;

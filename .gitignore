@@ -19,3 +19,6 @@ Build
 README.MD
 UnLuaTestSuite
 README.MD
+*.T3D
+*.txt
+

@@ -1,0 +1,1388 @@
+[
+	{
+		"Name": "ShortSword",
+		"ID": "ShortSword",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortSword.T_ShortSword'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortSword_R.T_ShortSword_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_ShortSwordPickUpItem.BP_ShortSwordPickUpItem_C'"
+	},
+	{
+		"Name": "ShortSword_M",
+		"ID": "ShortSword_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortSword.T_ShortSword'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortSword_R.T_ShortSword_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_ShortSwordPickUpItem.BP_ShortSwordPickUpItem_C'"
+	},
+	{
+		"Name": "ShortSword_S",
+		"ID": "ShortSword_S",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortSword.T_ShortSword'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortSword_R.T_ShortSword_R'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_ShortSwordPickUpItem.BP_ShortSwordPickUpItem_C'"
+	},
+	{
+		"Name": "CelticShield",
+		"ID": "CelticShield",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_CelticShield.T_CelticShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_CelticShield_R.T_CelticShield_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_CelticShieldPickUpItem.BP_CelticShieldPickUpItem_C'"
+	},
+	{
+		"Name": "CelticShield_M",
+		"ID": "CelticShield_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_CelticShield.T_CelticShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_CelticShield_R.T_CelticShield_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_CelticShieldPickUpItem.BP_CelticShieldPickUpItem_C'"
+	},
+	{
+		"Name": "KiteShield",
+		"ID": "KiteShield",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_KiteShield.T_KiteShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_KiteShield_R.T_KiteShield_R'",
+		"maxStack": 1,
+		"price": 55,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_KiteShieldPickUpItem.BP_KiteShieldPickUpItem_C'"
+	},
+	{
+		"Name": "KiteShield_M",
+		"ID": "KiteShield_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_KiteShield.T_KiteShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_KiteShield_R.T_KiteShield_R'",
+		"maxStack": 1,
+		"price": 55,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_KiteShieldPickUpItem.BP_KiteShieldPickUpItem_C'"
+	},
+	{
+		"Name": "KiteShield_R",
+		"ID": "KiteShield_R",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_KiteShield.T_KiteShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_KiteShield_R.T_KiteShield_R'",
+		"maxStack": 1,
+		"price": 55,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_KiteShieldPickUpItem.BP_KiteShieldPickUpItem_C'"
+	},
+	{
+		"Name": "RoundShield",
+		"ID": "RoundShield",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RoundShield.T_RoundShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RoundShield_R.T_RoundShield_R'",
+		"maxStack": 1,
+		"price": 15,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RoundShieldPickUpItem.BP_RoundShieldPickUpItem_C'"
+	},
+	{
+		"Name": "RoundShield_M",
+		"ID": "RoundShield_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RoundShield.T_RoundShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RoundShield_R.T_RoundShield_R'",
+		"maxStack": 1,
+		"price": 15,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RoundShieldPickUpItem.BP_RoundShieldPickUpItem_C'"
+	},
+	{
+		"Name": "RoundShield_S",
+		"ID": "RoundShield_S",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RoundShield.T_RoundShield'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RoundShield_R.T_RoundShield_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RoundShieldPickUpItem.BP_RoundShieldPickUpItem_C'"
+	},
+	{
+		"Name": "WarAxe",
+		"ID": "WarAxe",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WarAxe.T_WarAxe'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WarAxe_R.T_WarAxe_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_WarAxePickUpItem.BP_WarAxePickUpItem_C'"
+	},
+	{
+		"Name": "WarAxe_M",
+		"ID": "WarAxe_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WarAxe.T_WarAxe'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WarAxe_R.T_WarAxe_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_WarAxePickUpItem.BP_WarAxePickUpItem_C'"
+	},
+	{
+		"Name": "WarAxe_E",
+		"ID": "WarAxe_E",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WarAxe.T_WarAxe'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WarAxe_R.T_WarAxe_R'",
+		"maxStack": 1,
+		"price": 75,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_WarAxePickUpItem.BP_WarAxePickUpItem_C'"
+	},
+	{
+		"Name": "GreatAxe",
+		"ID": "GreatAxe",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 4
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GreatAxe.T_GreatAxe'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GreatAxe_R.T_GreatAxe_R'",
+		"maxStack": 1,
+		"price": 75,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GreatAxePickUpItem.BP_GreatAxePickUpItem_C'"
+	},
+	{
+		"Name": "GreatAxe_M",
+		"ID": "GreatAxe_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 4
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GreatAxe.T_GreatAxe'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GreatAxe_R.T_GreatAxe_R'",
+		"maxStack": 1,
+		"price": 75,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GreatAxePickUpItem.BP_GreatAxePickUpItem_C'"
+	},
+	{
+		"Name": "GreatAxe_L",
+		"ID": "GreatAxe_L",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 4
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GreatAxe.T_GreatAxe'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GreatAxe_R.T_GreatAxe_R'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GreatAxePickUpItem.BP_GreatAxePickUpItem_C'"
+	},
+	{
+		"Name": "Spear",
+		"ID": "Spear",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 4
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Spear.T_Spear'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Spear_R.T_Spear_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_SpearPickUpItem.BP_SpearPickUpItem_C'"
+	},
+	{
+		"Name": "Staff",
+		"ID": "Staff",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Staff.T_Staff'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Staff_R.T_Staff_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_StaffPickUpItem.BP_StaffPickUpItem_C'"
+	},
+	{
+		"Name": "Staff_M",
+		"ID": "Staff_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Staff.T_Staff'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Staff_R.T_Staff_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_StaffPickUpItem.BP_StaffPickUpItem_C'"
+	},
+	{
+		"Name": "LongBow",
+		"ID": "LongBow",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 4
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LongBow.T_LongBow'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LongBow_R.T_LongBow_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_LongBowPickUpItem.BP_LongBowPickUpItem_C'"
+	},
+	{
+		"Name": "ShortBow",
+		"ID": "ShortBow",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortBow.T_ShortBow'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ShortBow_R.T_ShortBow_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_ShortBowPickUpItem.BP_ShortBowPickUpItem_C'"
+	},
+	{
+		"Name": "LongBow_M",
+		"ID": "LongBow_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 4
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LongBow.T_LongBow'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LongBow_R.T_LongBow_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_LongBowPickUpItem.BP_LongBowPickUpItem_C'"
+	},
+	{
+		"Name": "ThrowingAxe",
+		"ID": "ThrowingAxe",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ThrowingAxe.T_ThrowingAxe'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ThrowingAxe_R.T_ThrowingAxe_R'",
+		"maxStack": 10,
+		"price": 15,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_ThrowingAxePickUpItem.BP_ThrowingAxePickUpItem_C'"
+	},
+	{
+		"Name": "Ruby",
+		"ID": "Ruby",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"6E5B7C644766A7BCB0A3D8AF9C5DA856\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemRuby.T_GemRuby'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemRuby.T_GemRuby'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemRubyPickUpItem.BP_GemRubyPickUpItem_C'"
+	},
+	{
+		"Name": "Emerald",
+		"ID": "Emerald",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"3EF3051A4775288AFF8D3C8DB0A4FB73\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemEmerald.T_GemEmerald'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemEmerald.T_GemEmerald'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemEmeraldPickUpItem.BP_GemEmeraldPickUpItem_C'"
+	},
+	{
+		"Name": "Sapphire",
+		"ID": "Sapphire",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"F5A61CC248489EA95247B68E21FE05E0\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemSapphire.T_GemSapphire'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemSapphire.T_GemSapphire'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemSapphirePickUpItem.BP_GemSapphirePickUpItem_C'"
+	},
+	{
+		"Name": "Topaz",
+		"ID": "Topaz",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"2535C83444E97607925B26887E1ED6BF\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemTopaz.T_GemTopaz'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemTopaz.T_GemTopaz'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemTopazPickUpItem.BP_GemTopazPickUpItem_C'"
+	},
+	{
+		"Name": "Amethyst",
+		"ID": "Amethyst",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"5FAEF2B74E4EDA22ECAF869FC67D5600\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemAmethyst.T_GemAmethyst'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_GemAmethyst.T_GemAmethyst'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemAmethystPickUpItem.BP_GemAmethystPickUpItem_C'"
+	},
+	{
+		"Name": "RunePho",
+		"ID": "RunePho",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"0ACA86474CA6FEFAF1F679A16D222FF8\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RunePho.T_RunePho'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RunePho.T_RunePho'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RunePickUpItem.BP_RunePickUpItem_C'"
+	},
+	{
+		"Name": "RuneEn",
+		"ID": "RuneEn",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"559259DD4E38FDDBF7E62F85979067F6\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RuneEn.T_RuneEn'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RuneEn.T_RuneEn'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RunePickUpItem.BP_RunePickUpItem_C'"
+	},
+	{
+		"Name": "RuneIx",
+		"ID": "RuneIx",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"EF6CB25846AD5498DC671BB80EBB9FFC\", \"Can be inserted into socketed equipment\")",
+		"itemType": "Socketable",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RuneIx.T_RuneIx'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RuneIx.T_RuneIx'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RunePickUpItem.BP_RunePickUpItem_C'"
+	},
+	{
+		"Name": "VikingHelm",
+		"ID": "VikingHelm",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_VikingHelmet.T_VikingHelmet'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_VikingHelmet_R.T_VikingHelmet_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_VikingHelmPickUpItem.BP_VikingHelmPickUpItem_C'"
+	},
+	{
+		"Name": "VikingHelm_M",
+		"ID": "VikingHelm_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_VikingHelmet.T_VikingHelmet'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_VikingHelmet_R.T_VikingHelmet_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_VikingHelmPickUpItem.BP_VikingHelmPickUpItem_C'"
+	},
+	{
+		"Name": "LeatherArmor",
+		"ID": "LeatherArmor",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherArmor.T_LeatherArmor'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherArmor.T_LeatherArmor'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "LeatherArmor_M",
+		"ID": "LeatherArmor_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherArmor.T_LeatherArmor'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherArmor_R.T_LeatherArmor_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "LeatherArmor_S",
+		"ID": "LeatherArmor_S",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_FireArmor.T_FireArmor'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_FireArmor_R.T_FireArmor_R'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "LeatherGloves",
+		"ID": "LeatherGloves",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherGloves.T_LeatherGloves'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherGloves_R.T_LeatherGloves_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "LeatherGloves_M",
+		"ID": "LeatherGloves_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherGloves.T_LeatherGloves'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherGloves_R.T_LeatherGloves_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "LeatherBoots",
+		"ID": "LeatherBoots",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherBoots.T_LeatherBoots'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherBoots_R.T_LeatherBoots_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "LeatherBoots_M",
+		"ID": "LeatherBoots_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherBoots.T_LeatherBoots'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LeatherBoots_R.T_LeatherBoots_R'",
+		"maxStack": 1,
+		"price": 25,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "ChainMail",
+		"ID": "ChainMail",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ChainMail.T_ChainMail'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ChainMail_R.T_ChainMail_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "ChainMail_M",
+		"ID": "ChainMail_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ChainMail.T_ChainMail'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ChainMail_R.T_ChainMail_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "IronGloves",
+		"ID": "IronGloves",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronGloves.T_IronGloves'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronGloves_R.T_IronGloves_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "IronGloves_M",
+		"ID": "IronGloves_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronGloves.T_IronGloves'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronGloves_R.T_IronGloves_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "IronBoots",
+		"ID": "IronBoots",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronBoots.T_IronBoots'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronBoots_R.T_IronBoots_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "IronBoots_M",
+		"ID": "IronBoots_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronBoots.T_IronBoots'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_IronBoots_R.T_IronBoots_R'",
+		"maxStack": 1,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "FireRing_M",
+		"ID": "FireRing_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_FireRing.T_FireRing'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_FireRing.T_FireRing'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemRubyPickUpItem.BP_GemRubyPickUpItem_C'"
+	},
+	{
+		"Name": "WaterRing_M",
+		"ID": "WaterRing_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WaterRing.T_WaterRing'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_WaterRing.T_WaterRing'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemSapphirePickUpItem.BP_GemSapphirePickUpItem_C'"
+	},
+	{
+		"Name": "TheOneRing_M",
+		"ID": "TheOneRing_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_TheOneRing.T_TheOneRing'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_TheOneRing.T_TheOneRing'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemTopazPickUpItem.BP_GemTopazPickUpItem_C'"
+	},
+	{
+		"Name": "TheOneRing_L",
+		"ID": "TheOneRing_L",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_TheOneRing.T_TheOneRing'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_TheOneRing.T_TheOneRing'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemTopazPickUpItem.BP_GemTopazPickUpItem_C'"
+	},
+	{
+		"Name": "FireAmulet_M",
+		"ID": "FireAmulet_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_FireAmulet.T_FireAmulet'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_FireAmulet.T_FireAmulet'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemRubyPickUpItem.BP_GemRubyPickUpItem_C'"
+	},
+	{
+		"Name": "HolyAmulet_M",
+		"ID": "HolyAmulet_M",
+		"subTitle": "",
+		"description": "",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_HolyAmulet.T_HolyAmulet'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_HolyAmulet.T_HolyAmulet'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemTopazPickUpItem.BP_GemTopazPickUpItem_C'"
+	},
+	{
+		"Name": "LifePotion",
+		"ID": "LifePotion",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"277F8E3D410728B43187D3931B533720\", \"Restores life over time\")",
+		"itemType": "UsableItem",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LifePotion.T_LifePotion'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_LifePotion.T_LifePotion'",
+		"maxStack": 20,
+		"price": 10,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_LifePotionPickUpItem.BP_LifePotionPickUpItem_C'"
+	},
+	{
+		"Name": "ManaPotion",
+		"ID": "ManaPotion",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"85395AA14B2689FD2CDBD2B9951F4783\", \"Restores mana over time\")",
+		"itemType": "UsableItem",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ManaPotion.T_ManaPotion'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_ManaPotion.T_ManaPotion'",
+		"maxStack": 20,
+		"price": 20,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_ManaPotionPickUpItem.BP_ManaPotionPickUpItem_C'"
+	},
+	{
+		"Name": "RejuvenationPotion",
+		"ID": "RejuvenationPotion",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"BA690D644D3EA34DCA409392572982AA\", \"Restores 33% of life and mana\")",
+		"itemType": "UsableItem",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RejuvenationPotion.T_RejuvenationPotion'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_RejuvenationPotion.T_RejuvenationPotion'",
+		"maxStack": 3,
+		"price": 50,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RejuvenationPotionPickUpItem.BP_RejuvenationPotionPickUpItem_C'"
+	},
+	{
+		"Name": "PortalScroll",
+		"ID": "PortalScroll",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"F7292D9E470446500EA4E8A4EF710C19\", \"Creates a portal to the base\")",
+		"itemType": "UsableItem",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_PortalScroll.T_PortalScroll'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_PortalScroll.T_PortalScroll'",
+		"maxStack": 20,
+		"price": 10,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_PortalScrollPickUpItem.BP_PortalScrollPickUpItem_C'"
+	},
+	{
+		"Name": "MagicBag",
+		"ID": "MagicBag",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"406A30BF419EDB985FA7FC8E4D64586D\", \"Allows certain items to be transmuted into other items\")",
+		"itemType": "Container",
+		"dimensions":
+		{
+			"X": 2,
+			"Y": 2
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_MagicBag.T_MagicBag'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_MagicBag_R.T_MagicBag_R'",
+		"maxStack": 1,
+		"price": 100,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_MagicBagPickUpItem.BP_MagicBagPickUpItem_C'"
+	},
+	{
+		"Name": "Crystal",
+		"ID": "Crystal",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"083BE0C44394368DF2934881C30C0A44\", \"Adds a socket to the equipment\")",
+		"itemType": "Misc",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Crystal.T_Crystal'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Crystal.T_Crystal'",
+		"maxStack": 1,
+		"price": 200,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemSapphirePickUpItem.BP_GemSapphirePickUpItem_C'"
+	},
+	{
+		"Name": "Skull",
+		"ID": "Skull",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"7BE545304FB96429A5E112A9A98E3035\", \"Removes socketables from the equipment\")",
+		"itemType": "Misc",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Skull.T_Skull'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Skull.T_Skull'",
+		"maxStack": 1,
+		"price": 200,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_RunePickUpItem.BP_RunePickUpItem_C'"
+	},
+	{
+		"Name": "Arrow",
+		"ID": "Arrow",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"1CD3759845F7AFB97474C0BD7E148CAB\", \"Ammo for bow class weapons\")",
+		"itemType": "Equipment",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 3
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Arrow.T_Arrow'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Arrow_R.T_Arrow_R'",
+		"maxStack": 500,
+		"price": 1,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GenericPickUpItem.BP_GenericPickUpItem_C'"
+	},
+	{
+		"Name": "Key",
+		"ID": "Key",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"815CB5924C8B0B9A45859AA0AEA380F7\", \"Opens locked chests.\")",
+		"itemType": "Misc",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Key.T_Key'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_Key.T_Key'",
+		"maxStack": 20,
+		"price": 5,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemTopazPickUpItem.BP_GemTopazPickUpItem_C'"
+	},
+	{
+		"Name": "MagicStone",
+		"ID": "MagicStone",
+		"subTitle": "",
+		"description": "NSLOCTEXT(\"[97A3D09D41121741ED1DE88D74FD9F86]\", \"BC06A9C04A75643C084178B3952318FB\", \"Believed to have magical powers.\")",
+		"itemType": "QuestItem",
+		"dimensions":
+		{
+			"X": 1,
+			"Y": 1
+		},
+		"image": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_MagicStone.T_MagicStone'",
+		"rotatedImage": "/Script/Engine.Texture2D'/Game/TopDownRPGTemplate/Textures/Items/Icons/T_MagicStone.T_MagicStone'",
+		"maxStack": 1,
+		"price": 1,
+		"lifeTimeOnGround": 60,
+		"pickUpSound": "None",
+		"dropSound": "None",
+		"pickUpStaticMesh": "None",
+		"pickUpSkeletalMesh": "None",
+		"customPickUpBP": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/PickUpItems/BP_GemTopazPickUpItem.BP_GemTopazPickUpItem_C'"
+	}
+]

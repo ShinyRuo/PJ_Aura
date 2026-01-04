@@ -19,9 +19,12 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UObject> WidgetController;
+
+	UPROPERTY(BlueprintReadOnly)
+	FName WidgetName;
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
-
 	void WidgetControllerSet();
 	UFUNCTION(BlueprintPure)
 	TArray<UAuraUserWidget*> GetAllChildAuraWidget();

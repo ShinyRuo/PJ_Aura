@@ -7,12 +7,15 @@
 #include "AbilitySystemInterface.h"
 #include "AuraPlayerState.generated.h"
 
+class UInventoryComponent;
 class ULevelUpInfo;
 class UAbilitySystemComponent;
 class UAttributeSet;
 
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStateChanged, int32 /*StateValue*/);
+
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnLevelChanged, int32 /*StateValue*/,bool /*bLevelUp*/);
 
 /**
  * 
@@ -26,12 +29,13 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const{ return AttributeSet; }
+	UInventoryComponent* GetInventoryComponent() const{return InventoryComponent;}
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<ULevelUpInfo> LevelUpInfo;
 
 	FOnPlayerStateChanged OnExpChangedDelegate;
-	FOnPlayerStateChanged OnLevelChangedDelegate;
+	FOnLevelChanged OnLevelChangedDelegate;
 	FOnPlayerStateChanged OnAttributePointsChangedDelegate;
 	FOnPlayerStateChanged OnSpellPointsChangedDelegate;
 
@@ -57,6 +61,9 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UInventoryComponent> InventoryComponent;
 
 private:
 	UPROPERTY(VisibleAnywhere,ReplicatedUsing= OnRep_Level)

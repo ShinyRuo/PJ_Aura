@@ -13,6 +13,7 @@
 #include "NiagaraComponent.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Components/AudioComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "PJ_AURA/PJ_AURA.h"
 
 AAuraProjectile::AAuraProjectile()
@@ -37,6 +38,8 @@ AAuraProjectile::AAuraProjectile()
 
 }
 
+
+
 void AAuraProjectile::BeginPlay()
 {
  	Super::BeginPlay();
@@ -45,52 +48,70 @@ void AAuraProjectile::BeginPlay()
 	LoopingSoundComponent = UGameplayStatics::SpawnSoundAttached(LoopingSound, GetRootComponent());
 }
 
+void AAuraProjectile::OnHit()
+{
+	//在炮弹销毁时又4个情境
+	//1 server上炮弹自然消亡 即没达到人
+	//2 client上炮弹自然消亡
+	//3 server上炮弹打到人了 通过OnSphereOverlap 调用Destroy
+	//4 client上炮弹打到人了 由server rep的Destroy
+	//那么情况 1和2 时需要播放声音的 但是 1是在server 不需要这个声音 除非声音有什么effect？
+	//所以 只有2 需要在这个时候播放声音
+	UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
+	if(LoopingSoundComponent)
+	{
+		LoopingSoundComponent->Stop();
+		LoopingSoundComponent->DestroyComponent();
+	}
+	bHit = true;
+}
+
 void AAuraProjectile::Destroyed()
 {
-	if (!bHit && !HasAuthority())
+	if (LoopingSoundComponent)
 	{
-		//在炮弹销毁时又4个情境
-		//1 server上炮弹自然消亡 即没达到人
-		//2 client上炮弹自然消亡
-		//3 server上炮弹打到人了 通过OnSphereOverlap 调用Destroy
-		//4 client上炮弹打到人了 由server rep的Destroy
-		//那么情况 1和2 时需要播放声音的 但是 1是在server 不需要这个声音 除非声音有什么effect？
-		//所以 只有2 需要在这个时候播放声音
-		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
-		if(LoopingSoundComponent)LoopingSoundComponent->Stop();
-		bHit = true;
+		LoopingSoundComponent->Stop();
+		LoopingSoundComponent->DestroyComponent();
 	}
+	if (!bHit && !HasAuthority()) OnHit();//client上 没有打到人 自然消亡
 	Super::Destroyed();
 }
 
 void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(DamageEffectSpecHandle.Data.IsValid() &&
-		(
-			DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor
-			||
-			UAuraAbilitySystemLibrary::IsFriend(DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser(), OtherActor)
-			)
-		)
-	{
-		//和自己重叠了todo 碰撞
-		return;
-	}
+	if (!IsValidOverlap(OtherActor)) return;
 
-	UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
-	if (!bHit)
-	{
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
-		if (LoopingSoundComponent)LoopingSoundComponent->Stop();
-		bHit = true;
-	}
+	if (!bHit) OnHit();
+
 	if (HasAuthority())
 	{
+
 		if (UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
-			TargetASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
+			const FVector DeathImpulse = GetActorForwardVector() * DamageEffectParams.DeathImpulseMagnitude;
+			DamageEffectParams.DeathImpulse = DeathImpulse;
+
+			const bool bKnockback = FMath::RandRange(1, 100) < DamageEffectParams.KnockbackChance;
+			if (bKnockback)
+			{
+				/*FVector GoingVec = ProjectileMovement->Velocity.GetSafeNormal();
+				FRotator Rotation = GoingVec.Rotation();*/
+				FRotator Rotation = GetActorRotation();
+				Rotation.Pitch = 45.f;
+				const FVector KnockbackDirection = Rotation.Vector();
+				const FVector KnockbackForce = KnockbackDirection * DamageEffectParams.KnockbackForceMagnitude;
+				DamageEffectParams.KnockbackForce = KnockbackForce;
+			}
+			else
+			{
+				DamageEffectParams.KnockbackForce = FVector::ZeroVector;
+			}
+			
+
+			DamageEffectParams.TargetAbilitySystemComponent = TargetASC;
+			UAuraAbilitySystemLibrary::ApplyDamageEffect(DamageEffectParams);
 		}
 		//打到人了 炮弹需要销毁
 		//只由服务器来销毁
@@ -98,10 +119,20 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		//不由客户端来销毁的原因我认为是 预测了之后不好callback 这里不能预测？
 		Destroy();
 	}
-	else
-	{
-		bHit = true;
-	}
 }
+
+bool AAuraProjectile::IsValidOverlap(AActor* OtherActor) const
+{
+	if (!DamageEffectParams.SourceAbilitySystemComponent) 
+		return false;
+	const AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+	if (SourceAvatarActor == OtherActor) 
+		return false;
+	if (UAuraAbilitySystemLibrary::IsFriend(SourceAvatarActor, OtherActor)) 
+		return false;
+	return true;
+}
+
+
 
 

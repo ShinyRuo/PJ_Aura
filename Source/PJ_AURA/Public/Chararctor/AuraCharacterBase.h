@@ -9,6 +9,9 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
+
+class UPassiveNiagaraComponent;
+class UDebuffNiagaraComponent;
 class UNiagaraSystem;
 class UGameplayAbility;
 class UGameplayEffect;
@@ -22,14 +25,18 @@ class PJ_AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemI
 
 public:
 	AAuraCharacterBase();
+	virtual  void Tick(float DeltaSeconds) override;
+	virtual  void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+	FOnDamageSignature OnDamageDelegate;
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-	virtual void Die() override;
+	virtual void Die(const FVector& DeathImpulse) override;
 
 	UFUNCTION(NetMulticast,Reliable)
-	virtual void MulticastHandleDeath();
+	virtual void MulticastHandleDeath(const FVector& DeathImpulse);
 
 	/** Combat Interface*/
 	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
@@ -42,12 +49,34 @@ public:
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual  void IncrementMinionCount_Implementation(int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
+
+	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
+	virtual FOnDeath& GetOnDeathDelegate() override;
+	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
+	virtual void SetBeingShocked_Implementation(bool InShocked) override;
+	virtual bool IsBeingShocked_Implementation() const override;
+	virtual FOnDamageSignature& GetOnDamageSignature() override;
 	/** end Combat Interface*/
+
+	FOnASCRegistered OnAscRegistered;
+	FOnDeath	OnDeath;
 
 	UPROPERTY(EditAnywhere,Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
 
+	UPROPERTY(ReplicatedUsing=OnRep_Stunned,BlueprintReadOnly)
+	bool bIsStunned = false;
 
+	UPROPERTY(ReplicatedUsing = OnRep_Burned, BlueprintReadOnly)
+	bool bIsBurned = false;
+
+	UFUNCTION()
+	virtual void OnRep_Stunned();
+	UFUNCTION()
+	virtual void OnRep_Burned();
+
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	bool bIsInShocked = false;
 
 protected:
 	virtual void BeginPlay() override;
@@ -67,6 +96,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "combat")
 	FName HitSocketName;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float BaseWalkSpeed = 600.f;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
@@ -89,6 +121,9 @@ protected:
 	virtual void InitializeDefaultAttributes() const;
 
 	void AddCharacterAbilities();
+
+	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+	virtual void BurnTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
 	/*
 	 * Dissolve Effects
@@ -122,6 +157,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Charater Class Defaults")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
+
+
+
 private:
 	UPROPERTY(EditAnywhere,Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
@@ -131,4 +174,17 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
+
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> HaloOfProtectionNiagaraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> LifeSiphonNiagaraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> ManaSiphonNiagaraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent> EffectAttachComponent;
 };

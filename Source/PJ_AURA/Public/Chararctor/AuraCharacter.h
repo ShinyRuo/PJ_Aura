@@ -9,7 +9,7 @@
 
 class UCameraComponent;
 class UNiagaraComponent;
-
+class UInventoryComponent;
 /**
  * 
  */
@@ -22,6 +22,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
+	virtual void OnRep_Stunned() override;
+	virtual void OnRep_Burned() override;
+	void LoadProgress();
 	/** Combat Interface*/
 	virtual int32 GetPlayerLevel_Implementation() override;
 	/** end Combat Interface*/
@@ -38,6 +41,9 @@ public:
 	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) override;
 	virtual int32 GetSpellPoints_Implementation() const override;
 	virtual int32 GetAttributePoints_Implementation() const override;
+	virtual void ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial) override;
+	virtual void HideMagicCircle_Implementation() override;
+	virtual void SaveProgress_Implementation(const FName& CheckPointTag) override;
 	/** end Player Interface*/
 
 	UFUNCTION(BlueprintImplementableEvent)
@@ -47,12 +53,19 @@ public:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent> NiagaraPlayComponent;
+
+	UFUNCTION(BlueprintCallable)
+	void OnPickUpItem(APickUpItem* ItemToPickUp);
+
+
 protected:
 	virtual void InitAbilityActorInfo() override;
 
 	UFUNCTION(NetMulticast,Reliable)
 	void MulticastLevelUpParticles() const;
+
 private:
 	TObjectPtr<UCameraComponent> TopDownCameraComponent;
-	
+
+
 };

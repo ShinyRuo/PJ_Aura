@@ -111,7 +111,7 @@ function M:EquipOne(index)
     end
 
     local IndexEquipGlobe = self.Equip_GlobeBtns[index]
-    if IndexEquipGlobe and self.WidgetController then
+    if IndexEquipGlobe and self.SpellWidgetController then
         local TargetSlotTagName = UE.UBlueprintGameplayTagLibrary.GetTagName(IndexEquipGlobe.widget.InputTag)
         local TargetIsPassiveGlobe = string.find(TargetSlotTagName, "InputTag.Passive")
         if
@@ -119,7 +119,7 @@ function M:EquipOne(index)
                 (self.WaitEquip == "Offensive" and not TargetIsPassiveGlobe)
          then
             -- clicked offensive and wait passive will be ignored
-            self.WidgetController:SpellRowGlobePressed(
+            self.SpellWidgetController:SpellRowGlobePressed(
                 curSelectTreeGlobe.widget.AbilityTag,
                 IndexEquipGlobe.widget.InputTag
             )
@@ -178,35 +178,35 @@ function M:InitializeParams()
     self.curSelectIsPassive = false
     self.Tree_GlobeBtns = {}
     self.Equip_GlobeBtns = {}
-    self.WidgetController = nil
+    self.SpellWidgetController = nil
     self.WaitEquip = nil
 end
 
 function M:Construct()
     self:InitializeParams()
 
-    self.WidgetController = UE.UAuraAbilitySystemLibrary.GetSpellMenuWidgetController(self)
-    self:SetWidgetController(self.WidgetController)
+    self.SpellWidgetController = UE.UAuraAbilitySystemLibrary.GetSpellMenuWidgetController(self)
+    self:SetWidgetController(self.SpellWidgetController)
     local ArrChildAuraWidgets = self:GetAllChildAuraWidget()
     -- local widget_class = UE.UClass.Load("/Game/Blueprints/UI/SpellGlobes/WBP_SpellGlobe_Button.WBP_SpellGlobe_Button_C")
     for i = 1, ArrChildAuraWidgets:Length() do
         local child = ArrChildAuraWidgets:Get(i)
-        child:SetWidgetController(self.WidgetController)
+        child:SetWidgetController(self.SpellWidgetController)
     end
 
     self:SetUpTreeGlobes()
     self:SetUpEquipGlobes()
 
-    self.WidgetController.SpellPointsChangedDelegate:Add(self, M.OnSpellPointsChanged)
-    self.WidgetController.AbilityInfoDelegate:Add(self, M.OnAbilityInfoChanged)
-    self.WidgetController.UIAbilityEquipped:Bind(self, M.OnUIAbilityEquipped)
+    self.SpellWidgetController.SpellPointsChangedDelegate:Add(self, M.OnSpellPointsChanged)
+    self.SpellWidgetController.AbilityInfoDelegate:Add(self, M.OnAbilityInfoChanged)
+    self.SpellWidgetController.UIAbilityEquipped:Bind(self, M.OnUIAbilityEquipped)
 
     --Screen.Print( "UI bind2")
 
     self.SpellButton.Button.OnClicked:Add(self, M.OnSpellButtonClicked)
     self.EquipButton.Button.OnClicked:Add(self, M.OnEquipButtonClicked)
 
-    self.WidgetController:BroadcastInitalValue()
+    self.SpellWidgetController:BroadcastInitalValue()
 
     self.CloseButton.Button.OnClicked:Add(self, M.OnCloseBtnClicked)
 end
@@ -294,7 +294,7 @@ end
 function M:OnSpellButtonClicked()
     local curSelect = self.curSelectTreeGlobe
     if curSelect and curSelect > 0 and self.Tree_GlobeBtns[curSelect] then
-        self.WidgetController:SpendSpellPointPressed(self.Tree_GlobeBtns[curSelect].widget.AbilityTag)
+        self.SpellWidgetController:SpendSpellPointPressed(self.Tree_GlobeBtns[curSelect].widget.AbilityTag)
     end
 end
 
@@ -323,7 +323,7 @@ function M:FillAbilityDesc()
     local curSelect = self.curSelectTreeGlobe
     if curSelect and curSelect > 0 and self.Tree_GlobeBtns[curSelect] then
         local bSucc, strCurLevelDesc, strNextLevelDesc =
-            self.WidgetController:GetAbilityDesc(self.Tree_GlobeBtns[curSelect].widget.AbilityTag)
+            self.SpellWidgetController:GetAbilityDesc(self.Tree_GlobeBtns[curSelect].widget.AbilityTag)
         self.Description_CurLevel:SetText(strCurLevelDesc)
         self.Description_NextLevel:SetText(strNextLevelDesc)
     end
@@ -334,8 +334,8 @@ end
 
 function M:Destruct()
     --WidgetController的delegate是必须清除的 因为 WidgetController是一直存在的
-    self.WidgetController.SpellPointsChangedDelegate:Clear()
-    self.WidgetController.AbilityInfoDelegate:Clear()
+    self.SpellWidgetController.SpellPointsChangedDelegate:Clear()
+    self.SpellWidgetController.AbilityInfoDelegate:Clear()
 
     --下面这些可以不clear 因为每次都重建
     self.SpellMenuClosed:Broadcast()

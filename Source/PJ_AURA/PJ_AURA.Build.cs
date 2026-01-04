@@ -8,9 +8,9 @@ public class PJ_AURA : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "GameplayAbilities" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "GameplayAbilities", "UMG", "UnLua" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayTags","GameplayTasks","NavigationSystem" ,"Niagara","AIModule","Lua","UnLua"});//只在cpp里用的模块
+		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayTags","GameplayTasks","NavigationSystem" ,"Niagara","AIModule","Lua", "Slate" , "SlateCore" });//只在cpp里用的模块
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

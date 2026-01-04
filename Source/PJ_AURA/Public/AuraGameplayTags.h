@@ -57,7 +57,19 @@ public:
 	FGameplayTag Damage_Arcane;//°ÂÊõ
 	FGameplayTag Damage_Physical;
 
-	TMap<FGameplayTag,FGameplayTag> DamageTypesToResistance;
+	FGameplayTag Debuff;
+	FGameplayTag Debuff_Burn;
+	FGameplayTag Debuff_Stun;
+	FGameplayTag Debuff_Arcane;
+	FGameplayTag Debuff_Physical;
+
+	FGameplayTag Debuff_Chance;
+	FGameplayTag Debuff_Damage;
+	FGameplayTag Debuff_Duration;
+	FGameplayTag Debuff_Frequency;
+
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistance;
+	TMap<FGameplayTag,FGameplayTag> DamageTypesToDebuffs;
 
 	FGameplayTag Effect_HitReact;
 	FGameplayTag Abilities_HitReact;
@@ -65,7 +77,10 @@ public:
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
 	FGameplayTag Abilities_Fire_FireBolt;
+	FGameplayTag Abilities_Fire_FireBlast;
 	FGameplayTag Abilities_Lighting_Electrocute;
+	FGameplayTag Abilities_Arcane_ArcaneShards;
+
 
 	FGameplayTag Abilities_Status_Locked;
 	FGameplayTag Abilities_Status_Eligible;
@@ -75,6 +90,11 @@ public:
 	FGameplayTag Abilities_Type_Passive;
 	FGameplayTag Abilities_Type_Offensive;
 	FGameplayTag Abilities_Type_None;
+
+	FGameplayTag Abilities_Passive_HaloOfProtection;
+	FGameplayTag Abilities_Passive_LifeSiphon;
+	FGameplayTag Abilities_Passive_ManaSiphon;
+
 
 
 	FGameplayTag Cooldown_Fire_FireBolt;
@@ -89,6 +109,13 @@ public:
 	FGameplayTag Montage_Attack_2;
 	FGameplayTag Montage_Attack_3;
 	FGameplayTag Montage_Attack_4;
+
+	FGameplayTag Player_Block_InputPressed;
+	FGameplayTag Player_Block_InputHeld;
+	FGameplayTag Player_Block_InputReleased;
+	FGameplayTag Player_Block_CursorTrace;
+
+	FGameplayTag GameplayCue_FireBlast;
 
 private:
 	static FAuraGameplayTags GameplayTags;

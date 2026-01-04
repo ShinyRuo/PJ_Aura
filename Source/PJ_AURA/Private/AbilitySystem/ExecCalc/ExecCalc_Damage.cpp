@@ -10,6 +10,7 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 
 struct AuraDamageStatics
 {
@@ -83,6 +84,39 @@ UExecCalc_Damage::UExecCalc_Damage()
 	RelevantAttributesToCapture.Add(DamageStatics().Resistance_PhysicalDef);
 }
 
+void UExecCalc_Damage::DetermineDebuff(const FGameplayEffectCustomExecutionParameters& ExecutionParams, const FGameplayEffectSpec& Spec, const FAggregatorEvaluateParameters& EvaluateParameters) const
+{
+	const FAuraGameplayTags Tags = FAuraGameplayTags::Get();
+	for (const auto& [DamageTypeTag, DebuffTag] : Tags.DamageTypesToDebuffs)
+	{
+		const float TypeDamage = Spec.GetSetByCallerMagnitude(DamageTypeTag, false,-1.f);
+		if (TypeDamage > -1.f) // 代表 有 这个 type的伤害 可能会造成debuff
+		{
+			float SourceDebuffChance = Spec.GetSetByCallerMagnitude(Tags.Debuff_Chance, false, -1.f);
+			float TargetDebuffResistance = 0.f;
+			const FGameplayTag& ResistanceTag = Tags.DamageTypesToResistance[DamageTypeTag];
+			ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().TagsToCaptureDefs[ResistanceTag], EvaluateParameters, TargetDebuffResistance);
+			TargetDebuffResistance = FMath::Clamp(TargetDebuffResistance, 0.f, 100.f);
+			float EffectiveDebuffChance = SourceDebuffChance * (100 - TargetDebuffResistance) / 100.f;
+			const bool bDebuff = FMath::RandRange(1, 100) < EffectiveDebuffChance;//这里肯定是只在server执行的
+			if (bDebuff)
+			{
+				FGameplayEffectContextHandle ContextHandle = Spec.GetContext();
+				UAuraAbilitySystemLibrary::SetSuccessfulDebuff(ContextHandle, bDebuff);
+				float DebuffDamage = Spec.GetSetByCallerMagnitude(Tags.Debuff_Damage, false, -1.f);
+				UAuraAbilitySystemLibrary::SetDebuffDamage(ContextHandle, DebuffDamage);
+				float DebuffDuration = Spec.GetSetByCallerMagnitude(Tags.Debuff_Duration, false, -1.f);
+				UAuraAbilitySystemLibrary::SetDebuffDuration(ContextHandle, DebuffDuration);
+				float DebuffFrequency = Spec.GetSetByCallerMagnitude(Tags.Debuff_Frequency, false, -1.f);
+				UAuraAbilitySystemLibrary::SetDebuffFrequency(ContextHandle, DebuffFrequency);
+
+				UAuraAbilitySystemLibrary::SetDamageTypeByValue(ContextHandle, DamageTypeTag);
+
+			}
+		}
+	}
+}
+
 void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
                                               FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
@@ -103,6 +137,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		TargetLevel = ICombatInterface::Execute_GetPlayerLevel(TargetAvatar);
 	}
 	const FGameplayEffectSpec Spec = ExecutionParams.GetOwningSpec();
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 
 	const FGameplayTagContainer* sourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* targetTags = Spec.CapturedTargetTags.GetAggregatedTags();
@@ -114,7 +149,9 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		作用：分别指向 “效果施加者” 和 “效果接收者” 的标签容器。
 		用途：在评估时，可用于校验修饰符是否与源 / 目标的标签匹配（例如，只对带有 “Fire” 标签的目标应用火焰伤害加成）。*/
 
-	float  Armor = 0.f;
+	//Debuff
+	DetermineDebuff(ExecutionParams, Spec, EvaluateParameters);
+
 	//Get Damage Set by Caller Magnitude
 	float Damage = 0;
 	for (const auto& Pair : FAuraGameplayTags::Get().DamageTypesToResistance)
@@ -130,10 +167,49 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 		DamageTypeValue *= (100.f - Resistance) / 100.f;
 
+		if (DamageTypeValue <= 0.f)
+		{
+			continue;
+		}
+
+		if (UAuraAbilitySystemLibrary::GetIsRadialDamage(EffectContextHandle))
+		{
+			//1. override TakeDamage In AuraCharacter
+			//2. create delegate OnDamageDelegate, broadcast damage received in TakeDamage
+			//3. Bind lambda to OnDamageDelegate on the Victim here
+			//4. Call UGameplayStatic::ApplyRadialDamageWithFalloff to cause damage (this will result in TakeDamage being called on the Victim,
+			//		which will then broadcast OnDamageDelegate)
+			//5. In Lambda,set DamageTypeValue to the damage received from the broadcast
+			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(TargetAvatar))
+			{
+				CombatInterface->GetOnDamageSignature().AddLambda(// todo  每次都加一次？
+					[&DamageTypeValue](float DamageAmount)
+					{
+						DamageTypeValue = DamageAmount;
+					}
+				);
+				UGameplayStatics::ApplyRadialDamageWithFalloff( //这里会调用 TakeDamage -> OnDamageDelegate -> 上面的Lambda  
+					TargetAvatar,
+					DamageTypeValue,
+					0.f,
+					UAuraAbilitySystemLibrary::GetRadialDamageOrigin(EffectContextHandle),
+					UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContextHandle),
+					UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContextHandle),
+					1.f,
+					UDamageType::StaticClass(),
+					TArray<AActor*>(),
+					SourceAvatar,
+					nullptr
+				);
+				CombatInterface->GetOnDamageSignature().Clear();
+			} 
+			
+
+		}
+
 		Damage += DamageTypeValue;
 	}
 
-	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 
 	//Capture BlockChance On Target , and determine if there was a successful Block
 	//If Block, halve the damage.

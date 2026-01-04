@@ -4,7 +4,7 @@ local PrintString = UE.UKismetSystemLibrary.PrintString
 
 function M.Print(text, color, duration)
     color = color or UE.FLinearColor(1, 1, 1, 1)
-    duration = duration or 3
+    duration = duration or 10
     PrintString(nil, text, true, false, color, duration)
 end
 
