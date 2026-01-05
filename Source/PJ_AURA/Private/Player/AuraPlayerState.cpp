@@ -16,7 +16,7 @@ AAuraPlayerState::AAuraPlayerState()
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("InventoryComponent");
-	InventoryComponent->SetIsReplicated(false);
+	InventoryComponent->SetIsReplicated(true);
 
 	NetUpdateFrequency = 100.f;
 }

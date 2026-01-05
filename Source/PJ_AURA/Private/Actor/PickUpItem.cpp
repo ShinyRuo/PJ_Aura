@@ -8,10 +8,8 @@
 #include "Game/ItemManager.h"
 #include "Net/UnrealNetwork.h"
 #include "Inventory/Item.h"
-#include "Inventory/InventoryComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "PJ_AURA/PJ_AURA.h"
-#include "Player/AuraPlayerController.h"
 #include "Sound/SoundCue.h"
 
 APickUpItem::APickUpItem()
@@ -309,12 +307,9 @@ void APickUpItem::PickUpTimelineFinished()
 
 	if (HasAuthority())
 	{
-		if (PickUpTargetActor.IsValid())
+		if (PickUpTargetActor.IsValid() && PickUpTargetActor->Implements<UPlayerInterface>())
 		{
-			if (UInventoryComponent* Inventory = PickUpTargetActor->FindComponentByClass<UInventoryComponent>())
-			{
-				Inventory->FindEmptySlotAndAddItem(ItemData);
-			}
+			IPlayerInterface::Execute_PickUpItem(PickUpTargetActor.Get(), ItemData);
 		}
 
 		StartRecycle();

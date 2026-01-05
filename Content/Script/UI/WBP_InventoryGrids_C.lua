@@ -83,7 +83,7 @@ function M:FillInventory()
             ProcessedItems[slotData.Item] = true
 
             -- 创建物品控件 (假设你有一个名为WBP_Item的蓝图控件)
-            local ItemWidget = self:CreateWidget(UE.UUserWidget, self, "WBP_Item_C")
+            local ItemWidget = self:CreateItemWidget()
             if ItemWidget then
                 -- 从 slotData 中获取物品的左上角坐标
                 local ItemRow = slotData.Y
@@ -96,7 +96,7 @@ function M:FillInventory()
                 CanvasSlot:SetAutoSize(true)
 
                 -- 调用物品控件的函数来设置其显示数据
-                ItemWidget:SetItem(slotData.Item)
+                --ItemWidget:SetItem(slotData.Item)
                 table.insert(self.itemWidgets, ItemWidget)
             end
         end

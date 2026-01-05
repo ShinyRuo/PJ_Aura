@@ -44,6 +44,8 @@ public:
 	virtual void ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial) override;
 	virtual void HideMagicCircle_Implementation() override;
 	virtual void SaveProgress_Implementation(const FName& CheckPointTag) override;
+	virtual void PickUpItem_Implementation(UItem* PickUpItem) override;
+	virtual void DropItem_Implementation(UItem* DropItem) override;
 	/** end Player Interface*/
 
 	UFUNCTION(BlueprintImplementableEvent)
@@ -55,7 +57,7 @@ public:
 	TObjectPtr<UNiagaraComponent> NiagaraPlayComponent;
 
 	UFUNCTION(BlueprintCallable)
-	void OnPickUpItem(APickUpItem* ItemToPickUp);
+	void OnPickUpItemBegin(APickUpItem* ItemToPickUp);
 
 
 protected:

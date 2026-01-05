@@ -45,7 +45,7 @@ void AAuraPlayerController::PickingItem()
 				// 到达范围内，执行拾取并停止移动
 				if (AAuraCharacter* AuraCharacter = Cast<AAuraCharacter>(ControlledPawn))
 				{
-					AuraCharacter->OnPickUpItem(TargetPickUpItem.Get());
+					AuraCharacter->OnPickUpItemBegin(TargetPickUpItem.Get());
 				}
 
 				// 停止寻路
@@ -396,7 +396,7 @@ void AAuraPlayerController::OnPickUpItemClicked(APickUpItem* ItemToPickUp)
 		// 距离足够近，直接拾取
 		if (AAuraCharacter* AuraCharacter = Cast<AAuraCharacter>(ControlledPawn))
 		{
-			AuraCharacter->OnPickUpItem(ItemToPickUp);
+			AuraCharacter->OnPickUpItemBegin(ItemToPickUp);
 		}
 	}
 }

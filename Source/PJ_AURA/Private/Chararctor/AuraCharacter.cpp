@@ -300,8 +300,23 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag)
 	}
 }
 
+void AAuraCharacter::PickUpItem_Implementation(UItem* PickUpItem)
+{
+	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+	{
+		if (UInventoryComponent* InventoryComp = AuraPlayerState->GetInventoryComponent())
+		{
+			InventoryComp->FindEmptySlotAndAddItem(PickUpItem);
+		}
+	}
+}
 
-void AAuraCharacter::OnPickUpItem(APickUpItem* ItemToPickUp)
+void AAuraCharacter::DropItem_Implementation(UItem* DropItem)
+{
+}
+
+
+void AAuraCharacter::OnPickUpItemBegin(APickUpItem* ItemToPickUp)
 {
 	
 	if (!ItemToPickUp)

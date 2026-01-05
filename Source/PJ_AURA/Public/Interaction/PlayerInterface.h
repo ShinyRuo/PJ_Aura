@@ -6,6 +6,7 @@
 #include "UObject/Interface.h"
 #include "PlayerInterface.generated.h"
 
+class UItem;
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UPlayerInterface : public UInterface
@@ -64,4 +65,10 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SaveProgress(const FName& CheckPointTag);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PickUpItem(UItem* PickUpItem);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void DropItem(UItem* DropItem);
+	
 };
