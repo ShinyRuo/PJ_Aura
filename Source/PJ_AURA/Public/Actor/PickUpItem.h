@@ -57,6 +57,11 @@ public:
 	/** 停用物品，准备回收到对象池 */
 	void DeactivateItem();
 
+	UItem* GetItem() const
+	{
+		return ItemData;
+	}
+
 	/** 当 ItemData 属性被复制时调用的函数 */
 	UFUNCTION()
 	void OnRep_Item();

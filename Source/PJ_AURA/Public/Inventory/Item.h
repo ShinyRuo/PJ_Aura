@@ -133,15 +133,46 @@ public:
 	 */
 	const FS_ItemData* GetItemData(const UObject* ContextObject) const;
 
+	UFUNCTION(BlueprintCallable)
 	UStaticMesh* GetStaticMesh() const;
 
+	UFUNCTION(BlueprintCallable)
 	USkeletalMesh* GetSkeletalMesh() const;
 
+	UFUNCTION(BlueprintCallable)
 	USoundCue* GetPickUpSound() const;
 
+	UFUNCTION(BlueprintCallable)
 	USoundCue* GetDropSound() const;
 
+	UFUNCTION(BlueprintCallable)
 	float GetLifeTimeOnGround() const;
+
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	FText GetItemName() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	FText GetItemSubTitle() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	EItemType GetItemType() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	FIntPoint GetItemDimensions() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	UTexture2D* GetItemImage() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	UTexture2D* GetRotatedItemImage() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	int32 GetMaxStack() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+	int32 GetPrice() const;
+
 
 	UFUNCTION(BlueprintCallable, Category = "ItemData")
 	FString GetItemDescription(UObject* ContextObject) const;

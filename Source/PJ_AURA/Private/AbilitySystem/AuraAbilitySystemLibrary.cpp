@@ -100,7 +100,7 @@ UAuraUserWidget* UAuraAbilitySystemLibrary::ShowAuraWidget(const UObject* WorldC
 		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(PC->GetHUD()))
 		{
 			UAuraUserWidget* AuraWidget = AuraHUD->GetOrCreateWidget(WidgetName, WidgetClass);
-			AuraWidget->SetVisibility(ESlateVisibility::Visible);
+			AuraWidget->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 			return AuraWidget;
 		}
 	}

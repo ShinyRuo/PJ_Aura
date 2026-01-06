@@ -38,7 +38,7 @@ public:
 	 * UI Pool
 	 */
 	 // 获取或创建 Widget
-	UAuraUserWidget* GetOrCreateWidget(const FName& WidgetName, TSubclassOf<UAuraUserWidget> WidgetClass);
+	UAuraUserWidget* GetOrCreateWidget(const FName& WidgetName, TSubclassOf<UAuraUserWidget> WidgetClass, int32 ZOrder = 0);
 
 	// 通过 FName 获取 Widget
 	UAuraUserWidget* GetWidgetByName(const FName& WidgetName) const;

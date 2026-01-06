@@ -75,7 +75,7 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 }
 
 
-UAuraUserWidget* AAuraHUD::GetOrCreateWidget(const FName& WidgetName, TSubclassOf<UAuraUserWidget> WidgetClass)
+UAuraUserWidget* AAuraHUD::GetOrCreateWidget(const FName& WidgetName, TSubclassOf<UAuraUserWidget> WidgetClass, int32 ZOrder)
 {
 	// 如果 Widget 已存在于池中，直接返回
 	if (WidgetPool.Contains(WidgetName))
@@ -90,7 +90,7 @@ UAuraUserWidget* AAuraHUD::GetOrCreateWidget(const FName& WidgetName, TSubclassO
 		// 添加到池中
 		NewWidget->WidgetName = WidgetName;
 		WidgetPool.Add(WidgetName, NewWidget);
-		NewWidget->AddToViewport();
+		NewWidget->AddToViewport(ZOrder);
 	}
 
 	return NewWidget;

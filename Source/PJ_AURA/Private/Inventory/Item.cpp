@@ -49,6 +49,23 @@ const FS_ItemData* UItem::GetItemData(const UObject* ContextObject) const
     return nullptr;
 }
 
+
+
+void UItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+    DOREPLIFETIME(UItem, ItemID);
+    DOREPLIFETIME(UItem, Quantity);
+}
+
+bool UItem::IsSupportedForNetworking() const
+{
+    return true;
+}
+
+
+
 UStaticMesh* UItem::GetStaticMesh() const
 {
     const FS_ItemData* Data = GetItemData(this);
@@ -79,6 +96,79 @@ float UItem::GetLifeTimeOnGround() const
     return Data ? Data->lifeTimeOnGround : 0.0f;
 }
 
+
+FText UItem::GetItemName() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->name;
+    }
+    return FText();
+}
+
+FText UItem::GetItemSubTitle() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->subTitle;
+    }
+    return FText();
+}
+
+EItemType UItem::GetItemType() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->itemType;
+    }
+    return EItemType::Misc;
+}
+
+FIntPoint UItem::GetItemDimensions() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->dimensions;
+    }
+    return FIntPoint::ZeroValue;
+}
+
+UTexture2D* UItem::GetItemImage() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->image;
+    }
+    return nullptr;
+}
+
+UTexture2D* UItem::GetRotatedItemImage() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->rotatedImage;
+    }
+    return nullptr;
+}
+
+int32 UItem::GetMaxStack() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->maxStack;
+    }
+    return 0;
+}
+
+int32 UItem::GetPrice() const
+{
+    if (const FS_ItemData* Data = GetItemData(this))
+    {
+        return Data->price;
+    }
+    return 0;
+}
+
 FString UItem::GetItemDescription(UObject* ContextObject) const
 {
     const FS_ItemData* Data = GetItemData(ContextObject);
@@ -87,19 +177,4 @@ FString UItem::GetItemDescription(UObject* ContextObject) const
         return Data->description.ToString();
     }
     return FString();
-}
-
-
-
-void UItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-    DOREPLIFETIME(UItem, ItemID);
-    DOREPLIFETIME(UItem, Quantity);
-}
-
-bool UItem::IsSupportedForNetworking() const
-{
-    return true;
 }

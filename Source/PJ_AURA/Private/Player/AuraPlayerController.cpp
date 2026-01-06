@@ -166,7 +166,7 @@ void AAuraPlayerController::ToggleDebugWidget()
 		}
 		else
 		{
-			DebugWidgetInstance->SetVisibility(ESlateVisibility::Visible);
+			DebugWidgetInstance->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 		}
 	}
 	else

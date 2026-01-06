@@ -142,6 +142,44 @@ bool UInventoryComponent::IsSpaceAvailable(UItem* Item, int32 X, int32 Y)
     return true;
 }
 
+bool UInventoryComponent::CanAddItem(UItem* Item) 
+{
+    if (!Item) return false;
+
+    const FS_ItemData* ItemData = Item->GetItemData(this);
+    if (!ItemData) return false;
+
+    // 1. 检查是否可以堆叠
+    if (ItemData->maxStack > 1)
+    {
+        for (const FInventorySlot& Slot : Slots)
+        {
+            if (Slot.Item)
+            {
+                const FS_ItemData* ExistingItemData = Slot.Item->GetItemData(this);
+                if (ExistingItemData && ExistingItemData->ID == ItemData->ID && Slot.Item->Quantity < ExistingItemData->maxStack)
+                {
+                    return true; // 找到了可以堆叠的位置
+                }
+            }
+        }
+    }
+
+    // 2. 检查是否有新的空槽位
+    for (int32 Y = 0; Y < InventoryHeight; ++Y)
+    {
+        for (int32 X = 0; X < InventoryWidth; ++X)
+        {
+            if (IsSpaceAvailable(Item, X, Y))
+            {
+                return true; // 找到了一个空的槽位
+            }
+        }
+    }
+
+    return false; // 既不能堆叠，也没有空位
+}
+
 bool UInventoryComponent::FindEmptySlotAndAddItem(UItem* Item)
 {
 	if (!Item) return false;
@@ -149,20 +187,48 @@ bool UInventoryComponent::FindEmptySlotAndAddItem(UItem* Item)
     const FS_ItemData* ItemData = Item->GetItemData(this);
     if (!ItemData) return false;
 
-    for (int32 Y = 0; Y < InventoryHeight; ++Y)
+    // 1. 尝试堆叠
+    if (ItemData->maxStack > 1)
     {
-        for (int32 X = 0; X < InventoryWidth; ++X)
+        for (FInventorySlot& Slot : Slots)
         {
-
-            if (IsSpaceAvailable(Item, X, Y))
+            if (Slot.Item)
             {
+                const FS_ItemData* ExistingItemData = Slot.Item->GetItemData(this);
+                if (ExistingItemData && ExistingItemData->ID == ItemData->ID && Slot.Item->Quantity < ExistingItemData->maxStack)
+                {
+                    int32 CanAddAmount = ExistingItemData->maxStack - Slot.Item->Quantity;
+                    int32 AmountToAdd = FMath::Min(Item->Quantity, CanAddAmount);
 
-                AddItem(Item, X, Y);
-                return true;
+                    Slot.Item->Quantity += AmountToAdd;
+                    Item->Quantity -= AmountToAdd;
+
+                    OnInventoryUpdateSignature.Broadcast(); // 广播更新
+
+                    if (Item->Quantity <= 0)
+                    {
+                        return true; // 物品已完全堆叠
+                    }
+                }
             }
         }
     }
 
+    // 2. 如果还有剩余或物品不可堆叠，则寻找新槽位
+    if (Item->Quantity > 0)
+    {
+        for (int32 Y = 0; Y < InventoryHeight; ++Y)
+        {
+            for (int32 X = 0; X < InventoryWidth; ++X)
+            {
+                if (IsSpaceAvailable(Item, X, Y))
+                {
+                    AddItem(Item, X, Y);
+                    return true;
+                }
+            }
+        }
+    }
     return false;
 }
 

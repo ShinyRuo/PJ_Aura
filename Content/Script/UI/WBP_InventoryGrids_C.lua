@@ -22,6 +22,7 @@ function M:InitializeParams()
     self.InvGridWidgetController  = nil
     self.inventorySlots = {}
     self.itemWidgets = {} -- 用于存储创建的物品控件
+    self.bIsDragging = false
 end
 
 function M:Construct()
@@ -33,6 +34,7 @@ end
 function M:WidgetControllerSet()
     self:InitSlots()
     self.InvGridWidgetController.OnUIInventoryUpdateDelegate:Add(self, M.OnInventoryUpdate)
+    self:OnInventoryUpdate()
 end
 
 --创建背包格子
@@ -83,7 +85,7 @@ function M:FillInventory()
             ProcessedItems[slotData.Item] = true
 
             -- 创建物品控件 (假设你有一个名为WBP_Item的蓝图控件)
-            local ItemWidget = self:CreateItemWidget()
+            local ItemWidget = self:CreateItemWidget(slotData.Item,slotData.X,slotData.Y)
             if ItemWidget then
                 -- 从 slotData 中获取物品的左上角坐标
                 local ItemRow = slotData.Y
@@ -93,8 +95,8 @@ function M:FillInventory()
                 local CanvasSlot = self.ItemCanvas:AddChildToCanvas(ItemWidget)
                 -- 根据行列坐标设置位置
                 CanvasSlot:SetPosition(UE.FVector2D(ItemColumn * 50, ItemRow * 50)) -- 假设每个格子大小为50x50
-                CanvasSlot:SetAutoSize(true)
-
+                local ItemDimensions = slotData.Item:GetItemDimensions()
+                CanvasSlot:SetSize(UE.FVector2D(ItemDimensions.X * 50, ItemDimensions.Y * 50))  --根据配表 设置道具的长宽
                 -- 调用物品控件的函数来设置其显示数据
                 --ItemWidget:SetItem(slotData.Item)
                 table.insert(self.itemWidgets, ItemWidget)
@@ -103,8 +105,9 @@ function M:FillInventory()
     end
 end
 
---function M:Tick(MyGeometry, InDeltaTime)
---end
+-- function M:Tick(MyGeometry, InDeltaTime)
+    
+-- end
 
 function M:OnInventoryUpdate()
     Screen.Print("OnInventoryUpdate")

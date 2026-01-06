@@ -30,7 +30,7 @@ end
 
 
 function M:OnVisibilityChangedEvent(InVisibility)
-    if InVisibility == UE.ESlateVisibility.Visible then
+    if InVisibility == UE.ESlateVisibility.Visible or InVisibility == UE.ESlateVisibility.SelfHitTestInvisible then
         self.WBP_InventoryGrids:OnShow()
     elseif InVisibility == UE.ESlateVisibility.Hidden then
         self.WBP_InventoryGrids:OnHidden()

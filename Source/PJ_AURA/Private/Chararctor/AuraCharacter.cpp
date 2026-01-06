@@ -323,6 +323,22 @@ void AAuraCharacter::OnPickUpItemBegin(APickUpItem* ItemToPickUp)
 	{
 		return;
 	}
+
+	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+	{
+		if (UInventoryComponent* InventoryComp = AuraPlayerState->GetInventoryComponent())
+		{
+			if (!InventoryComp->CanAddItem(ItemToPickUp->GetItem()))
+			{
+				if (GEngine)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("背包空间不足，无法拾取"));
+				}
+				return;
+			}
+		}
+	}
+
 	ItemToPickUp->OnInteracted(this);
 
 }

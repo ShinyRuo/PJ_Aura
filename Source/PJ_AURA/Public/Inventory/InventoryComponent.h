@@ -52,6 +52,9 @@ public:
     bool IsSpaceAvailable(UItem* Item, int32 X, int32 Y) ;
 
 
+    UFUNCTION(BlueprintPure, Category = "Inventory")
+    bool CanAddItem(UItem* Item) ;
+
     UFUNCTION(BlueprintCallable, Category = "Inventory")
     bool FindEmptySlotAndAddItem(UItem* Item);
 
