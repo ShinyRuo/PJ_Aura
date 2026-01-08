@@ -29,6 +29,10 @@ function M:Construct()
     self:InitializeParams()
     self.InvGridWidgetController = UE.UAuraAbilitySystemLibrary.GetInventoryWidgetController(self)
     self:SetWidgetController(self.InvGridWidgetController)
+    self.cachedHoverIndexX = 0
+    self.cachedHoverIndexY = 0
+    self.DragItemStartX = 0
+    self.DragItemStartY = 0
 end
 
 function M:WidgetControllerSet()
@@ -45,9 +49,13 @@ function M:InitSlots()
     self.SlotList:ClearChildren() -- 清理panel
     for i=1,Rows do
         for j=1,Columns do
-            local SlotWidget = self:CreateSlotWidget()
+            local SlotWidget = self:CreateSlotWidget(i,j)
             self.SlotList:AddChildToGrid(SlotWidget,i,j)
-            table.insert(self.inventorySlots, SlotWidget)
+            if not self.inventorySlots[i] then
+                self.inventorySlots[i] = {}
+            end
+            self.inventorySlots[i][j] = SlotWidget
+           -- table.insert(self.inventorySlots, SlotWidget)
         end
     end
 end
@@ -90,12 +98,14 @@ function M:FillInventory()
                 -- 从 slotData 中获取物品的左上角坐标
                 local ItemRow = slotData.Y
                 local ItemColumn = slotData.X
-
+                local ItemDimensions = slotData.Item:GetItemDimensions()
+                ItemWidget.StartX = ItemColumn + 1
+                ItemWidget.StartY = ItemRow + 1
+                ItemWidget.Dimensions = ItemDimensions
                 -- 将物品控件添加到画布上
                 local CanvasSlot = self.ItemCanvas:AddChildToCanvas(ItemWidget)
                 -- 根据行列坐标设置位置
                 CanvasSlot:SetPosition(UE.FVector2D(ItemColumn * 50, ItemRow * 50)) -- 假设每个格子大小为50x50
-                local ItemDimensions = slotData.Item:GetItemDimensions()
                 CanvasSlot:SetSize(UE.FVector2D(ItemDimensions.X * 50, ItemDimensions.Y * 50))  --根据配表 设置道具的长宽
                 -- 调用物品控件的函数来设置其显示数据
                 --ItemWidget:SetItem(slotData.Item)
@@ -125,6 +135,101 @@ function M:OnHidden()
     Screen.Print(self:GetName() .."OnHidden")
 end
 
+function M:ClearSlotColor()
+    if not self.SlotCollect then
+        self.SlotCollect = {}
+    end
+    for index, SlotWidget in ipairs(self.SlotCollect) do
+        if SlotWidget and SlotWidget:IsValid() then
+            SlotWidget:RemoveColor()
+        end
+    end
+    self.SlotCollect = {}
 
+end
+
+function M:OnSlotDragOver(RowIndex,ColunmIndex,ItemData)
+    if RowIndex ==  self.cachedHoverIndexX and  ColunmIndex == self.cachedHoverIndexY then
+        return
+    end
+    self.cachedHoverIndexX = ColunmIndex
+    self.cachedHoverIndexY = RowIndex
+    local ItemDimensionX = ItemData:GetItemDimensions().X
+    local ItemDimensionY = ItemData:GetItemDimensions().Y
+    local ItemNeedSpace = ItemDimensionX* ItemDimensionY
+    local StartSlot = self.inventorySlots[RowIndex][ColunmIndex]
+    self.DropCheckPass = true
+
+    self:ClearSlotColor()
+
+    local NeedMap = {}
+
+    if StartSlot then
+        --背包边界检测
+        for i= 1,ItemDimensionY do
+            for j =1,ItemDimensionX do
+                local CheckRowIndex = RowIndex+i-1
+                local CheckColunmIndex = ColunmIndex+j-1
+                if not self.inventorySlots[CheckRowIndex] then
+                    self.DropCheckPass = false
+                else
+                    local CheckSlot = self.inventorySlots[CheckRowIndex][CheckColunmIndex]
+                    if CheckSlot then
+                        table.insert(self.SlotCollect, CheckSlot)
+                        if not NeedMap[CheckRowIndex] then
+                            NeedMap[CheckRowIndex] = {}
+                        end
+                        NeedMap[CheckRowIndex][CheckColunmIndex] = true
+                    else
+                        self.DropCheckPass = false
+                    end
+                end
+            end
+        end
+        --是否覆盖到别的item上
+        for index, ItemWidget in ipairs(self.itemWidgets) do
+            if ItemWidget.itemData ~= ItemData then
+                --拖起来之后 又放到自己的位置上 则不管
+                 for i= 1,ItemWidget.Dimensions.Y do
+                    for j =1,ItemWidget.Dimensions.X do
+                        local CheckX = ItemWidget.StartX + i - 1
+                        local CheckY = ItemWidget.StartY + j - 1
+                        if NeedMap[CheckX] and NeedMap[CheckX][CheckY] then
+                            self.DropCheckPass = false
+                        end
+                    end
+                end
+            else
+                --源item 记录下位子
+                self.DragItemStartX = ItemWidget.StartX
+                self.DragItemStartY = ItemWidget.StartY
+            end
+        end
+        for index, SlotWidget in ipairs(self.SlotCollect) do
+           if self.DropCheckPass then
+                SlotWidget:ShowGreenColor()
+           else
+                SlotWidget:ShowRedColor()
+           end
+        end
+    end
+end
+
+function M:OnItemDropOnSlot()
+    if not self.DropCheckPass then
+        return false
+    end
+
+    self:ClearSlotColor()
+    Screen.Print("OnItemDropOnSlot"..self.DragItemStartX..","..self.DragItemStartY..","..self.cachedHoverIndexX..","..self.cachedHoverIndexY)
+
+    self.InvGridWidgetController:TryMoveBagItem( self.DragItemStartX,self.DragItemStartY,self.cachedHoverIndexX,self.cachedHoverIndexY)
+
+    return true
+end
+
+function M:OnItemDragCancel()
+    self:ClearSlotColor()
+end
 
 return M

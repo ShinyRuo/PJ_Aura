@@ -264,3 +264,88 @@ bool UInventoryComponent::RemoveItem(UItem* Item)
 
     return RemoveItemByPosition(X, Y);
 }
+
+void UInventoryComponent::Server_MoveItem_Implementation(int32 FromX, int32 FromY, int32 ToX, int32 ToY)
+{
+    if (!GetOwner()->HasAuthority()) return;
+
+    UItem* ItemToMove = GetItemAt(FromX, FromY);
+    if (!ItemToMove) return;
+
+    // 如果起始和目标位置相同，则不执行任何操作
+    if (FromX == ToX && FromY == ToY) return;
+
+    // 1. 找到 FromX, FromY 对应的 ItemData 并收集占用的槽位信息 A
+    const FS_ItemData* ItemData = ItemToMove->GetItemData(this);
+    if (!ItemData) return;
+
+    TArray<int32> SourceIndices;
+    for (int32 j = 0; j < ItemData->dimensions.Y; ++j)
+    {
+        for (int32 i = 0; i < ItemData->dimensions.X; ++i)
+        {
+            SourceIndices.Add((FromY + j) * InventoryWidth + (FromX + i));
+        }
+    }
+
+    // 2. 检测 ToX, ToY 位置是否有足够的空间放下该物品，判断的时候忽略自己，并收集目标槽位信息 B
+    TArray<int32> TargetIndices;
+    bool bIsSpaceAvailable = true;
+    for (int32 j = 0; j < ItemData->dimensions.Y; ++j)
+    {
+        for (int32 i = 0; i < ItemData->dimensions.X; ++i)
+        {
+            const int32 CurrentX = ToX + i;
+            const int32 CurrentY = ToY + j;
+
+            // 检查是否越界
+            if (CurrentX < 0 || CurrentX >= InventoryWidth || CurrentY < 0 || CurrentY >= InventoryHeight)
+            {
+                bIsSpaceAvailable = false;
+                break;
+            }
+
+            const int32 TargetIndex = CurrentY * InventoryWidth + CurrentX;
+            TargetIndices.Add(TargetIndex);
+
+            // 检查目标槽位是否被其他物品占用
+            UItem* ExistingItem = Slots[TargetIndex].Item;
+            if (ExistingItem != nullptr && ExistingItem != ItemToMove)
+            {
+                bIsSpaceAvailable = false;
+                break;
+            }
+        }
+        if (!bIsSpaceAvailable) break;
+    }
+
+    // 如果空间不足，则中止操作
+    if (!bIsSpaceAvailable) return;
+
+    // 3. 将 A 位置的槽位清空，将 B 位置的槽位设置为 ItemData
+    // 清空 A 位置
+    for (const int32 Index : SourceIndices)
+    {
+        if (Slots.IsValidIndex(Index))
+        {
+            Slots[Index].Item = nullptr;
+            Slots[Index].X = 0;
+            Slots[Index].Y = 0;
+        }
+    }
+
+    // 填充 B 位置
+    for (const int32 Index : TargetIndices)
+    {
+        if (Slots.IsValidIndex(Index))
+        {
+            Slots[Index].Item = ItemToMove;
+            Slots[Index].X = ToX;
+            Slots[Index].Y = ToY;
+        }
+    }
+
+    // 在服务器上广播更新，以便服务器本地UI（如果有）可以立即响应。
+    // 客户端将通过 OnRep_Slots 自动接收更新。
+    OnInventoryUpdateSignature.Broadcast();
+}

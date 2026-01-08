@@ -73,6 +73,14 @@ bool UInventoryWidgetController::MoveItemToInventory(UItem* Item, int32 Inventor
     return true;
 }
 
+void UInventoryWidgetController::TryMoveBagItem(int32 FromX, int32 FromY, int32 ToX, int32 ToY)
+{
+    if (!InventoryComponent) return;
+
+    // 客户端直接调用服务器RPC，将移动请求发送给服务器处理
+    InventoryComponent->Server_MoveItem(FromX-1, FromY-1, ToX-1, ToY-1);
+}
+
 void UInventoryWidgetController::DropItem(UItem* Item)
 {
     if (!Item) return;

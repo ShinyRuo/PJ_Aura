@@ -46,6 +46,10 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Inventory")
     bool RemoveItem(UItem* Item);
 
+    UFUNCTION(Server, Reliable)
+    void Server_MoveItem(int32 FromX, int32 FromY, int32 ToX, int32 ToY);
+
+
     UFUNCTION(BlueprintCallable, Category = "Inventory")
     UItem* GetItemAt(int32 X, int32 Y) const;
 

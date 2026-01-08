@@ -38,6 +38,10 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
     bool MoveItemToInventory(UItem* Item, int32 InventoryX, int32 InventoryY);
 
+    /*在背包内移动道具*/
+    UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
+    void TryMoveBagItem(int32 FromX, int32 FromY, int32 ToX, int32 ToY);
+
     /** 丢弃物品 */
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
     void DropItem(UItem* Item);
