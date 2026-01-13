@@ -1,6 +1,11 @@
 #include "Inventory/InventoryComponent.h"
+
+#include "NavigationSystem.h"
+#include "Actor/PickUpItem.h"
+#include "Game/ItemManager.h"
 #include "Inventory/Item.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/AuraPlayerState.h"
 
 UInventoryComponent::UInventoryComponent()
 {
@@ -95,6 +100,8 @@ bool UInventoryComponent::RemoveItemByPosition(int32 X, int32 Y)
             if (Slots.IsValidIndex(Index) && Slots[Index].Item == Item)
             {
                 Slots[Index].Item = nullptr;
+                Slots[Index].X = 0;
+                Slots[Index].Y = 0;
             }
         }
     }
@@ -104,6 +111,52 @@ bool UInventoryComponent::RemoveItemByPosition(int32 X, int32 Y)
     OnInventoryUpdateSignature.Broadcast(); // 在服务器上广播更新
 
     return true;
+}
+
+
+void UInventoryComponent::Server_DiscardItem_Implementation(int32 FromX, int32 FromY)
+{
+    UItem* ItemToDiscard = GetItemAt(FromX, FromY);
+    if (ItemToDiscard)
+    {
+        // 1. 从背包中移除物品
+        const bool bRemoved = RemoveItemByPosition(FromX, FromY);
+        if (!bRemoved) return; // 如果移除失败，则中止
+
+        // 2. 在角色身边生成掉落物
+        if (UWorld* World = GetWorld())
+        {
+            AActor* OwnerActor = GetOwner();
+            if (!OwnerActor) return;
+            FVector CharacterLocation = FVector::ZeroVector;
+            FVector DropLocation = CharacterLocation;
+            if (const APlayerState* PlayerState = Cast<APlayerState>(OwnerActor))
+            {
+                if (const APawn* Pawn = PlayerState->GetPawn())
+                {
+                    CharacterLocation = Pawn->GetActorLocation();
+                }
+            }
+            // 3. 计算随机生成位置
+            FNavLocation NavLocation;
+            if (UNavigationSystemV1* NavSys = UNavigationSystemV1::GetCurrent(World))
+            {
+                // 在角色周围半径200的圆内寻找一个随机的可导航点
+                const bool bFoundPoint = NavSys->GetRandomPointInNavigableRadius(CharacterLocation, 200.f, NavLocation);
+                if (bFoundPoint)
+                {
+                    DropLocation = NavLocation.Location;
+                }
+            }
+            if (UItemManager::Get(this))
+            {
+                APickUpItem* DropItem =  UItemManager::Get(this)->SpawnItemOnTheFloor(ItemToDiscard->ItemID, ItemToDiscard->Quantity, CharacterLocation);
+                DropItem->OnItemDropped(DropLocation);
+            }
+
+            
+        }
+    }
 }
 
 UItem* UInventoryComponent::GetItemAt(int32 X, int32 Y) const

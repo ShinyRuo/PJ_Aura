@@ -141,6 +141,10 @@ void APickUpItem::UnHighlightActor()
 
 void APickUpItem::OnInteracted(AActor* InteractingActor)
 {
+	if (ItemID < 0 )
+	{
+		return;
+	}
 	if (HasAuthority() && InteractingActor)
 	{
 		Multicast_PlayPickUpEffects(InteractingActor);
@@ -277,8 +281,8 @@ void APickUpItem::DropTimelineUpdate(float Value)
 
 void APickUpItem::DropTimelineFinished()
 {
-	StaticMeshComponent->SetSimulatePhysics(true);
-	SkeletalMeshComponent->SetSimulatePhysics(true);
+	//StaticMeshComponent->SetSimulatePhysics(true);
+	//SkeletalMeshComponent->SetSimulatePhysics(true);
 	// 动画结束后，开启物理模拟或使其固定
 	// 也可以在这里启动地面生命周期计时器
 	if (HasAuthority() && ItemData && ItemData->GetLifeTimeOnGround() > 0.f)
@@ -290,12 +294,10 @@ void APickUpItem::DropTimelineFinished()
 //传入的时Curve根据时间插值
 void APickUpItem::PickUpTimelineUpdate(float Value)
 {
-	if (PickUpTargetActor.IsValid())//todo item的位置有点问题 server和client不同步
+	if (PickUpTargetActor.IsValid())
 	{
-		// --- 修改：使用缓存的起始位置 ---
 		const FVector EndLocation = PickUpTargetActor->GetActorLocation();
 		const FVector NewLocation = FMath::Lerp(PickUpStartLocation, EndLocation, Value);
-		// --------------------------------
 		SetActorLocationAndRotation(NewLocation, GetActorRotation(), false, nullptr, ETeleportType::TeleportPhysics);
 	}
 }

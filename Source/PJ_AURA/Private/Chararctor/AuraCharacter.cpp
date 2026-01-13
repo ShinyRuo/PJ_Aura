@@ -10,6 +10,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/Data/AbilityInfo.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Actor/PickUpItem.h"
@@ -84,7 +85,10 @@ void AAuraCharacter::LoadProgress()
 		}
 		else
 		{
-			//todo Load abilities
+			if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(GetAbilitySystemComponent()))
+			{
+				AuraASC->AddCharacterAbilitiesFromSavedData(SaveData);
+			}
 			if (AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>())
 			{
 				AuraPlayerState->SetPlayerLevel(SaveData->PlayerLevel);
@@ -273,6 +277,10 @@ void AAuraCharacter::HideMagicCircle_Implementation()
 
 void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag)
 {
+	if (!HasAuthority())
+	{
+		return;
+	}
 	if(AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 	{
 		ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
@@ -295,6 +303,31 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag)
 		SaveData->Resilience = UAuraAttributeSet::GetResilienceAttribute().GetNumericValue(GetAttributeSet());
 		SaveData->Vigor = UAuraAttributeSet::GetVigorAttribute().GetNumericValue(GetAttributeSet());
 
+		
+		FForEachAbility SaveAbilityDelegate;
+		UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+		SaveData->SavedAbilities.Empty();
+		SaveAbilityDelegate.BindLambda(
+			[this, AuraASC,SaveData](const FGameplayAbilitySpec& AbilitySpec)
+			{
+				FSavedAbility SavedAbility;
+				FGameplayTag Tag = AuraASC->GetAbilityTagFromSpec(AbilitySpec);
+
+				SavedAbility.GameplayAbility = AbilitySpec.Ability->GetClass();
+				SavedAbility.AbilityLevel = AbilitySpec.Level;
+				SavedAbility.AbilityTag = Tag;
+				SavedAbility.AbilitySlot = AuraASC->GetAbilitySlotFromTag(Tag);
+				SavedAbility.AbilityStatus = AuraASC->GetAbilityStatusTagFromTag(Tag);
+				if (UAbilityInfo* Info = UAuraAbilitySystemLibrary::GetAbilityInfo(this))
+				{
+					FAuraAbilityInfo AbilityInfo = Info->FindAbilityInfoForTag(Tag);
+					SavedAbility.AbilityType = AbilityInfo.AbilityType;
+				}
+
+				SaveData->SavedAbilities.AddUnique(SavedAbility);
+			}
+		);
+		AuraASC->ForEachAbility(SaveAbilityDelegate);
 		
 		AuraGameMode->SaveInGameProgressData(SaveData);
 	}

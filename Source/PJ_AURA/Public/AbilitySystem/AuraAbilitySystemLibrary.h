@@ -194,4 +194,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|Item")
 	static void SpawnAItemOnTheFloor(const UObject* WorldContextObject, const FVector& WorldLocation,const FName& ItemName,const int32 ItemCount);
+
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|Widget")
+	static bool IsScreenSpacePositionOverAnyWidget(const UObject* WorldContextObject, const FVector2D& ScreenPosition);
+
 };

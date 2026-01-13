@@ -7,6 +7,7 @@
 #include "AuraAbilitySystemComponent.generated.h"
 
 
+class ULoadScreenSaveGame;
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /* AssetTags*/);
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag& /* AbilityTag*/, const FGameplayTag& /* StatusTag*/,int32 /*AbilityLevel*/);
 DECLARE_MULTICAST_DELEGATE_FiveParams(FAbilityEquipped, const FGameplayTag& /* AbilityTag*/, const FGameplayTag& /* StatusTag*/, const FGameplayTag& /* Slot*/, const FGameplayTag& /* PrevSlot*/,int32);
@@ -46,6 +47,7 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel);
 
+	void AddCharacterAbilitiesFromSavedData(ULoadScreenSaveGame* SaveData);
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 

@@ -81,25 +81,13 @@ void UInventoryWidgetController::TryMoveBagItem(int32 FromX, int32 FromY, int32 
     InventoryComponent->Server_MoveItem(FromX-1, FromY-1, ToX-1, ToY-1);
 }
 
-void UInventoryWidgetController::DropItem(UItem* Item)
+void UInventoryWidgetController::TryDropItem(int32 FromX, int32 FromY)
 {
-    if (!Item) return;
-
-    // 从背包或装备栏移除物品
-    InventoryComponent->RemoveItem(Item);
-    int32 SlotIndex = EquipmentSlots.Find(Item);
-    if (SlotIndex != INDEX_NONE)
-    {
-        EquipmentSlots[SlotIndex] = nullptr;
-    }
-
-    // 触发丢弃逻辑（例如生成物品掉落到地面）
-    // TODO: 实现丢弃逻辑
-
-    // 更新界面
-    UpdateInventory();
-    UpdateEquipment();
+    if (!InventoryComponent) return;
+    
+    InventoryComponent->Server_DiscardItem(FromX-1, FromY-1);
 }
+
 
 void UInventoryWidgetController::UpdateInventory()
 {

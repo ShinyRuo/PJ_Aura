@@ -123,6 +123,7 @@ function M:OnInventoryUpdate()
     Screen.Print("OnInventoryUpdate")
     self:ClearAllItems()
     self:FillInventory()
+    self:ClearSlotColor()
 end
 
 function M:OnShow()
@@ -226,6 +227,12 @@ function M:OnItemDropOnSlot()
     self.InvGridWidgetController:TryMoveBagItem( self.DragItemStartX,self.DragItemStartY,self.cachedHoverIndexX,self.cachedHoverIndexY)
 
     return true
+end
+
+function M:OnItemDropOut(ItemStartX,ItemStartY)
+   
+    self.InvGridWidgetController:TryDropItem( ItemStartX,ItemStartY)
+
 end
 
 function M:OnItemDragCancel()

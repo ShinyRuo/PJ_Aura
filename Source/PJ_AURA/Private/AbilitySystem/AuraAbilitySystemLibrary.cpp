@@ -520,6 +520,37 @@ void UAuraAbilitySystemLibrary::SpawnAItemOnTheFloor(const UObject* WorldContext
 	}
 }
 
+bool UAuraAbilitySystemLibrary::IsScreenSpacePositionOverAnyWidget(const UObject* WorldContextObject,
+	const FVector2D& ScreenPosition)
+{
+
+	if (FSlateApplication::IsInitialized())
+	{
+		const TArray<TSharedRef<SWindow>> Windows = FSlateApplication::Get().GetInteractiveTopLevelWindows();
+		for (const TSharedRef<SWindow>& Window : Windows)
+		{
+			const FWidgetPath WidgetPath = FSlateApplication::Get().LocateWindowUnderMouse(ScreenPosition, Windows, false);
+			if (WidgetPath.IsValid())
+			{
+				// 遍历路径中的所有Widget
+				for (int32 i = WidgetPath.Widgets.Num() - 1; i >= 0; --i)
+				{
+					const FArrangedWidget& ArrangedWidget = WidgetPath.Widgets[i];
+					const TSharedRef<SWidget> Widget = ArrangedWidget.Widget;
+
+					// 检查Widget是否是用户创建的UI（而不是视口本身或装饰器）
+					// SViewport 通常是游戏世界的渲染区域，我们希望忽略它
+					if (Widget->GetTypeAsString() != "SViewport" && Widget->GetVisibility().IsHitTestVisible())
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
 
 FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const FDamageEffectParams& EffectParam)
 {

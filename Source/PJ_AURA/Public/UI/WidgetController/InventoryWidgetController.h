@@ -42,9 +42,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
     void TryMoveBagItem(int32 FromX, int32 FromY, int32 ToX, int32 ToY);
 
-    /** 丢弃物品 */
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
-    void DropItem(UItem* Item);
+    void TryDropItem(int32 FromX, int32 FromY);
 
     /** 更新背包界面 */
     UFUNCTION(BlueprintCallable, Category = "Inventory|Update")
