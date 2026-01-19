@@ -3,6 +3,7 @@
 #include "NavigationSystem.h"
 #include "Actor/PickUpItem.h"
 #include "Game/ItemManager.h"
+#include "Game/LoadScreenSaveGame.h"
 #include "Inventory/Item.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/AuraPlayerState.h"
@@ -20,19 +21,26 @@ UInventoryComponent::UInventoryComponent()
 void UInventoryComponent::BeginPlay()
 {
     Super::BeginPlay();
-    Slots.SetNum(MaxCapacity);
 }
 
 void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     DOREPLIFETIME_CONDITION(UInventoryComponent, Slots, COND_OwnerOnly);
+    DOREPLIFETIME_CONDITION(UInventoryComponent, InventoryWidth, COND_OwnerOnly);
+    DOREPLIFETIME_CONDITION(UInventoryComponent, InventoryHeight, COND_OwnerOnly);
 }
 
 void UInventoryComponent::OnRep_Slots()
 {
     // 更新客户端 UI 或其他逻辑
     OnInventoryUpdateSignature.Broadcast();
+}
+
+void UInventoryComponent::OnRep_InventorySize()
+{
+    MaxCapacity = InventoryWidth * InventoryHeight;
+    Slots.SetNum(MaxCapacity);
 }
 
 
@@ -283,6 +291,35 @@ bool UInventoryComponent::FindEmptySlotAndAddItem(UItem* Item)
         }
     }
     return false;
+}
+
+void UInventoryComponent::LoadItemSlots(const FSavedInventory& SavedInventory)
+{
+    for ( const FSavedItemSlot& SavedOneSlot: SavedInventory.ItemSlots)
+    {
+        UItem* NewItem = NewObject<UItem>(this);
+        NewItem->ItemID = SavedOneSlot.ItemID;
+        NewItem->Quantity = SavedOneSlot.Quantity;
+        const FS_ItemData* ItemData = NewItem->GetItemData(this);
+        if (!ItemData) return;
+        int32 X = SavedOneSlot.X;
+        int32 Y = SavedOneSlot.Y;
+
+        // 添加物品到背包
+        for (int32 i = 0; i < ItemData->dimensions.X; ++i)
+        {
+            for (int32 j = 0; j < ItemData->dimensions.Y; ++j)
+            {
+                int32 Index = (Y + j) * InventoryWidth + (X + i);
+                Slots[Index].Item = NewItem;
+                Slots[Index].X = X;
+                Slots[Index].Y = Y;
+            }
+        }
+
+        // 更新当前容量
+        CurrentCapacity += X*Y;
+    }
 }
 
 bool UInventoryComponent::FindItemPosition(UItem* Item, int32& OutX, int32& OutY) const

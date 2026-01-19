@@ -6,6 +6,7 @@
 #include "InventoryComponent.generated.h"
 
 
+struct FSavedInventory;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInventoryUpdate);
 
 
@@ -19,10 +20,10 @@ public:
 
     FOnInventoryUpdate OnInventoryUpdateSignature;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+    UPROPERTY(ReplicatedUsing = OnRep_InventorySize, EditAnywhere, BlueprintReadWrite, Category = "Inventory")
     int32 InventoryWidth; // 背包网格宽度
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+    UPROPERTY(ReplicatedUsing = OnRep_InventorySize, EditAnywhere, BlueprintReadWrite, Category = "Inventory")
     int32 InventoryHeight; // 背包网格高度
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
@@ -64,11 +65,17 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Inventory")
     bool FindEmptySlotAndAddItem(UItem* Item);
 
+    void LoadItemSlots(const FSavedInventory& SavedInventory);
+
+    UFUNCTION()
+    void OnRep_InventorySize();
+
 protected:
     virtual void BeginPlay() override;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
     UFUNCTION()
     void OnRep_Slots();
+
 
 };

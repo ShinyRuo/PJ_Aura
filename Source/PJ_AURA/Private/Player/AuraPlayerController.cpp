@@ -313,7 +313,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 			}
 		}
 	}
-	else if(bShiftKeyDown)
+	else 
 	{
 		if (GetASC())
 		{

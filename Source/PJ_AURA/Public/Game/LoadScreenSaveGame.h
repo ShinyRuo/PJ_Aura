@@ -47,6 +47,70 @@ inline bool operator==(const FSavedAbility& Left,const FSavedAbility& Right)
 	return Left.AbilityTag.MatchesTagExact(Right.AbilityTag);
 }
 
+USTRUCT(BlueprintType)
+struct FSavedActor
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FName ActorName;
+
+	UPROPERTY()
+	FTransform ActorTransform;
+
+	//serialize variables only those marked with SaveGame specifier
+	UPROPERTY()
+	TArray<uint8> Bytes;
+};
+
+inline bool operator==(const FSavedActor& Left, const FSavedActor& Right)
+{
+	return Left.ActorName == Right.ActorName;
+}
+
+USTRUCT(BlueprintType)
+struct FSavedMap
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FString MapAssetName;
+
+	UPROPERTY()
+	TArray<FSavedActor> SavedActors;
+
+};
+
+USTRUCT(BlueprintType)
+struct FSavedItemSlot
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FName ItemID;
+
+	UPROPERTY()
+	int32 Quantity = 1;
+
+	UPROPERTY()
+	int32 X = 0; // 格子在网格中的 X 坐标
+
+	UPROPERTY()
+	int32 Y = 0; // 格子在网格中的 Y 坐标
+};
+
+
+USTRUCT(BlueprintType)
+struct FSavedInventory
+{
+	GENERATED_BODY()
+	UPROPERTY()
+	TArray<FSavedItemSlot> ItemSlots;
+	UPROPERTY()
+	int32 InventoryWidth = 10;
+	UPROPERTY()
+	int32 InventoryHeight = 5;
+};
 /**
  * 
  */
@@ -108,4 +172,16 @@ public:
 
 	UPROPERTY()
 	TArray<FSavedAbility> SavedAbilities;
+
+	UPROPERTY()
+	TArray<FSavedMap> SavedMaps;
+
+	FSavedMap GetSavedMapWithMapName(const FString& InMapName) const;
+
+	bool HasMap(const FString& InMapName) const;
+
+	//目前只能保存一个玩家的数据
+	UPROPERTY()
+	FSavedInventory SavedInventory;
+	
 };

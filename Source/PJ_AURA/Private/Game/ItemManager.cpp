@@ -5,10 +5,10 @@
 #include "Game/AuraGameStateBase.h"
 #include "Kismet/GameplayStatics.h"
 
-UItemManager* UItemManager::Get(const UObject* WorldContextObject)
+UItemManager* UItemManager::Get( const UObject* WorldContextObject)
 {
 	// 通过 GameState 获取 ItemManager
-	if (const AAuraGameStateBase* GameState = Cast<AAuraGameStateBase>(UGameplayStatics::GetGameState(WorldContextObject)))
+	if ( AAuraGameStateBase* GameState = Cast<AAuraGameStateBase>(UGameplayStatics::GetGameState(WorldContextObject)))
 	{
 		return GameState->GetItemManager();
 	}

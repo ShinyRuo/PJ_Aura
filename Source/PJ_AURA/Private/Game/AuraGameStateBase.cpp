@@ -9,12 +9,13 @@ AAuraGameStateBase::AAuraGameStateBase()
 {
 }
 
-void AAuraGameStateBase::BeginPlay()
+UItemManager* AAuraGameStateBase::GetItemManager() 
 {
-	Super::BeginPlay();
-
-
-	ItemManager = NewObject<UItemManager>(this, ItemManagerClass);
-	ItemManager->Initialize(GetWorld());
+	if(!ItemManager)
+	{
+		ItemManager = NewObject<UItemManager>(this, ItemManagerClass);
+		ItemManager->Initialize(GetWorld());
+	}
+	return ItemManager;
 }
 

@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "AuraPlayerState.generated.h"
 
+class ULoadScreenSaveGame;
 class UInventoryComponent;
 class ULevelUpInfo;
 class UAbilitySystemComponent;
@@ -54,6 +55,9 @@ public:
 	FORCEINLINE int32 GetSpellPoints() const { return SpellPoints; }
 	void SetSpellPoints(int32 InValue);
 	void AddSpellPoints(int32 InValue);
+
+	void SaveInventory(ULoadScreenSaveGame* SaveData) const;
+	void LoadInventory(const ULoadScreenSaveGame* SaveData) const;
 
 protected:
 	UPROPERTY(VisibleAnywhere)

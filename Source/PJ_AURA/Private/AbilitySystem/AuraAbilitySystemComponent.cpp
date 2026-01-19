@@ -39,7 +39,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilitiesFromSavedData(ULoadScreen
 
         const TSubclassOf<UGameplayAbility> LoadedAbilityClass = SavedAbility.GameplayAbility;
         FGameplayAbilitySpec LoadedAbilitySpec = FGameplayAbilitySpec(LoadedAbilityClass, SavedAbility.AbilityLevel);
-        LoadedAbilitySpec.DynamicAbilityTags.AddTag(SavedAbility.AbilityTag);
+        LoadedAbilitySpec.DynamicAbilityTags.AddTag(SavedAbility.AbilitySlot);
         LoadedAbilitySpec.DynamicAbilityTags.AddTag(SavedAbility.AbilityStatus);
         if (SavedAbility.AbilityType == FAuraGameplayTags::Get().Abilities_Type_Offensive)
         {
@@ -47,7 +47,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilitiesFromSavedData(ULoadScreen
         }
         else if(SavedAbility.AbilityType == FAuraGameplayTags::Get().Abilities_Type_Passive)
         {
-	        if (SavedAbility.AbilityTag.MatchesTagExact(FAuraGameplayTags::Get().Abilities_Status_Equipped))
+	        if (SavedAbility.AbilityStatus.MatchesTagExact(FAuraGameplayTags::Get().Abilities_Status_Equipped))
 	        {
                 GiveAbilityAndActivateOnce(LoadedAbilitySpec);
 	        }

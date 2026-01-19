@@ -72,11 +72,17 @@ void AAuraCharacter::LoadProgress()
 {
 	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 	{
+
 		ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
 		if (!SaveData)
 		{
 			return;
 		}
+
+		AuraGameMode->LoadWorldState(GetWorld(), SaveData);
+
+		LoadInventory(SaveData);
+
 		if (SaveData->bFirstTimeLoadIn)
 		{
 			//第一次加载 使用初始属性值
@@ -288,6 +294,12 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag)
 		{
 			return;
 		}
+		//World信息
+		AuraGameMode->SaveWorldState(GetWorld(), SaveData);
+		//Player信息
+
+		SaveInventory(SaveData);
+
 		SaveData->PlayerStartTag = CheckPointTag;
 		SaveData->bFirstTimeLoadIn = false;
 
@@ -374,6 +386,22 @@ void AAuraCharacter::OnPickUpItemBegin(APickUpItem* ItemToPickUp)
 
 	ItemToPickUp->OnInteracted(this);
 
+}
+
+void AAuraCharacter::SaveInventory(ULoadScreenSaveGame* SaveData)
+{
+	if (!SaveData) return;
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	AuraPlayerState->SaveInventory(SaveData);
+}
+
+void AAuraCharacter::LoadInventory(const ULoadScreenSaveGame* SaveData)
+{
+	if (!SaveData) return;
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	AuraPlayerState->LoadInventory(SaveData);
 }
 
 void AAuraCharacter::InitAbilityActorInfo()

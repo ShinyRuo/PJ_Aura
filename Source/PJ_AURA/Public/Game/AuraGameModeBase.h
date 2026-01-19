@@ -38,6 +38,9 @@ public:
 
 	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject) const;
 
+	void SaveWorldState(UWorld* World, ULoadScreenSaveGame* SaveGame);
+	void LoadWorldState(UWorld* World, ULoadScreenSaveGame* SaveGame) const;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<USaveGame> LoadScreenSaveGameClass;
 

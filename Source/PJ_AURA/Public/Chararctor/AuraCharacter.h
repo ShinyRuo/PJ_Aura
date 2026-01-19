@@ -7,6 +7,7 @@
 #include "Interaction/PlayerInterface.h"
 #include "AuraCharacter.generated.h"
 
+class ULoadScreenSaveGame;
 class UCameraComponent;
 class UNiagaraComponent;
 class UInventoryComponent;
@@ -58,6 +59,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void OnPickUpItemBegin(APickUpItem* ItemToPickUp);
+
+	void SaveInventory(ULoadScreenSaveGame* SaveData);
+	void LoadInventory(const ULoadScreenSaveGame* SaveData);
 
 
 protected:

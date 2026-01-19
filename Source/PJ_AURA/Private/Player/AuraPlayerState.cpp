@@ -4,6 +4,7 @@
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "Game/LoadScreenSaveGame.h"
 #include "Inventory/InventoryComponent.h"
 #include "Net/UnrealNetwork.h"
 
@@ -91,6 +92,40 @@ void AAuraPlayerState::AddSpellPoints(int32 InValue)
 {
 	SpellPoints += InValue;
 	OnSpellPointsChangedDelegate.Broadcast(SpellPoints);
+}
+
+void AAuraPlayerState::SaveInventory(ULoadScreenSaveGame* SaveData) const
+{
+	if (!SaveData) return;
+	if (!HasAuthority())return;
+	if (!IsValid(InventoryComponent))return;
+	SaveData->SavedInventory.InventoryWidth = InventoryComponent->InventoryWidth;
+	SaveData->SavedInventory.InventoryHeight = InventoryComponent->InventoryHeight;
+
+	SaveData->SavedInventory.ItemSlots.Empty();
+	for (const FInventorySlot& IS : InventoryComponent->Slots)
+	{
+		if (IS.Item)
+		{
+			FSavedItemSlot OneSaveSlot;
+			OneSaveSlot.ItemID = IS.Item->ItemID;
+			OneSaveSlot.Quantity = IS.Item->Quantity;
+			OneSaveSlot.X = IS.X;
+			OneSaveSlot.Y = IS.Y;
+			SaveData->SavedInventory.ItemSlots.Add(OneSaveSlot);
+		}
+	}
+}
+
+void AAuraPlayerState::LoadInventory(const ULoadScreenSaveGame* SaveData) const
+{
+	if (!SaveData) return;
+	if (!HasAuthority())return;
+	if (!IsValid(InventoryComponent))return;
+	InventoryComponent->InventoryWidth = SaveData->SavedInventory.InventoryWidth;
+	InventoryComponent->InventoryHeight = SaveData->SavedInventory.InventoryHeight;
+	InventoryComponent->OnRep_InventorySize();
+	InventoryComponent->LoadItemSlots(SaveData->SavedInventory);
 }
 
 
