@@ -37,6 +37,8 @@ public:
 
 	UDataTable* GetItemDataTable() const { return ItemDataTable; }
 
+	UDataTable* GetEquipmentDataTable() const { return EquipmentDataTable; }
+
 private:
 	/** 预热对象池，创建初始数量的 APickUpItem */
 	void PrimePool();
@@ -69,6 +71,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "ItemManager", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UDataTable> ItemDataTable;
+
+	UPROPERTY(EditDefaultsOnly, Category = "ItemManager", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UDataTable> EquipmentDataTable;
 
 	/** 保存对世界的弱引用，因为 UObject 本身没有 GetWorld() */
 	UPROPERTY()

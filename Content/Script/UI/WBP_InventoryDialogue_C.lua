@@ -32,8 +32,10 @@ end
 function M:OnVisibilityChangedEvent(InVisibility)
     if InVisibility == UE.ESlateVisibility.Visible or InVisibility == UE.ESlateVisibility.SelfHitTestInvisible then
         self.WBP_InventoryGrids:OnShow()
+        self.WBP_EquipmentDialogue:OnShow()
     elseif InVisibility == UE.ESlateVisibility.Hidden then
         self.WBP_InventoryGrids:OnHidden()
+        self.WBP_EquipmentDialogue:OnHidden()
     -- elseif InVisibility == UE.ESlateVisibility.Collapsed then
     --     Screen.Print(self:GetName() .. " is now Collapsed.")
 

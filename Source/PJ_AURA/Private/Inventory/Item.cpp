@@ -50,7 +50,6 @@ const FS_ItemData* UItem::GetItemData(const UObject* ContextObject) const
 }
 
 
-
 void UItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -169,12 +168,12 @@ int32 UItem::GetPrice() const
     return 0;
 }
 
-FString UItem::GetItemDescription(UObject* ContextObject) const
+FText UItem::GetItemDescription() const
 {
-    const FS_ItemData* Data = GetItemData(ContextObject);
+    const FS_ItemData* Data = GetItemData(this);
     if (Data)
     {
-        return Data->description.ToString();
+        return Data->description;
     }
-    return FString();
+    return FText();
 }

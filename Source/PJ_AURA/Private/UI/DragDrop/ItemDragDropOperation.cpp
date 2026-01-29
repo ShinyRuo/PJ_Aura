@@ -11,7 +11,7 @@ void UItemDragDropOperation::DragCancelled_Implementation(const FPointerEvent& P
 {
 
 	// 首先进行安全检查
-	if (!IsValid(SourceWidget) || !IsValid(DropCheckWidget))
+	if (!IsValid(DropCheckWidget))
 	{
 		// 如果关键的Widget无效，则执行默认的取消操作
 		if (IsValid(SourceWidget))
@@ -36,7 +36,10 @@ void UItemDragDropOperation::DragCancelled_Implementation(const FPointerEvent& P
 	{
 		// 鼠标在 DropCheckWidget 区域内，这是常规的取消操作
 		// 恢复原始物品的显示
-		SourceWidget->SetVisibility(ESlateVisibility::Visible);
+		if (IsValid(SourceWidget))
+		{
+			SourceWidget->SetVisibility(ESlateVisibility::Visible);
+		}
 	}
 	else
 	{

@@ -2,9 +2,11 @@
 
 #include "NavigationSystem.h"
 #include "Actor/PickUpItem.h"
+#include "Engine/ActorChannel.h"
 #include "Game/ItemManager.h"
 #include "Game/LoadScreenSaveGame.h"
 #include "Inventory/Item.h"
+#include "Inventory/Equipment.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/AuraPlayerState.h"
 
@@ -16,6 +18,34 @@ UInventoryComponent::UInventoryComponent()
     MaxCapacity = InventoryWidth * InventoryHeight; // 默认最大容量
     CurrentCapacity = 0; // 初始已使用容量为 0
     SetIsReplicatedByDefault(true); // 确保组件是可复制的
+    EquipmentSlots.SetNum(static_cast<int32>(E_EquipmentSlots::EES_MAX));
+}
+
+bool UInventoryComponent::ReplicateSubobjects(UActorChannel* Channel, FOutBunch* Bunch, FReplicationFlags* RepFlags)
+{
+
+    bool bWroteSomething = Super::ReplicateSubobjects(Channel, Bunch, RepFlags);
+
+    // 遍历所有格子
+    for (const FInventorySlot& Slot : Slots)
+    {
+        // 如果格子里有物品 (UItem 对象)
+        if (Slot.Item != nullptr)
+        {
+            // 明确地告诉 ActorChannel 复制这个子对象
+            bWroteSomething |= Channel->ReplicateSubobject(Slot.Item, *Bunch, *RepFlags);
+        }
+    }
+
+    for (UEquipment* Equipment : EquipmentSlots)
+    {
+        if (Equipment)
+        {
+            bWroteSomething |= Channel->ReplicateSubobject(Equipment, *Bunch, *RepFlags);
+        }
+    }
+
+    return bWroteSomething;
 }
 
 void UInventoryComponent::BeginPlay()
@@ -29,6 +59,45 @@ void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
     DOREPLIFETIME_CONDITION(UInventoryComponent, Slots, COND_OwnerOnly);
     DOREPLIFETIME_CONDITION(UInventoryComponent, InventoryWidth, COND_OwnerOnly);
     DOREPLIFETIME_CONDITION(UInventoryComponent, InventoryHeight, COND_OwnerOnly);
+    DOREPLIFETIME(UInventoryComponent, EquipmentSlots);
+}
+
+bool UInventoryComponent::RemoveItemByPositionInternal(int32 X, int32 Y, bool bMarkGarbage)
+{
+    if (!GetOwner()->HasAuthority()) return false;
+
+    UItem* ItemToRemove = GetItemAt(X, Y);
+    if (!ItemToRemove) return false;
+
+    const FS_ItemData* ItemData = ItemToRemove->GetItemData(this);
+	if (!ItemData) return false;
+
+    // 移除物品引用（清空对应占用格子）
+    for (int32 i = 0; i < ItemData->dimensions.X; ++i)
+    {
+        for (int32 j = 0; j < ItemData->dimensions.Y; ++j)
+        {
+            int32 Index = (Y + j) * InventoryWidth + (X + i);
+            if (Slots.IsValidIndex(Index) && Slots[Index].Item == ItemToRemove)
+            {
+                Slots[Index].Item = nullptr;
+                Slots[Index].X = 0;
+                Slots[Index].Y = 0;
+            }
+        }
+    }
+
+    // 更新当前容量
+    CurrentCapacity -= ItemData->dimensions.X * ItemData->dimensions.Y;
+    OnInventoryUpdateSignature.Broadcast(); // 在服务器上广播更新
+
+   // 只有在需要销毁时才标记垃圾。用于 discard 等场景。
+    if (bMarkGarbage)
+    {
+        ItemToRemove->MarkAsGarbage();
+    }
+
+    return true;
 }
 
 void UInventoryComponent::OnRep_Slots()
@@ -37,12 +106,43 @@ void UInventoryComponent::OnRep_Slots()
     OnInventoryUpdateSignature.Broadcast();
 }
 
+void UInventoryComponent::OnRep_Equipment()
+{
+    OnEquipmentUpdateSignature.Broadcast();
+}
+
 void UInventoryComponent::OnRep_InventorySize()
 {
     MaxCapacity = InventoryWidth * InventoryHeight;
     Slots.SetNum(MaxCapacity);
 }
 
+
+
+UItem* UInventoryComponent::DuplicateItemByItemType(UItem* Item)
+{
+    if (!Item)
+    {
+        return nullptr;
+    }
+	UItem* NewItem = nullptr;
+    if (Item->GetItemType() == EItemType::Equipment)
+    {
+		//作为item的子类equipment来处理
+        NewItem = NewObject<UEquipment>(this);
+        NewItem->ItemID = Item->ItemID;
+        NewItem->Quantity = Item->Quantity;
+    }
+    else
+    {
+        NewItem = DuplicateObject<UItem>(Item, this);
+    }
+    if (!NewItem)
+    {
+        return nullptr;
+    }
+    return NewItem;
+}
 
 //int32 X, int32 Y : 物品在背包网格中的起始位置（左上角坐标）。
 bool UInventoryComponent::AddItem(UItem* Item, int32 X, int32 Y)
@@ -61,9 +161,8 @@ bool UInventoryComponent::AddItem(UItem* Item, int32 X, int32 Y)
         UE_LOG(LogTemp, Warning, TEXT("Cannot add item: Exceeds inventory capacity!"));
         return false;
     }
-
-    // --- 新增：创建物品的副本 ---
-    UItem* NewItem = DuplicateObject<UItem>(Item, this);
+   
+    UItem* NewItem = DuplicateItemByItemType(Item);
     if (!NewItem)
     {
         // 如果复制失败，则直接返回
@@ -91,34 +190,11 @@ bool UInventoryComponent::AddItem(UItem* Item, int32 X, int32 Y)
 
 bool UInventoryComponent::RemoveItemByPosition(int32 X, int32 Y)
 {
+
     if (!GetOwner()->HasAuthority()) return false; // 确保只在服务器上执行
 
-    UItem* Item = GetItemAt(X, Y);
-    if (!Item) return false;
-
-    const FS_ItemData* ItemData = Item->GetItemData(this);
-    if (!ItemData) return false; // 虽然不太可能发生，但做好检查
-
-    // 移除物品
-    for (int32 i = 0; i < ItemData->dimensions.X; ++i)
-    {
-        for (int32 j = 0; j < ItemData->dimensions.Y; ++j)
-        {
-            int32 Index = (Y + j) * InventoryWidth + (X + i);
-            if (Slots.IsValidIndex(Index) && Slots[Index].Item == Item)
-            {
-                Slots[Index].Item = nullptr;
-                Slots[Index].X = 0;
-                Slots[Index].Y = 0;
-            }
-        }
-    }
-
-    // 更新当前容量
-    CurrentCapacity -= ItemData->dimensions.X * ItemData->dimensions.Y;
-    OnInventoryUpdateSignature.Broadcast(); // 在服务器上广播更新
-
-    return true;
+	// 默认行为：删除并标记为垃圾
+	return RemoveItemByPositionInternal(X, Y, true);
 }
 
 
@@ -130,39 +206,117 @@ void UInventoryComponent::Server_DiscardItem_Implementation(int32 FromX, int32 F
         // 1. 从背包中移除物品
         const bool bRemoved = RemoveItemByPosition(FromX, FromY);
         if (!bRemoved) return; // 如果移除失败，则中止
+        DropItemFromOwner(ItemToDiscard);
+    }
+}
 
-        // 2. 在角色身边生成掉落物
-        if (UWorld* World = GetWorld())
+
+void UInventoryComponent::Server_DiscardEquip_Implementation(E_EquipmentSlots Slot)
+{
+    if (!GetOwner()->HasAuthority()) return;
+
+    const int32 SlotIndex = static_cast<int32>(Slot);
+    if (!EquipmentSlots.IsValidIndex(SlotIndex)) return;
+
+    UEquipment* EquipmentToDiscard = EquipmentSlots[SlotIndex];
+    if (!EquipmentToDiscard) return;
+
+    // 1. 从装备栏移除引用并通知客户端更新
+    EquipmentSlots[SlotIndex] = nullptr;
+    OnRep_Equipment();
+
+    // 2. 在角色身边生成掉落物（行为与 Server_DiscardItem_Implementation 保持一致）
+    DropItemFromOwner(EquipmentToDiscard);
+
+    // 3. 标记为垃圾以便网络系统和 GC 处理对象生命周期
+    EquipmentToDiscard->MarkAsGarbage();
+}
+
+
+void UInventoryComponent::Server_EquipItem_Implementation(int32 FromX, int32 FromY, E_EquipmentSlots Slot)
+{
+    if (GetOwner()->HasAuthority())
+     {
+         UItem* ItemToEquip = GetItemAt(FromX, FromY);
+         if (UEquipment* Equipment = Cast<UEquipment>(ItemToEquip))
+         {
+             if (Equipment->GetEquipmentType() == static_cast<E_EquipmentType>(Slot))
+             {
+                int32 Xpos = 0;
+                int32 Ypos = 0;
+                if (FindItemPosition(Equipment, Xpos, Ypos))
+                {
+                    // 从背包中移除但不标记为垃圾（保留对象用于装备槽）
+                    if (RemoveItemByPositionInternal(Xpos, Ypos, false))
+                    {
+                        if (EquipmentSlots[static_cast<int32>(Slot)])
+                        {
+                            UEquipment* OldEquipment = EquipmentSlots[static_cast<int32>(Slot)];
+                            // 将旧装备放回到先前的格子（使用从哪个位置来的坐标作为示例）
+                            AddItem(OldEquipment, FromX, FromY);
+                        }
+                        EquipmentSlots[static_cast<int32>(Slot)] = Equipment;
+                        OnRep_Equipment();
+                        OnRep_Slots();
+                    }
+                }
+             }
+         }
+     }
+}
+
+void UInventoryComponent::Server_UnEquipItem_Implementation(E_EquipmentSlots Slot, int32 ToX, int32 ToY)
+{
+    if (GetOwner()->HasAuthority())
+    {
+        if (EquipmentSlots.IsValidIndex(static_cast<int32>(Slot)) && EquipmentSlots[static_cast<int32>(Slot)] != nullptr)
         {
-            AActor* OwnerActor = GetOwner();
-            if (!OwnerActor) return;
-            FVector CharacterLocation = FVector::ZeroVector;
-            FVector DropLocation = CharacterLocation;
-            if (const APlayerState* PlayerState = Cast<APlayerState>(OwnerActor))
+            UEquipment* EquipmentToUnEquip = EquipmentSlots[static_cast<int32>(Slot)];
+            if (IsSpaceAvailable(EquipmentToUnEquip, ToX, ToY))
             {
-                if (const APawn* Pawn = PlayerState->GetPawn())
-                {
-                    CharacterLocation = Pawn->GetActorLocation();
-                }
+                EquipmentSlots[static_cast<int32>(Slot)] = nullptr;
+                AddItem(EquipmentToUnEquip, ToX, ToY);
+                OnRep_Equipment();
+                OnRep_Slots();
             }
-            // 3. 计算随机生成位置
-            FNavLocation NavLocation;
-            if (UNavigationSystemV1* NavSys = UNavigationSystemV1::GetCurrent(World))
-            {
-                // 在角色周围半径200的圆内寻找一个随机的可导航点
-                const bool bFoundPoint = NavSys->GetRandomPointInNavigableRadius(CharacterLocation, 200.f, NavLocation);
-                if (bFoundPoint)
-                {
-                    DropLocation = NavLocation.Location;
-                }
-            }
-            if (UItemManager::Get(this))
-            {
-                APickUpItem* DropItem =  UItemManager::Get(this)->SpawnItemOnTheFloor(ItemToDiscard->ItemID, ItemToDiscard->Quantity, CharacterLocation);
-                DropItem->OnItemDropped(DropLocation);
-            }
+        }
+    }
+}
 
-            
+
+void UInventoryComponent::DropItemFromOwner(UItem* ItemToDrop)
+{
+	if (!ItemToDrop) return;
+		
+    // 2. 在角色身边生成掉落物
+    if (UWorld* World = GetWorld())
+    {
+        AActor* OwnerActor = GetOwner();
+        if (!OwnerActor) return;
+        FVector CharacterLocation = FVector::ZeroVector;
+        FVector DropLocation = CharacterLocation;
+        if (const APlayerState* PlayerState = Cast<APlayerState>(OwnerActor))
+        {
+            if (const APawn* Pawn = PlayerState->GetPawn())
+            {
+                CharacterLocation = Pawn->GetActorLocation();
+            }
+        }
+        // 3. 计算随机生成位置
+        FNavLocation NavLocation;
+        if (UNavigationSystemV1* NavSys = UNavigationSystemV1::GetCurrent(World))
+        {
+            // 在角色周围半径200的圆内寻找一个随机的可导航点
+            const bool bFoundPoint = NavSys->GetRandomPointInNavigableRadius(CharacterLocation, 200.f, NavLocation);
+            if (bFoundPoint)
+            {
+                DropLocation = NavLocation.Location;
+            }
+        }
+        if (UItemManager::Get(this))
+        {
+            APickUpItem* DropItem = UItemManager::Get(this)->SpawnItemOnTheFloor(ItemToDrop->ItemID, ItemToDrop->Quantity, CharacterLocation);
+            DropItem->OnItemDropped(DropLocation);
         }
     }
 }
@@ -171,6 +325,15 @@ UItem* UInventoryComponent::GetItemAt(int32 X, int32 Y) const
 {
     int32 Index = Y * InventoryWidth + X;
     return Slots.IsValidIndex(Index) ? Slots[Index].Item : nullptr;
+}
+
+UEquipment* UInventoryComponent::GetEquipmentOnSlot(E_EquipmentSlots Slot)
+{
+	if (EquipmentSlots.IsValidIndex(static_cast<int32>(Slot)))
+	{
+        return  EquipmentSlots[static_cast<int32>(Slot)];
+	}
+    return nullptr;
 }
 
 bool UInventoryComponent::IsSpaceAvailable(UItem* Item, int32 X, int32 Y) 

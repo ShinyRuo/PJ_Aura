@@ -361,9 +361,9 @@ void AAuraCharacter::DropItem_Implementation(UItem* DropItem)
 }
 
 
-void AAuraCharacter::OnPickUpItemBegin(APickUpItem* ItemToPickUp)
+
+void AAuraCharacter::OnPickUpItemBegin_Implementation(APickUpItem* ItemToPickUp)
 {
-	
 	if (!ItemToPickUp)
 	{
 		return;
@@ -385,7 +385,6 @@ void AAuraCharacter::OnPickUpItemBegin(APickUpItem* ItemToPickUp)
 	}
 
 	ItemToPickUp->OnInteracted(this);
-
 }
 
 void AAuraCharacter::SaveInventory(ULoadScreenSaveGame* SaveData)

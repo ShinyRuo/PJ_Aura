@@ -7,6 +7,7 @@
 #include "Interaction/PlayerInterface.h"
 #include "AuraCharacter.generated.h"
 
+class APickUpItem;
 class ULoadScreenSaveGame;
 class UCameraComponent;
 class UNiagaraComponent;
@@ -57,7 +58,7 @@ public:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent> NiagaraPlayComponent;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(Server,Reliable,BlueprintCallable)
 	void OnPickUpItemBegin(APickUpItem* ItemToPickUp);
 
 	void SaveInventory(ULoadScreenSaveGame* SaveData);

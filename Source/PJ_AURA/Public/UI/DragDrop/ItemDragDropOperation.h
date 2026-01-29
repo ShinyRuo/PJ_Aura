@@ -25,7 +25,7 @@ public:
 	TObjectPtr<UUserWidget> SourceWidget;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drag and Drop", meta = (ExposeOnSpawn = "true"))
-	TObjectPtr<UUserWidget> DropCheckWidget;
+	TObjectPtr<UWidget> DropCheckWidget;
 
 	virtual void DragCancelled_Implementation(const FPointerEvent& PointerEvent) override;
 

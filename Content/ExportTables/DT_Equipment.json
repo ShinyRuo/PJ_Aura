@@ -1,0 +1,2864 @@
+[
+	{
+		"Name": "ShortSword",
+		"ID": "ShortSword",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 100,
+			"min": 1,
+			"max": 4,
+			"biasToMin": 5
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "ShortSword",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "ShortSword_M",
+		"ID": "ShortSword_M",
+		"equipmentType": "Weapon",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 50,
+			"min": 1,
+			"max": 1,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "ShortSword",
+		"individualBonuses":
+		{
+			"%AttackSpeed":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%LifeSteal":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 3,
+				"biasToMin": 2
+			},
+			"%ExtraGold":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+AttackRating":
+				{
+					"%chance": 1,
+					"min": 5,
+					"max": 10,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "ShortSword_S",
+		"ID": "ShortSword_S",
+		"equipmentType": "Weapon",
+		"rarity": "Set",
+		"SetID": "Phoenix",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortSword.SM_ShortSword'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "ShortSword",
+		"individualBonuses":
+		{
+			"%CritChance":
+			{
+				"%chance": 100,
+				"min": 5,
+				"max": 5,
+				"biasToMin": 1
+			},
+			"%CritDamage":
+			{
+				"%chance": 100,
+				"min": 5,
+				"max": 5,
+				"biasToMin": 1
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "CelticShield",
+		"ID": "CelticShield",
+		"equipmentType": "Shield",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 15,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 20,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_CelticShield.SM_CelticShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "CelticShield",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "CelticShield_M",
+		"ID": "CelticShield_M",
+		"equipmentType": "Shield",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 15,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 20,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_CelticShield.SM_CelticShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "CelticShield",
+		"individualBonuses":
+		{
+			"%Defense":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"+DodgeRatio":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%HitRecovery":
+				{
+					"%chance": 1,
+					"min": 1,
+					"max": 5,
+					"biasToMin": 2
+				},
+				"%Defense":
+				{
+					"%chance": 1,
+					"min": 1,
+					"max": 5,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "KiteShield",
+		"ID": "KiteShield",
+		"equipmentType": "Shield",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 10,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 10,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 1,
+			"biasToMin": 1
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_KiteShield.SM_KiteShield'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_KiteShield.SM_KiteShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "KiteShield",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "KiteShield_M",
+		"ID": "KiteShield_M",
+		"equipmentType": "Shield",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 10,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 10,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 1,
+			"biasToMin": 1
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_KiteShield.SM_KiteShield'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_KiteShield.SM_KiteShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "KiteShield",
+		"individualBonuses":
+		{
+			"%LightningResistance":
+			{
+				"%chance": 15,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%PoisonResistance":
+			{
+				"%chance": 15,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%FireResistance":
+			{
+				"%chance": 15,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%ColdResistance":
+			{
+				"%chance": 15,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%DamageReflect":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 10,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%HitRecovery":
+				{
+					"%chance": 1,
+					"min": 1,
+					"max": 5,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "KiteShield_R",
+		"ID": "KiteShield_M",
+		"equipmentType": "Shield",
+		"rarity": "Rare",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 10,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 15,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 1,
+			"biasToMin": 1
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_KiteShield.SM_KiteShield'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_KiteShield.SM_KiteShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "KiteShield",
+		"individualBonuses":
+		{
+			"%LightningResistance":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%PoisonResistance":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%FireResistance":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%ColdResistance":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%DamageReflect":
+			{
+				"%chance": 50,
+				"min": 5,
+				"max": 15,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%HitRecovery":
+				{
+					"%chance": 1,
+					"min": 3,
+					"max": 7,
+					"biasToMin": 2
+				},
+				"%DamageReflect":
+				{
+					"%chance": 1,
+					"min": 10,
+					"max": 15,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "RoundShield",
+		"ID": "RoundShield",
+		"equipmentType": "Shield",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 1,
+			"max": 5,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "RoundShield",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "RoundShield_M",
+		"ID": "RoundShield_M",
+		"equipmentType": "Shield",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 1,
+			"max": 5,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "RoundShield",
+		"individualBonuses":
+		{
+			"+LifeRegen":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 2,
+				"biasToMin": 2
+			},
+			"+ManaRegen":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 2,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+Life":
+				{
+					"%chance": 1,
+					"min": 5,
+					"max": 10,
+					"biasToMin": 2
+				},
+				"+Mana":
+				{
+					"%chance": 1,
+					"min": 5,
+					"max": 10,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "RoundShield_S",
+		"ID": "RoundShield_S",
+		"equipmentType": "Shield",
+		"rarity": "Set",
+		"SetID": "Phoenix",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 1,
+			"max": 5,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_RoundShield.SM_RoundShield'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "RoundShield",
+		"individualBonuses":
+		{
+			"+LifeRegen":
+			{
+				"%chance": 100,
+				"min": 2,
+				"max": 2,
+				"biasToMin": 1
+			},
+			"+ManaRegen":
+			{
+				"%chance": 100,
+				"min": 2,
+				"max": 2,
+				"biasToMin": 1
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "WarAxe",
+		"ID": "WarAxe",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 2,
+		"strengthRequirement": 5,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 5,
+			"biasToMin": 3
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_WarAxe.SM_WarAxe'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "WarAxe",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "WarAxe_M",
+		"ID": "WarAxe_M",
+		"equipmentType": "Weapon",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 2,
+		"strengthRequirement": 5,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 5,
+			"biasToMin": 3
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_WarAxe.SM_WarAxe'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "WarAxe",
+		"individualBonuses":
+		{
+			"%CritChance":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"%CritDamage":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%BonusDamageToUndead":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%MagicFind":
+			{
+				"%chance": 50,
+				"min": 10,
+				"max": 15,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%CritChance":
+				{
+					"%chance": 1,
+					"min": 1,
+					"max": 5,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "WarAxe_E",
+		"ID": "WarAxe_E",
+		"equipmentType": "Weapon",
+		"rarity": "Epic",
+		"SetID": "None",
+		"levelRequirement": 2,
+		"strengthRequirement": 5,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 5,
+			"biasToMin": 3
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_WarAxe.SM_WarAxe'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "WarAxe",
+		"individualBonuses":
+		{
+			"%CritDamage":
+			{
+				"%chance": 100,
+				"min": 10,
+				"max": 20,
+				"biasToMin": 2
+			},
+			"%BonusDamageToUndead":
+			{
+				"%chance": 50,
+				"min": 5,
+				"max": 15,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%CritChance":
+				{
+					"%chance": 1,
+					"min": 25,
+					"max": 50,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "GreatAxe",
+		"ID": "GreatAxe",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 10,
+		"strengthRequirement": 20,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_GreatAxe.SM_GreatAxe'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "GreatAxe",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "GreatAxe_M",
+		"ID": "GreatAxe_M",
+		"equipmentType": "Weapon",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 10,
+		"strengthRequirement": 20,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_GreatAxe.SM_GreatAxe'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "GreatAxe",
+		"individualBonuses":
+		{
+			"%Damage":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"%LifeSteal":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%ManaSteal":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%MagicFind":
+			{
+				"%chance": 25,
+				"min": 15,
+				"max": 20,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+AttackRating":
+				{
+					"%chance": 1,
+					"min": 10,
+					"max": 25,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "GreatAxe_L",
+		"ID": "GreatAxe_L",
+		"equipmentType": "Weapon",
+		"rarity": "Legendary",
+		"SetID": "None",
+		"levelRequirement": 20,
+		"strengthRequirement": 50,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 100,
+			"min": 5,
+			"max": 5,
+			"biasToMin": 1
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_GreatAxe.SM_GreatAxe'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "GreatAxe",
+		"individualBonuses":
+		{
+			"%Damage":
+			{
+				"%chance": 100,
+				"min": 50,
+				"max": 100,
+				"biasToMin": 2
+			},
+			"%LifeSteal":
+			{
+				"%chance": 100,
+				"min": 10,
+				"max": 25,
+				"biasToMin": 2
+			},
+			"%ManaSteal":
+			{
+				"%chance": 100,
+				"min": 10,
+				"max": 25,
+				"biasToMin": 2
+			},
+			"%BonusDamageToHuman":
+			{
+				"%chance": 50,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"%CritChance":
+			{
+				"%chance": 100,
+				"min": 20,
+				"max": 25,
+				"biasToMin": 2
+			},
+			"%CritDamage":
+			{
+				"%chance": 100,
+				"min": 25,
+				"max": 50,
+				"biasToMin": 0
+			},
+			"+Strength":
+			{
+				"%chance": 50,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+AttackRating":
+				{
+					"%chance": 1,
+					"min": 40,
+					"max": 25,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "Spear",
+		"ID": "Spear",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 10,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_Spear.SM_Spear'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "Spear",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "Staff",
+		"ID": "Staff_M",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Wizard"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_Staff.SM_Staff'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "Staff",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "Staff_M",
+		"ID": "Staff_M",
+		"equipmentType": "Weapon",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Wizard"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_Staff.SM_Staff'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "Staff",
+		"individualBonuses":
+		{
+			"+Energy":
+			{
+				"%chance": 50,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%CastRate":
+				{
+					"%chance": 1,
+					"min": 1,
+					"max": 10,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "ShortBow",
+		"ID": "ShortBow",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 5,
+		"classRequirement": [
+			"Archer"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_ShortBow.SM_ShortBow'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "ShortBow",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "LongBow",
+		"ID": "LongBow",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 20,
+		"classRequirement": [
+			"Archer"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_LongBow.SM_LongBow'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LongBow",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "LongBow_M",
+		"ID": "LongBow_M",
+		"equipmentType": "Weapon",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 20,
+		"classRequirement": [
+			"Archer"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_LongBow.SM_LongBow'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LongBow",
+		"individualBonuses":
+		{
+			"+Dexterity":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%BonusDamageToDemon":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%ExtraGold":
+			{
+				"%chance": 50,
+				"min": 10,
+				"max": 20,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%AttackSpeed":
+				{
+					"%chance": 1,
+					"min": 1,
+					"max": 5,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "ThrowingAxe",
+		"ID": "ThrowingAxe",
+		"equipmentType": "Weapon",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_WarAxe.SM_WarAxe'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "ThrowingAxe",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "VikingHelm",
+		"ID": "VikingHelm",
+		"equipmentType": "Helmet",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 15,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 20,
+			"min": 1,
+			"max": 1,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "VikingHelm",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "VikingHelm_M",
+		"ID": "VikingHelm_M",
+		"equipmentType": "Helmet",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 15,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 20,
+			"min": 1,
+			"max": 1,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+			"Summoner": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'",
+			"Wizard": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'",
+			"Archer": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'",
+			"Swordsman": "/Script/Engine.StaticMesh'/Game/TopDownRPGTemplate/Meshes/SM_VikingHelmet.SM_VikingHelmet'"
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "VikingHelm",
+		"individualBonuses":
+		{
+			"%CastRate":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%HitRecovery":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%Defense":
+				{
+					"%chance": 100,
+					"min": 5,
+					"max": 25,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "LeatherArmor",
+		"ID": "LeatherArmor",
+		"equipmentType": "Armor",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 25,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 10,
+			"min": 1,
+			"max": 3,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+			"Summoner": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'",
+			"Wizard": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'",
+			"Archer": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'",
+			"Swordsman": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'"
+		},
+		"equipSocketName": "LeatherArmor",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "LeatherArmor_M",
+		"ID": "LeatherArmor_M",
+		"equipmentType": "Armor",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 25,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 10,
+			"min": 1,
+			"max": 3,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+			"Summoner": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'",
+			"Wizard": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'",
+			"Archer": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'",
+			"Swordsman": "/Script/Engine.BlueprintGeneratedClass'/Game/TopDownRPGTemplate/Blueprints/Items/EquipmentMeshes/BP_LeatherArmorEquipmentMesh.BP_LeatherArmorEquipmentMesh_C'"
+		},
+		"equipSocketName": "LeatherArmor",
+		"individualBonuses":
+		{
+			"%HitRecovery":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%Defense":
+			{
+				"%chance": 50,
+				"min": 10,
+				"max": 25,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+DodgeRatio":
+				{
+					"%chance": 100,
+					"min": 1,
+					"max": 3,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "LeatherArmor_S",
+		"ID": "LeatherArmor_S",
+		"equipmentType": "Armor",
+		"rarity": "Set",
+		"SetID": "Phoenix",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 25,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 10,
+			"min": 1,
+			"max": 3,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherArmor",
+		"individualBonuses":
+		{
+			"%HitRecovery":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%Defense":
+			{
+				"%chance": 50,
+				"min": 10,
+				"max": 25,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+DodgeRatio":
+				{
+					"%chance": 100,
+					"min": 1,
+					"max": 3,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "LeatherGloves",
+		"ID": "LeatherGloves",
+		"equipmentType": "Gloves",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 10,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherGloves",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "LeatherGloves_M",
+		"ID": "LeatherGloves_M",
+		"equipmentType": "Gloves",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 10,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherGloves",
+		"individualBonuses":
+		{
+			"%BonusDamageToDemon":
+			{
+				"%chance": 20,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"+AttackRating":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 15,
+				"biasToMin": 2
+			},
+			"%MagicFind":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%AttackSpeed":
+				{
+					"%chance": 100,
+					"min": 1,
+					"max": 5,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "LeatherBoots",
+		"ID": "LeatherBoots",
+		"equipmentType": "Boots",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 10,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherBoots",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "LeatherBoots_M",
+		"ID": "LeatherBoots_M",
+		"equipmentType": "Boots",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 5,
+			"max": 10,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherBoots",
+		"individualBonuses":
+		{
+			"%MovementSpeed":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 3,
+				"biasToMin": 2
+			},
+			"+LifeRegen":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 3,
+				"biasToMin": 2
+			},
+			"+ManaRegen":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 3,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%MovementSpeed":
+				{
+					"%chance": 100,
+					"min": 1,
+					"max": 5,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "ChainMail",
+		"ID": "ChainMail",
+		"equipmentType": "Armor",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 35,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 15,
+			"max": 30,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 4,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "ChainMail",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "ChainMail_M",
+		"ID": "ChainMail_M",
+		"equipmentType": "Armor",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 35,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 15,
+			"max": 30,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 25,
+			"min": 1,
+			"max": 4,
+			"biasToMin": 2
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "ChainMail",
+		"individualBonuses":
+		{
+			"+Vitality":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			},
+			"%Defense":
+			{
+				"%chance": 50,
+				"min": 5,
+				"max": 25,
+				"biasToMin": 2
+			},
+			"+Energy":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 5,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%HitRecovery":
+				{
+					"%chance": 100,
+					"min": 5,
+					"max": 10,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "IronGloves",
+		"ID": "IronGloves",
+		"equipmentType": "Gloves",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 25,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 15,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "IronGloves",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "IronGloves_M",
+		"ID": "IronGloves_M",
+		"equipmentType": "Gloves",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 25,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 15,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherBoots",
+		"individualBonuses":
+		{
+			"%BonusDamageToDemon":
+			{
+				"%chance": 20,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"+AttackRating":
+			{
+				"%chance": 25,
+				"min": 10,
+				"max": 20,
+				"biasToMin": 2
+			},
+			"%ExtraGold":
+			{
+				"%chance": 50,
+				"min": 20,
+				"max": 30,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%AttackSpeed":
+				{
+					"%chance": 100,
+					"min": 5,
+					"max": 10,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "IronBoots",
+		"ID": "IronBoots",
+		"equipmentType": "Boots",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 25,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 15,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherBoots",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	},
+	{
+		"Name": "IronBoots_M",
+		"ID": "IronBoots_M",
+		"equipmentType": "Boots",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 25,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Swordsman",
+			"Summoner"
+		],
+		"defenseRandom":
+		{
+			"min": 10,
+			"max": 15,
+			"biasToMin": 2
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "LeatherBoots",
+		"individualBonuses":
+		{
+			"%MovementSpeed":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"+LifeRegen":
+			{
+				"%chance": 25,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"+ManaRegen":
+			{
+				"%chance": 25,
+				"min": 1,
+				"max": 3,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%Defense":
+				{
+					"%chance": 100,
+					"min": 25,
+					"max": 50,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "FireRing_M",
+		"ID": "FireRing_M",
+		"equipmentType": "Ring",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "None",
+		"individualBonuses":
+		{
+			"+Life":
+			{
+				"%chance": 25,
+				"min": 15,
+				"max": 30,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%FireResistance":
+				{
+					"%chance": 100,
+					"min": 5,
+					"max": 50,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "WaterRing_M",
+		"ID": "WaterRing_M",
+		"equipmentType": "Ring",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 5,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "None",
+		"individualBonuses":
+		{
+			"+Mana":
+			{
+				"%chance": 25,
+				"min": 15,
+				"max": 30,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%ColdResistance":
+				{
+					"%chance": 100,
+					"min": 5,
+					"max": 50,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "TheOneRing_M",
+		"ID": "TheOneRing_M",
+		"equipmentType": "Ring",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 10,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "None",
+		"individualBonuses":
+		{
+			"+Life":
+			{
+				"%chance": 25,
+				"min": 15,
+				"max": 30,
+				"biasToMin": 2
+			},
+			"+Mana":
+			{
+				"%chance": 25,
+				"min": 15,
+				"max": 30,
+				"biasToMin": 2
+			},
+			"%ExtraGold":
+			{
+				"%chance": 100,
+				"min": 20,
+				"max": 50,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+AttackRating":
+				{
+					"%chance": 100,
+					"min": 20,
+					"max": 50,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "TheOneRing_L",
+		"ID": "TheOneRing_L",
+		"equipmentType": "Ring",
+		"rarity": "Legendary",
+		"SetID": "None",
+		"levelRequirement": 25,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "None",
+		"individualBonuses":
+		{
+			"+Life":
+			{
+				"%chance": 75,
+				"min": 30,
+				"max": 50,
+				"biasToMin": 2
+			},
+			"+Mana":
+			{
+				"%chance": 75,
+				"min": 30,
+				"max": 50,
+				"biasToMin": 2
+			},
+			"%CritChance":
+			{
+				"%chance": 100,
+				"min": 20,
+				"max": 50,
+				"biasToMin": 2
+			},
+			"%CritDamage":
+			{
+				"%chance": 75,
+				"min": 25,
+				"max": 50,
+				"biasToMin": 2
+			},
+			"%BonusDamageToHuman":
+			{
+				"%chance": 75,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"%BonusDamageToDemon":
+			{
+				"%chance": 75,
+				"min": 5,
+				"max": 15,
+				"biasToMin": 2
+			},
+			"%BonusDamageToUndead":
+			{
+				"%chance": 75,
+				"min": 5,
+				"max": 15,
+				"biasToMin": 2
+			},
+			"%AttackSpeed":
+			{
+				"%chance": 75,
+				"min": 5,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"%MagicFind":
+			{
+				"%chance": 50,
+				"min": 20,
+				"max": 50,
+				"biasToMin": 2
+			},
+			"%ExtraGold":
+			{
+				"%chance": 50,
+				"min": 50,
+				"max": 100,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+AttackRating":
+				{
+					"%chance": 100,
+					"min": 50,
+					"max": 100,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "FireAmulet_M",
+		"ID": "FireAmulet_M",
+		"equipmentType": "Amulet",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 10,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "None",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"%FireResistance":
+				{
+					"%chance": 100,
+					"min": 5,
+					"max": 25,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "HolyAmulet_M",
+		"ID": "HolyAmulet_M",
+		"equipmentType": "Amulet",
+		"rarity": "Magic",
+		"SetID": "None",
+		"levelRequirement": 15,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "None",
+		"individualBonuses":
+		{
+			"%LifeSteal":
+			{
+				"%chance": 50,
+				"min": 3,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"%ManaSteal":
+			{
+				"%chance": 50,
+				"min": 3,
+				"max": 10,
+				"biasToMin": 2
+			},
+			"%ExtraGold":
+			{
+				"%chance": 50,
+				"min": 15,
+				"max": 25,
+				"biasToMin": 2
+			}
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+				"+Energy":
+				{
+					"%chance": 100,
+					"min": 5,
+					"max": 10,
+					"biasToMin": 2
+				}
+			}
+		}
+	},
+	{
+		"Name": "Arrow",
+		"ID": "Arrow",
+		"equipmentType": "Ammo",
+		"rarity": "Normal",
+		"SetID": "None",
+		"levelRequirement": 0,
+		"strengthRequirement": 0,
+		"dexterityRequirement": 0,
+		"classRequirement": [
+			"Archer"
+		],
+		"defenseRandom":
+		{
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"socketNumberRandom":
+		{
+			"%chance": 0,
+			"min": 0,
+			"max": 0,
+			"biasToMin": 0
+		},
+		"equippedStaticMesh":
+		{
+		},
+		"equippedSkeletalMesh":
+		{
+		},
+		"customEquippedBP":
+		{
+		},
+		"equipSocketName": "None",
+		"individualBonuses":
+		{
+		},
+		"guaranteedBonus":
+		{
+			"bonus":
+			{
+			}
+		}
+	}
+]

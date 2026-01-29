@@ -18,6 +18,42 @@ enum class EItemType : uint8
 	Container,
 };
 
+UENUM(BlueprintType)
+enum class E_EquipmentSlots : uint8
+{
+	EES_RightHand   UMETA(DisplayName = "RightHand"),
+	EES_Armor       UMETA(DisplayName = "Armor"),
+	EES_LeftHand    UMETA(DisplayName = "LeftHand"),
+	EES_Helmet      UMETA(DisplayName = "Helmet"),
+	EES_Gloves      UMETA(DisplayName = "Gloves"),
+	EES_Boots       UMETA(DisplayName = "Boots"),
+	EES_Belt        UMETA(DisplayName = "Belt"),
+	EES_LeftRing    UMETA(DisplayName = "LeftRing"),
+	EES_RightRing   UMETA(DisplayName = "RightRing"),
+	EES_Amulet      UMETA(DisplayName = "Amulet"),
+
+	EES_MAX         UMETA(DisplayName = "DefaultMAX")
+};
+
+
+UENUM(BlueprintType)
+enum class E_EquipmentType : uint8
+{
+	EET_Weapon      UMETA(DisplayName = "Weapon"),
+	EET_Armor       UMETA(DisplayName = "Armor"),
+	EET_Shield      UMETA(DisplayName = "Shield"),
+	EET_Helmet      UMETA(DisplayName = "Helmet"),
+	EET_Gloves      UMETA(DisplayName = "Gloves"),
+	EET_Boots       UMETA(DisplayName = "Boots"),
+	EET_Belt        UMETA(DisplayName = "Belt"),
+	EET_Ring        UMETA(DisplayName = "Ring"),
+	EET_Amulet      UMETA(DisplayName = "Amulet"),
+	EET_Ammo        UMETA(DisplayName = "Ammo"),
+
+	EET_MAX         UMETA(DisplayName = "DefaultMAX")
+};
+
+
 /** A struct representing the data of an item in the inventory. */
 USTRUCT(BlueprintType)
 struct FS_ItemData : public FTableRowBase
@@ -97,7 +133,6 @@ class PJ_AURA_API UItem : public UObject
 
 public:
 
-
 	//~ Begin UObject Interface
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual bool IsSupportedForNetworking() const override;
@@ -173,9 +208,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Item")
 	int32 GetPrice() const;
 
-
 	UFUNCTION(BlueprintCallable, Category = "ItemData")
-	FString GetItemDescription(UObject* ContextObject) const;
+	FText GetItemDescription() const;
 
 private:
 	// 用于缓存查找到的数据，避免重复查找，标记为mutable以便在const函数中修改

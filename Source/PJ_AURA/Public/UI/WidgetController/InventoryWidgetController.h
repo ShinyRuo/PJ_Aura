@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetController/AuraWidgetController.h"
+#include <Inventory/Item.h>
+
 #include "InventoryWidgetController.generated.h"
 
 class UInventoryComponent;
@@ -9,6 +11,7 @@ class UItem;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUIInventoryUpdate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUIEquipmentUpdate);
 
 
 /**
@@ -21,7 +24,10 @@ class PJ_AURA_API UInventoryWidgetController : public UAuraWidgetController
 
 public:
     UPROPERTY(BlueprintAssignable, Category = "Inventory|Update")
-	FOnUIInventoryUpdate OnUIInventoryUpdateDelegate;
+    FOnUIInventoryUpdate OnUIInventoryUpdateDelegate;
+
+    UPROPERTY(BlueprintAssignable, Category = "Inventory|Update")
+	FOnUIEquipmentUpdate OnUIEquipmentUpdateDelegate;
 
     /* AuraWidgetController */
 	virtual void BindCallbackToDependencies() override;
@@ -30,20 +36,19 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Inventory|Initialization")
     void Initialize(UInventoryComponent* InInventoryComponent);
 
-    /** 从背包拖动物品到装备栏 */
-    UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
-    bool MoveItemToEquipment(UItem* Item, int32 EquipmentSlotIndex);
-
-    /** 从装备栏拖动物品到背包 */
-    UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
-    bool MoveItemToInventory(UItem* Item, int32 InventoryX, int32 InventoryY);
-
     /*在背包内移动道具*/
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
     void TryMoveBagItem(int32 FromX, int32 FromY, int32 ToX, int32 ToY);
 
+    /*放置装备*/
+    UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
+	void TryEquipItem(UItem* Item, E_EquipmentSlots EquipmentSlot);
+
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
     void TryDropItem(int32 FromX, int32 FromY);
+
+    UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
+    void TryDropEquip(E_EquipmentSlots EquipmentSlot);
 
     /** 更新背包界面 */
     UFUNCTION(BlueprintCallable, Category = "Inventory|Update")
@@ -57,10 +62,7 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "Inventory")
     TObjectPtr<UInventoryComponent> InventoryComponent;
 
-    /** 装备栏数据 */
-    UPROPERTY(BlueprintReadOnly, Category = "Inventory")
-    TArray<UItem*> EquipmentSlots;
-
+			
     /** 背包网格宽度 */
     UPROPERTY(BlueprintReadOnly, Category = "Inventory")
     int32 InventoryWidth;
