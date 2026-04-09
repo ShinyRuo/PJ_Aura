@@ -104,6 +104,8 @@ void AAuraCharacter::LoadProgress()
 			}
 			UAuraAbilitySystemLibrary::InitalizeDefaultAttributesForSaveData(this, AbilitySystemComponent, SaveData);
 		}
+		//施加装备提供的属性加成GE
+		ApplyEquipmentAttributeGE_OnInit();
 	}
 }
 
@@ -161,6 +163,26 @@ int32 AAuraCharacter::GetPlayerLevel_Implementation()
 	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check(AuraPlayerState);
 	return AuraPlayerState->GetPlayerLevel();
+}
+
+void AAuraCharacter::Die(const FVector& DeathImpulse)
+{
+	Super::Die(DeathImpulse);
+	//创建一个委托，用于绑定委托回调
+	FTimerDelegate DeathTimerDelegate;
+	DeathTimerDelegate.BindLambda([this]()
+		{
+			if (const AAuraGameModeBase* RPGGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
+			{
+				RPGGameMode->PlayerDied(this);
+			}
+		});
+
+	//通过定时器触发对应的委托广播
+	GetWorldTimerManager().SetTimer(DeathTimer, DeathTimerDelegate, DeathTime, false);
+
+	//防止相机在玩家角色死亡后跟随移动，将相机固定在世界坐标位置
+	TopDownCameraComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 }
 
 void AAuraCharacter::AddToExp_Implementation(int32 InExp)
@@ -281,12 +303,14 @@ void AAuraCharacter::HideMagicCircle_Implementation()
 	}
 }
 
-void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag)
+void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag, const FString& DestinationMapAssetName )
 {
 	if (!HasAuthority())
 	{
 		return;
 	}
+	UAuraGameInstance* AuraGI = Cast<UAuraGameInstance>(GetGameInstance());
+	check(AuraGI);
 	if(AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 	{
 		ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
@@ -300,7 +324,15 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckPointTag)
 
 		SaveInventory(SaveData);
 
+		if (DestinationMapAssetName != FString(""))
+		{
+			SaveData->MapAssetName = DestinationMapAssetName;
+			SaveData->MapName = AuraGameMode->GetMapNameFromMapAssetName(DestinationMapAssetName);
+		}
+
 		SaveData->PlayerStartTag = CheckPointTag;
+		AuraGI->PlayerStartTag = CheckPointTag;
+
 		SaveData->bFirstTimeLoadIn = false;
 
 		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
@@ -403,6 +435,101 @@ void AAuraCharacter::LoadInventory(const ULoadScreenSaveGame* SaveData)
 	AuraPlayerState->LoadInventory(SaveData);
 }
 
+void AAuraCharacter::ApplyEquipmentAttributeGE_OnInit()
+{
+	// 在玩家初始化成功后调用一次（Server）
+	if (!HasAuthority()) return;
+
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	if (!IsValid(AuraPlayerState)) return;
+
+	OnEquipmentUpdate_ApplyEffectModifiers();
+
+	UInventoryComponent* InventoryComponent = AuraPlayerState->GetInventoryComponent();
+	if (!IsValid(InventoryComponent)) return;
+	InventoryComponent->OnEquipmentUpdateSignature.AddUniqueDynamic(this,&ThisClass::OnEquipmentUpdate_ApplyEffectModifiers);
+}
+
+void AAuraCharacter::OnEquipmentUpdate_ApplyEffectModifiers()
+{
+	// Called when equipment/attributes from equipment change - server only
+	if (!HasAuthority()) return;
+
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	if (!IsValid(AuraPlayerState)) return;
+
+	UInventoryComponent* InventoryComponent = AuraPlayerState->GetInventoryComponent();
+	if (!IsValid(InventoryComponent)) return;
+
+	TMap<FGameplayTag, float> AllEquipmentAddAttributes;
+	InventoryComponent->GetAllEquipmentAddedAttributes(AllEquipmentAddAttributes);
+
+	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent());
+	if (!ASC) return;
+
+	UCharacterClassInfo* ClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(this);
+	if (!ClassInfo) return;
+
+
+	//通过CDO 把所有的 Modifiers 读出来 在SetByCallerMap中设置为  0
+	UGameplayEffect* GECDO = ClassInfo->SecondaryAttributes_Infinite_EquipmentProvided->GetDefaultObject<UGameplayEffect>();
+	if (!GECDO)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to get CDO for class: %s"), *ClassInfo->SecondaryAttributes_Infinite_EquipmentProvided->GetName());
+		return;
+	}
+
+	//  访问 CDO 的 Modifiers 数组
+	const TArray<FGameplayModifierInfo>& Modifiers = GECDO->Modifiers;
+	TMap<FGameplayTag, float> SetByCallerMap;
+
+	for (int32 i = 0; i < Modifiers.Num(); ++i)
+	{
+		const FGameplayModifierInfo& Modifier = Modifiers[i];
+
+		if (Modifier.ModifierMagnitude.GetMagnitudeCalculationType() == EGameplayEffectMagnitudeCalculation::SetByCaller)
+		{
+			FGameplayTag AttributeTag = Modifier.ModifierMagnitude.GetSetByCallerFloat().DataTag;
+			SetByCallerMap.Add(AttributeTag, 0.f);
+		}
+
+	}
+
+	//装备中的属性加成 覆盖 SetByCallerMap 中的默认值
+	for (const auto& Pair : AllEquipmentAddAttributes)
+	{
+		const FGameplayTag& SetByCallerTag = Pair.Key;
+		if (SetByCallerMap.Contains(SetByCallerTag))
+		{
+			SetByCallerMap[SetByCallerTag] = Pair.Value;
+		}
+	}
+
+	// 如果已存在已应用的 GE（保存的 ActiveHandle），直接更新 SetByCaller magnitudes
+	if (EquipmentAttributeGEHandle.IsValid())
+	{
+		ASC->UpdateActiveGameplayEffectSetByCallerMagnitudes(EquipmentAttributeGEHandle, SetByCallerMap);
+	}
+	else
+	{
+		// 后备：若 ActiveHandle 丢失，重新应用带初始值的 Spec 并保存 Handle
+		if (ClassInfo->SecondaryAttributes_Infinite_EquipmentProvided)
+		{
+			FGameplayEffectContextHandle EffectContext = ASC->MakeEffectContext();
+			FGameplayEffectSpecHandle SpecHandle = ASC->MakeOutgoingSpec(ClassInfo->SecondaryAttributes_Infinite_EquipmentProvided, 1.f, EffectContext);
+			if (SpecHandle.IsValid())
+			{
+				// 将所有 set-by-caller 数值注入到 Spec（初次应用时）
+				for (const auto& KV : SetByCallerMap)
+				{
+					SpecHandle.Data.Get()->SetSetByCallerMagnitude(KV.Key, KV.Value);
+				}
+				FActiveGameplayEffectHandle ActiveHandle = ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+				EquipmentAttributeGEHandle = ActiveHandle;
+			}
+		}
+	}
+}
 void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();

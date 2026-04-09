@@ -54,6 +54,9 @@ public:
 	TSubclassOf<UGameplayEffect> SecondaryAttributes_Infinite;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Default")
+	TSubclassOf<UGameplayEffect> SecondaryAttributes_Infinite_EquipmentProvided;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Common Class Default")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Default")

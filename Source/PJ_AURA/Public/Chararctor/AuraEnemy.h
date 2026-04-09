@@ -55,6 +55,12 @@ public:
 	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
 	virtual AActor* GetCombatTarget_Implementation() const override;
 
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerLevel(int32 InLevel) { Level = InLevel; }
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpawnLoot();
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo() override;

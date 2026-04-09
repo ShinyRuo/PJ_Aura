@@ -38,6 +38,13 @@ void UInventoryWidgetController::TryMoveBagItem(int32 FromX, int32 FromY, int32 
     InventoryComponent->Server_MoveItem(FromX-1, FromY-1, ToX-1, ToY-1);
 }
 
+void UInventoryWidgetController::TryMoveBagItemFromEquip(int32 FromEquipSlotIndex, int32 ToX, int32 ToY)
+{
+    if (!InventoryComponent) return;
+	E_EquipmentSlots FromEquipSlot = static_cast<E_EquipmentSlots>(FromEquipSlotIndex);
+    InventoryComponent->Server_UnEquipItem(FromEquipSlot, ToX-1, ToY-1);
+}
+
 void UInventoryWidgetController::TryEquipItem(UItem* Item, E_EquipmentSlots EquipmentSlot)
 {
     if (!InventoryComponent) return;

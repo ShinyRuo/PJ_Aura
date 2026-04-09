@@ -23,6 +23,7 @@
 #include <AbilitySystem/AuraAbilitySystemLibrary.h>
 
 #include "Actor/PickUpItem.h"
+#include "CheckPoint/CheckPoint.h"
 
 
 AAuraPlayerController::AAuraPlayerController()
@@ -302,6 +303,16 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 			if (APickUpItem* PickItem = Cast<APickUpItem>(ThisActor))
 			{
 				OnPickUpItemClicked(PickItem);
+			}
+			else if(ACheckPoint* CheckPoint = Cast<ACheckPoint>(ThisActor))
+			{
+				CheckPoint->SetMoveToLocation_Implementation(CachedDestination);
+				if (APawn* ControlledPawn = GetPawn())
+				{
+					const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
+					ControlledPawn->AddMovementInput(WorldDirection);
+					AutoRunToCachedDestination(ControlledPawn);
+				}
 			}
 		}
 		else

@@ -145,7 +145,7 @@ UItem* UInventoryComponent::DuplicateItemByItemType(UItem* Item)
 }
 
 //int32 X, int32 Y : 物品在背包网格中的起始位置（左上角坐标）。
-bool UInventoryComponent::AddItem(UItem* Item, int32 X, int32 Y)
+bool UInventoryComponent::AddItem(UItem* Item, int32 X, int32 Y, bool DuplicateItem)
 {
     if (!GetOwner()->HasAuthority()) return false; // 确保只在服务器上执行
 
@@ -162,7 +162,11 @@ bool UInventoryComponent::AddItem(UItem* Item, int32 X, int32 Y)
         return false;
     }
    
-    UItem* NewItem = DuplicateItemByItemType(Item);
+    UItem* NewItem = Item;
+    if (DuplicateItem)
+    {
+        NewItem = DuplicateItemByItemType(Item);
+    }
     if (!NewItem)
     {
         // 如果复制失败，则直接返回
@@ -187,6 +191,7 @@ bool UInventoryComponent::AddItem(UItem* Item, int32 X, int32 Y)
 
     return true;
 }
+
 
 bool UInventoryComponent::RemoveItemByPosition(int32 X, int32 Y)
 {
@@ -275,7 +280,7 @@ void UInventoryComponent::Server_UnEquipItem_Implementation(E_EquipmentSlots Slo
             if (IsSpaceAvailable(EquipmentToUnEquip, ToX, ToY))
             {
                 EquipmentSlots[static_cast<int32>(Slot)] = nullptr;
-                AddItem(EquipmentToUnEquip, ToX, ToY);
+                AddItem(EquipmentToUnEquip, ToX, ToY,false);
                 OnRep_Equipment();
                 OnRep_Slots();
             }
@@ -404,7 +409,7 @@ bool UInventoryComponent::CanAddItem(UItem* Item)
     return false; // 既不能堆叠，也没有空位
 }
 
-bool UInventoryComponent::FindEmptySlotAndAddItem(UItem* Item)
+bool UInventoryComponent::FindEmptySlotAndAddItem(UItem* Item, bool bDuplicateItem)
 {
 	if (!Item) return false;
 
@@ -447,7 +452,7 @@ bool UInventoryComponent::FindEmptySlotAndAddItem(UItem* Item)
             {
                 if (IsSpaceAvailable(Item, X, Y))
                 {
-                    AddItem(Item, X, Y);
+                    AddItem(Item, X, Y, bDuplicateItem);
                     return true;
                 }
             }
@@ -482,6 +487,28 @@ void UInventoryComponent::LoadItemSlots(const FSavedInventory& SavedInventory)
 
         // 更新当前容量
         CurrentCapacity += X*Y;
+    }
+}
+
+void UInventoryComponent::GetAllEquipmentAddedAttributes(TMap<FGameplayTag, float>& OutAttributesMap) const
+{
+    for (UEquipment* Equipment : EquipmentSlots)
+    {
+	    if (IsValid(Equipment))
+	    {
+            TMap<FGameplayTag, float> TempMap = Equipment->GetAddedAttributes();
+            for (const auto& Pair : TempMap)
+            {
+                if(OutAttributesMap.Contains(Pair.Key))
+                {
+                    OutAttributesMap[Pair.Key] += Pair.Value;
+                }
+                else
+                {
+                    OutAttributesMap.Add(Pair.Key, Pair.Value);
+                }
+            }
+	    }
     }
 }
 

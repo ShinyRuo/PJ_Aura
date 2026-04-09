@@ -6,6 +6,7 @@
 #include "Inventory/Item.h"
 #include "InventoryComponent.generated.h"
 
+struct FGameplayTag;
 class UItem;
 class UEquipment;
 
@@ -48,7 +49,9 @@ public:
     UItem* DuplicateItemByItemType(UItem* Item);
 
     UFUNCTION(BlueprintCallable, Category = "Inventory")
-    bool AddItem(UItem* Item, int32 X, int32 Y);
+    bool AddItem(UItem* Item, int32 X, int32 Y,bool DuplicateItem = true);
+
+   
 
     UFUNCTION(BlueprintCallable, Category = "Inventory")
     bool RemoveItemByPosition(int32 X, int32 Y);
@@ -88,9 +91,11 @@ public:
     bool CanAddItem(UItem* Item);
 
     UFUNCTION(BlueprintCallable, Category = "Inventory")
-    bool FindEmptySlotAndAddItem(UItem* Item);
+    bool FindEmptySlotAndAddItem(UItem* Item,bool bDuplicateItem = true);
 
     void LoadItemSlots(const FSavedInventory& SavedInventory);
+
+    void GetAllEquipmentAddedAttributes(TMap<FGameplayTag, float>& OutAttributesMap) const;
 
     UFUNCTION()
     void OnRep_InventorySize();

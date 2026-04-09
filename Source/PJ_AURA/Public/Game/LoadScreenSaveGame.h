@@ -132,6 +132,10 @@ public:
 	UPROPERTY()
 	FString MapName = FString("Default Map");
 
+	//地图资源路径
+	UPROPERTY()
+	FString	MapAssetName = FString("Default MapAssetName");
+
 	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SaveSlotStatus = Vacant;
 
@@ -183,5 +187,6 @@ public:
 	//目前只能保存一个玩家的数据
 	UPROPERTY()
 	FSavedInventory SavedInventory;
+
 	
 };

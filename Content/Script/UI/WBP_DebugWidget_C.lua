@@ -22,7 +22,8 @@ function M:Construct()
     self:SetWidgetController(self.InvGridWidgetController)
 
     self:AddDebugButton("Print Aura Position", "DebugTestFun1")
-    self:AddDebugButton("Spawn a Item on the floor", "DebugTestFun2")
+    self:AddDebugButton("Spawn a Sword on the floor", "DebugTestFun2")
+    self:AddDebugButton("Spawn a Shield on the floor", "DebugTestFun3")
 
 end
 
@@ -35,12 +36,20 @@ function M:DebugTestFun1()
     end
 end
 function M:DebugTestFun2()
-    Screen.Print("Spawn a Item on the floor")
     local PlayerController = UE.UGameplayStatics.GetPlayerController(self, 0)
     if PlayerController and PlayerController.Pawn then
         local Location = PlayerController.Pawn:K2_GetActorLocation()
         Location.X = Location.X + 10
         UE.UAuraAbilitySystemLibrary.SpawnAItemOnTheFloor(self,Location,"ShortSword",1)
+    end
+end
+
+function M:DebugTestFun3()
+    local PlayerController = UE.UGameplayStatics.GetPlayerController(self, 0)
+    if PlayerController and PlayerController.Pawn then
+        local Location = PlayerController.Pawn:K2_GetActorLocation()
+        Location.X = Location.X + 10
+        UE.UAuraAbilitySystemLibrary.SpawnAItemOnTheFloor(self,Location,"CelticShield",1)
     end
 end
 

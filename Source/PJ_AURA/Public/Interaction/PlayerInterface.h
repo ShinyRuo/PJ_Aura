@@ -63,7 +63,7 @@ public:
 	void HideMagicCircle();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void SaveProgress(const FName& CheckPointTag);
+	void SaveProgress(const FName& CheckPointTag, const FString& DestinationMapAssetName = FString(""));
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void PickUpItem(UItem* PickUpItem);

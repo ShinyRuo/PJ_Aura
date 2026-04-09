@@ -40,6 +40,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
     void TryMoveBagItem(int32 FromX, int32 FromY, int32 ToX, int32 ToY);
 
+    UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
+    void TryMoveBagItemFromEquip(int32 FromEquipSlotIndex, int32 ToX, int32 ToY);
+
     /*·ÅÖÃ×°±¸*/
     UFUNCTION(BlueprintCallable, Category = "Inventory|Interaction")
 	void TryEquipItem(UItem* Item, E_EquipmentSlots EquipmentSlot);

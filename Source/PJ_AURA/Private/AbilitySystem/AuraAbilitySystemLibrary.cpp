@@ -123,7 +123,7 @@ void UAuraAbilitySystemLibrary::HideAuraWidget(const UObject* WorldContextObject
         }
     }
 }
-
+//怪物专用
 void UAuraAbilitySystemLibrary::InitalizeDefaultAttributes(const UObject* WorldContextObject,ECharacterClass CharacterClass, float Level,UAbilitySystemComponent* ASC)
 {
 	UCharacterClassInfo* ClassInfo = GetCharacterClassInfo(WorldContextObject);
@@ -550,6 +550,84 @@ bool UAuraAbilitySystemLibrary::IsScreenSpacePositionOverAnyWidget(const UObject
 	}
 	return false;
 }
+
+void UAuraAbilitySystemLibrary::InspectGameplayEffectModifiers(TSubclassOf<UGameplayEffect> GEClass)
+{
+	// 1. 检查传入的 Class 是否有效
+	if (!GEClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("GameplayEffect Class is null!"));
+		return;
+	}
+
+	// 2. 获取该 Class 的 CDO (Class Default Object)
+	UGameplayEffect* GECDO = GEClass->GetDefaultObject<UGameplayEffect>();
+	if (!GECDO)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to get CDO for class: %s"), *GEClass->GetName());
+		return;
+	}
+
+	// 3. 访问 CDO 的 Modifiers 数组
+	const TArray<FGameplayModifierInfo>& Modifiers = GECDO->Modifiers;
+
+	// 4. 遍历并打印信息
+	UE_LOG(LogTemp, Log, TEXT("Inspecting GameplayEffect: %s"), *GECDO->GetName());
+	UE_LOG(LogTemp, Log, TEXT("Found %d modifiers:"), Modifiers.Num());
+
+	for (int32 i = 0; i < Modifiers.Num(); ++i)
+	{
+		const FGameplayModifierInfo& Modifier = Modifiers[i];
+
+		// 获取属性 Tag 的名称
+		FString AttributeName = "Invalid";
+		if (Modifier.Attribute.IsValid())
+		{
+			AttributeName = Modifier.Attribute.GetName();
+		}
+
+		// 获取 Modifier Op 的名称
+		FString OpName = StaticEnum<EGameplayModOp::Type>()->GetNameStringByValue(static_cast<int64>(Modifier.ModifierOp));
+
+		// 获取 Magnitude 的信息 (这里比较复杂，因为它可能是 ScalableFloat, AttributeBased, CustomCalculation等)
+		FString MagnitudeInfo;
+		//switch (Modifier.ModifierMagnitude.GetMagnitudeCalculationType())
+		//{
+		//case EGameplayEffectMagnitudeCalculation::ScalableFloat:
+		//	float OutValue = 0.f;
+		//	Modifier.ModifierMagnitude.GetStaticMagnitudeIfPossible(1.f, OutValue);
+		//	MagnitudeInfo = FString::Printf(TEXT("ScalableFloat: %.2f"), OutValue);
+		//	break;
+		//case EGameplayEffectMagnitudeCalculation::AttributeBased:
+		//	MagnitudeInfo = TEXT("AttributeBased");
+		//	break;
+		//case EGameplayEffectMagnitudeCalculation::CustomCalculationClass:
+		//	MagnitudeInfo = TEXT("CustomCalculationClass");
+		//	break;
+		//case EGameplayEffectMagnitudeCalculation::SetByCaller:
+		//	// 对于 SetByCaller，获取其 DataTag
+		//	MagnitudeInfo = FString::Printf(TEXT("SetByCaller: %.2f"), Modifier.ModifierMagnitude.gets());
+		//	break;
+		//default:
+		//	MagnitudeInfo = TEXT("Unknown");
+		//	break;
+		//}
+
+		UE_LOG(LogTemp, Log, TEXT("  [%d] Attribute: %s, Op: %s, Magnitude: %s"),
+			i, *AttributeName, *OpName, *MagnitudeInfo);
+	}
+}
+
+ULootTiers* UAuraAbilitySystemLibrary::GetLootTiers(const UObject* WorldContextObject)
+{
+	//获取到当前关卡的GameMode实例
+	const AAuraGameModeBase* GameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
+	if (GameMode == nullptr) return nullptr;
+
+	//返回敌人战利品配置，需要设置到GameMode上
+	return  GameMode->LootTiers;
+}
+
 
 
 FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const FDamageEffectParams& EffectParam)

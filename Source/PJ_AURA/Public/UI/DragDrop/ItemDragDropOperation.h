@@ -9,6 +9,14 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDropITem);
 
+
+UENUM(BlueprintType)
+enum EDragSourceType
+{
+	DST_Inventory UMETA(DisplayName = "Inventory"),
+	DST_Equipment UMETA(DisplayName = "Equipment"),
+	DST_Max UMETA(Hidden)
+};
 /**
  * 
  */
@@ -20,6 +28,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnDropITem OnDropItem;
+
+	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = "true"))
+	TEnumAsByte<EDragSourceType> DragSourceType;
+
+	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = "true"))
+	FIntPoint DragSourcePoint;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drag and Drop", meta = (ExposeOnSpawn = "true"))
 	TObjectPtr<UUserWidget> SourceWidget;

@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "Interaction/CombatInterface.h"
+#include "Interaction/MiniMapInterface.h"
 #include "AuraCharacterBase.generated.h"
 
 
@@ -19,7 +20,7 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 
 UCLASS(Abstract)
-class PJ_AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface,public ICombatInterface
+class PJ_AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface,public ICombatInterface,public IMiniMapInterface
 {
 	GENERATED_BODY()
 
@@ -58,6 +59,11 @@ public:
 	virtual FOnDamageSignature& GetOnDamageSignature() override;
 	/** end Combat Interface*/
 
+	/* MiniMap Interface */
+	virtual void GetMiniMapIcon_Implementation(UTexture2D*& OutMiniMapIcon, bool& OutIsPermanent, bool& OutShouldRemoveIcon, bool& OutIgnoreMapRotation) override;
+	virtual void GetMiniMapLocationAndRotation_Implementation(FVector& OutLocation, FRotator& OutRotation) override;
+	/* end MiniMap Interface */
+
 	FOnASCRegistered OnAscRegistered;
 	FOnDeath	OnDeath;
 
@@ -77,6 +83,8 @@ public:
 
 	UPROPERTY(Replicated, BlueprintReadOnly)
 	bool bIsInShocked = false;
+
+	void SetCharacterClass(const ECharacterClass InCharacterClass){ CharacterClass = InCharacterClass;}
 
 protected:
 	virtual void BeginPlay() override;
@@ -163,6 +171,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Minimap")
+	TObjectPtr<UTexture2D>	MiniMapIcon;
 
 
 private:

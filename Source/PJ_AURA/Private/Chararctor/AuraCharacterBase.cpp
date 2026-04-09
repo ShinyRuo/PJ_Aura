@@ -135,6 +135,19 @@ FOnDamageSignature& AAuraCharacterBase::GetOnDamageSignature()
 	return OnDamageDelegate;
 }
 
+void AAuraCharacterBase::GetMiniMapIcon_Implementation(UTexture2D*& OutMiniMapIcon, bool& OutIsPermanent,
+	bool& OutShouldRemoveIcon, bool& OutIgnoreMapRotation)
+{
+	OutMiniMapIcon = MiniMapIcon;
+	OutShouldRemoveIcon = IsDead_Implementation();
+}
+
+void AAuraCharacterBase::GetMiniMapLocationAndRotation_Implementation(FVector& OutLocation, FRotator& OutRotation)
+{
+	OutLocation = GetActorLocation();
+	OutRotation = GetActorRotation();
+}
+
 
 float AAuraCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
                                      AActor* DamageCauser)

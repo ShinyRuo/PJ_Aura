@@ -7,6 +7,7 @@
 #include "Game/AuraGameInstance.h"
 #include "Game/ItemManager.h"
 #include "Game/LoadScreenSaveGame.h"
+#include "GameFramework/Character.h"
 #include "GameFramework/PlayerStart.h"
 #include "Interaction/SaveInterface.h"
 #include "Kismet/GameplayStatics.h"
@@ -175,6 +176,28 @@ AActor* AAuraGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
 		return SelectedActor;
 	}
 	return nullptr;
+}
+
+FString AAuraGameModeBase::GetMapNameFromMapAssetName(const FString& MapAssetName)
+{
+	for (auto& Map : Maps)
+	{
+		if (Map.Value.ToSoftObjectPath().GetAssetName() == MapAssetName)
+		{
+			return Map.Key;
+		}
+	}
+	return FString();
+}
+
+void AAuraGameModeBase::PlayerDied(const ACharacter* DeadCharacter) const
+{
+	//获取存档数据
+	const ULoadScreenSaveGame* SaveGame = RetrieveInGameSaveData();
+	if (!IsValid(SaveGame)) return;
+
+	//通过地图命名打开地图
+	UGameplayStatics::OpenLevelBySoftObjectPtr(DeadCharacter->GetWorld(), Maps.FindChecked(SaveGame->MapName));
 }
 
 void AAuraGameModeBase::BeginPlay()

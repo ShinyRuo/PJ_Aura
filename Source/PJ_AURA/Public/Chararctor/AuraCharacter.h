@@ -29,6 +29,7 @@ public:
 	void LoadProgress();
 	/** Combat Interface*/
 	virtual int32 GetPlayerLevel_Implementation() override;
+	virtual void Die(const FVector& DeathImpulse) override;
 	/** end Combat Interface*/
 
 	/** Player Interface*/
@@ -45,7 +46,7 @@ public:
 	virtual int32 GetAttributePoints_Implementation() const override;
 	virtual void ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial) override;
 	virtual void HideMagicCircle_Implementation() override;
-	virtual void SaveProgress_Implementation(const FName& CheckPointTag) override;
+	virtual void SaveProgress_Implementation(const FName& CheckPointTag, const FString& DestinationMapAssetName = FString("")) override;
 	virtual void PickUpItem_Implementation(UItem* PickUpItem) override;
 	virtual void DropItem_Implementation(UItem* DropItem) override;
 	/** end Player Interface*/
@@ -64,12 +65,26 @@ public:
 	void SaveInventory(ULoadScreenSaveGame* SaveData);
 	void LoadInventory(const ULoadScreenSaveGame* SaveData);
 
+	void ApplyEquipmentAttributeGE_OnInit();
+	UFUNCTION()
+	void OnEquipmentUpdate_ApplyEffectModifiers();
+
+
+	UPROPERTY(Transient) // Transient 表示不序列化，避免存档问题
+	FActiveGameplayEffectHandle EquipmentAttributeGEHandle;
 
 protected:
 	virtual void InitAbilityActorInfo() override;
 
 	UFUNCTION(NetMulticast,Reliable)
 	void MulticastLevelUpParticles() const;
+
+	//角色死亡后持续时间，用于表现角色死亡
+	UPROPERTY(EditDefaultsOnly)
+	float DeathTime = 5.f;
+
+	//声明一个计时器，用于角色死亡后一定时间处理后续逻辑
+	FTimerHandle DeathTimer;
 
 private:
 	TObjectPtr<UCameraComponent> TopDownCameraComponent;

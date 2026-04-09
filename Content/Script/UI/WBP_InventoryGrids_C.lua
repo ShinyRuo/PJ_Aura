@@ -229,6 +229,15 @@ function M:OnItemDropOnSlot()
     return true
 end
 
+function M:OnItemDropOnSlotFromEquip(equipmentSlotIndex)
+     if not self.DropCheckPass then
+        return false
+    end
+    self:ClearSlotColor()
+    self.InvGridWidgetController:TryMoveBagItemFromEquip(equipmentSlotIndex,self.cachedHoverIndexX,self.cachedHoverIndexY)
+    return true
+end
+
 function M:OnItemDropOut(ItemStartX,ItemStartY)
    
     self.InvGridWidgetController:TryDropItem( ItemStartX,ItemStartY)

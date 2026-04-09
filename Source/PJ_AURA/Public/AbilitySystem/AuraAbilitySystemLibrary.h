@@ -18,6 +18,7 @@ class USpellMenuWidgetController;
 class UAbilitySystemComponent;
 class UAttributeMenuWidgetController;
 class UOverlayWidgetController;
+class ULootTiers;
 
 /**
  * AuraAbilitySystemLibrary
@@ -197,5 +198,11 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|Widget")
 	static bool IsScreenSpacePositionOverAnyWidget(const UObject* WorldContextObject, const FVector2D& ScreenPosition);
+
+	static void InspectGameplayEffectModifiers(TSubclassOf<UGameplayEffect> GEClass);
+
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (DefaultToSelf = "WorldContextObject"))
+	static ULootTiers* GetLootTiers(const UObject* WorldContextObject);
+
 
 };
