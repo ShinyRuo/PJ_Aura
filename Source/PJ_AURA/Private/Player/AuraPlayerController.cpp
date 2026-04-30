@@ -23,8 +23,9 @@
 #include <AbilitySystem/AuraAbilitySystemLibrary.h>
 
 #include "Actor/PickUpItem.h"
+#include "Chararctor/NPCCharacter.h"
 #include "CheckPoint/CheckPoint.h"
-
+#include "Talk//NPCInteractionComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -205,6 +206,32 @@ void AAuraPlayerController::CursorTrace()
 		if (ThisActor)
 			ThisActor->HighlightActor();
 	}
+
+	// Check for NPC interaction
+	AActor* HitActor = CursorHit.GetActor();
+	if (HitActor)
+	{
+		// Check if hit actor has NPC interaction component
+		UNPCInteractionComponent* NPCInteractionComponent = HitActor->FindComponentByClass<UNPCInteractionComponent>();
+		if (NPCInteractionComponent)
+		{
+			// Check if player is within interaction range
+			APawn* ControlledPawn = GetPawn();
+			if (ControlledPawn)
+			{
+				float Distance = FVector::Distance(ControlledPawn->GetActorLocation(), HitActor->GetActorLocation());
+				if (Distance <= NPCInteractionComponent->GetInteractionRange_Implementation())
+				{
+					// Change mouse cursor to dialogue icon
+					CurrentMouseCursor = EMouseCursor::Hand;
+					return;
+				}
+			}
+		}
+	}
+
+	// Reset mouse cursor if not over NPC
+	CurrentMouseCursor = EMouseCursor::Default;
 }
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
@@ -312,6 +339,26 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 					const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
 					ControlledPawn->AddMovementInput(WorldDirection);
 					AutoRunToCachedDestination(ControlledPawn);
+				}
+			}
+			else if (ANPCCharacter* Npc = Cast<ANPCCharacter>(ThisActor))
+			{
+				// Check if hit actor has NPC interaction component
+				UNPCInteractionComponent* NPCInteractionComponent = Npc->FindComponentByClass<UNPCInteractionComponent>();
+				if (NPCInteractionComponent)
+				{
+					// Check if player is within interaction range
+					APawn* ControlledPawn = GetPawn();
+					if (ControlledPawn)
+					{
+						float Distance = FVector::Distance(ControlledPawn->GetActorLocation(), Npc->GetActorLocation());
+						if (Distance <= NPCInteractionComponent->GetInteractionRange_Implementation())
+						{
+							// Start conversation
+							NPCInteractionComponent->OnNPCClicked();
+							return;		
+						}
+					}
 				}
 			}
 		}

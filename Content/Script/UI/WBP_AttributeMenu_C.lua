@@ -50,7 +50,7 @@ function M:Construct()
 
     local ArrChildAuraWidgets = self:GetAllChildAuraWidget()
 
-    for i = 1, ArrChildAuraWidgets:Length() do
+    for i = 1, ArrChildAuraWidgets:Length() do   
         ArrChildAuraWidgets:Get(i):SetWidgetController(self.AttriWidgetController)
     end
 

@@ -393,6 +393,16 @@ void AAuraCharacter::DropItem_Implementation(UItem* DropItem)
 }
 
 
+FVector AAuraCharacter::GetCaptureLocalPosition() const
+{
+	return HeadshotCaptureLocalPosition;
+}
+
+FRotator AAuraCharacter::GetCaptureLocalRotation() const
+{
+	return HeadshotCaptureLocalRotation;
+}
+
 
 void AAuraCharacter::OnPickUpItemBegin_Implementation(APickUpItem* ItemToPickUp)
 {

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Talk/DialogueDataManager.h"
 #include "AuraGameInstance.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMapLoadedSignature, const FString&, MapName);
@@ -26,5 +27,17 @@ public:
 
 	UPROPERTY()
 	int32 LoadSlotIndex = 0;
+
+	virtual void Init() override;
+
+	// 添加一个公共的获取器，方便外部访问
+	UDialogueDataManager* GetDialogueDataManager();
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "Dialogue")
+	TObjectPtr<UDialogueDataManager> DialogueDataManager;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDialogueDataManager> DialogueDataManagerClass;
 
 };

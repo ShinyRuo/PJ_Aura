@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Chararctor/AuraCharacterBase.h"
 #include "Interaction/PlayerInterface.h"
+#include "UI/Widget/HeadShot/RenderActorTargetInterface.h"
 #include "AuraCharacter.generated.h"
 
 class APickUpItem;
@@ -16,7 +17,7 @@ class UInventoryComponent;
  * 
  */
 UCLASS()
-class PJ_AURA_API AAuraCharacter : public AAuraCharacterBase,public IPlayerInterface
+class PJ_AURA_API AAuraCharacter : public AAuraCharacterBase,public IPlayerInterface, public IRenderActorTargetInterface
 {
 	GENERATED_BODY()
 public:
@@ -50,6 +51,12 @@ public:
 	virtual void PickUpItem_Implementation(UItem* PickUpItem) override;
 	virtual void DropItem_Implementation(UItem* DropItem) override;
 	/** end Player Interface*/
+
+	/** Render Actor Target Interface */
+	virtual FVector GetCaptureLocalPosition() const override;
+	virtual FRotator GetCaptureLocalRotation() const override;
+	/** End Render Actor Target Interface */
+
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnRotatingCamera(float DeltaX, float DeltaY);
@@ -89,5 +96,10 @@ protected:
 private:
 	TObjectPtr<UCameraComponent> TopDownCameraComponent;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Capture")
+	FVector HeadshotCaptureLocalPosition;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Capture")
+	FRotator HeadshotCaptureLocalRotation;
 
 };
