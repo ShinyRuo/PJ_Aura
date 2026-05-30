@@ -80,6 +80,12 @@ public:
 	UPROPERTY(Transient) // Transient 表示不序列化，避免存档问题
 	FActiveGameplayEffectHandle EquipmentAttributeGEHandle;
 
+	UFUNCTION(Client,Reliable)
+	void Client_ProcessedBy();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void Client_OnProcessedBy();
+
 protected:
 	virtual void InitAbilityActorInfo() override;
 

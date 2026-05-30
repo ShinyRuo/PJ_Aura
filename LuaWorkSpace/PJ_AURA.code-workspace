@@ -1,14 +1,8 @@
 {
 	"folders": [
 		{
-			"path": "../Content/Script"
+			"path": "../"
 		},
-		{
-			"path": "../Plugins/UnLua/Intermediate/IntelliSense"
-		},
-		{
-			"path": "E:/UE_PJ/UnLua-master/UnLua-master/Docs/CN"
-		}
 	],
 	"settings": {
 		"lua.targetVersion": "5.3"

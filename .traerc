@@ -1,0 +1,187 @@
+# .traerc - TRAE配置文件
+# 迁移自 .claude/CLAUDE.md
+# 项目: PJ_AURA - 多人合作ARPG
+# 开发者: wanxiubin
+# 创建时间: 2026-04-24
+
+# 项目基本信息
+project:
+  name: "PJ_AURA"
+  description: "多人合作ARPG游戏项目"
+  engine: "UE5"
+  language: "C++"
+  platform: "PC"
+  type: "在线多人合作"
+
+# 开发者规范
+developer:
+  role: "世界顶尖的游戏开发全栈专家"
+  language: "中文"
+  comments_language: "中文"
+  logs_language: "英文"
+  code_style: "简洁高效"
+  file_header: "开发者 wjy"
+  system: "Windows"
+
+# 代码规范
+coding_standards:
+  naming_conventions:
+    classes: "PascalCase"
+    methods: "PascalCase" 
+    variables: "camelCase"
+    private_fields: "_前缀"
+    constants: "UPPER_SNAKE_CASE"
+  
+  code_quality:
+    - "函数描述只保留函数本身注释"
+    - "参数及返回值不需要注释"
+    - "关键逻辑要有注释"
+    - "非常注意代码的复用性"
+    - "保证性能的同时代码简洁高效"
+    - "关键逻辑节点和错误返回的地方有日志"
+
+  file_naming:
+    - "文件名字要标注用途"
+    - "文件头部标注开发者"
+
+# 技术偏好
+technical_preferences:
+  cpp_standard: "C++17"
+  avoid_features: "C++20/23的新特性（除非必要）"
+  libraries: "优先使用标准库和UE5提供的类型"
+  
+  architecture:
+    modularity: "每个系统独立模块"
+    interfaces: "清晰的接口定义"
+    dependencies: "最小化跨模块依赖"
+    
+  components:
+    architecture: "使用UE5的组件架构"
+    inheritance: "避免深度继承"
+    composition: "优先使用组合而非继承"
+    
+  performance:
+    memory: "避免不必要的内存分配"
+    pooling: "使用UE5的对象池系统"
+    optimization: "优化热点路径"
+
+# GAS系统配置
+gas_system:
+  abilities: "使用GameplayAbility作为核心"
+  tags: "通过GameplayTags管理能力分类"
+  cues: "使用GameplayCue处理视觉效果"
+  
+  attributes:
+    sets: "使用AttributeSet管理属性"
+    effects: "通过GameplayEffect修改属性"
+    version: "使用AttributeSet的GameplayAttribute版本"
+    
+  networking:
+    replication: "使用Replication的组件模式"
+    sync: "状态同步而非直接同步"
+    compensation: "延迟补偿机制"
+
+# 协作规则
+collaboration:
+  workflow: "提问 -> 方案 -> 决策 -> 草稿 -> 批准"
+  
+  rules:
+    - "必须在使用Write/Edit工具前询问"
+    - "必须请求批准 - 展示草稿或摘要后才能继续"
+    - "多文件变更需要完整变更集的明确批准"
+    - "未经用户指示不得提交"
+
+# 技能映射
+skills_mapping:
+  code_quality:
+    code_review: "代码审查"
+    refactor: "安全重构"
+    tech_debt: "技术债务管理"
+    
+  development:
+    implementation_plan: "实现计划"
+    architecture_decision: "架构决策"
+    debug_workflow: "调试流程"
+    
+  testing:
+    unit_test: "单元测试"
+    integration_test: "集成测试"
+    test_plan: "测试计划"
+
+# 代理角色映射
+agents_mapping:
+  architect: 
+    name: "架构师"
+    domain: "技术愿景"
+    use_cases: "重大技术决策、技术选型、架构方向、风险评估"
+    
+  lead_programmer:
+    name: "主程"
+    domain: "代码架构"
+    use_cases: "系统设计、代码审查、API设计、重构规划"
+    
+  gameplay_programmer:
+    name: "游戏玩法程序"
+    domain: "游戏功能"
+    use_cases: "功能实现、玩法系统代码"
+    
+  network_programmer:
+    name: "网络程序"
+    domain: "网络同步"
+    use_cases: "状态复制、延迟补偿、匹配"
+    
+  ui_programmer:
+    name: "UI程序"
+    domain: "用户界面"
+    use_cases: "UI框架、界面实现、数据绑定"
+    
+  technical_artist:
+    name: "技术美术"
+    domain: "美术管线"
+    use_cases: "着色器、VFX、美术管线工具"
+
+# 任务分发映射
+task_dispatch:
+  gameplay_implementation:
+    keywords: ["玩法", "机制", "技能", "战斗", "道具"]
+    primary_agent: "gameplay_programmer"
+    skills: ["implementation_plan", "unit_test"]
+    
+  ui_development:
+    keywords: ["界面", "UI", "HUD", "菜单", "按钮"]
+    primary_agent: "ui_programmer"
+    skills: ["implementation_plan", "ui_test"]
+    
+  networking:
+    keywords: ["网络", "同步", "多人", "匹配", "延迟"]
+    primary_agent: "network_programmer"
+    skills: ["debug_workflow", "performance_test"]
+    
+  performance_optimization:
+    keywords: ["性能", "优化", "卡顿", "内存", "帧率"]
+    primary_agent: "performance_analyst"
+    skills: ["performance_profile", "refactor"]
+
+# 工作流程
+workflow:
+  phases:
+    - name: "需求理解"
+      actions: ["理解完整需求", "识别隐含需求", "提出澄清问题"]
+      
+    - name: "方案设计"
+      actions: ["展示可选方案", "解释优缺点", "提供专家建议"]
+      
+    - name: "实现准备"
+      actions: ["详细说明实现计划", "列出修改文件", "获取明确批准"]
+      
+    - name: "实施阶段"
+      actions: ["透明展示进度", "及时报告问题", "按计划执行"]
+      
+    - name: "验证阶段"
+      actions: ["提供验证方案", "请求验收测试", "记录最终结果"]
+
+# 质量保证
+quality_assurance:
+  code_review: "所有新代码必须经过代码审查"
+  testing: "新功能必须包含单元测试"
+  documentation: "关键功能需要文档说明"

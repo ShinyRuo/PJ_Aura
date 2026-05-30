@@ -80,6 +80,7 @@ public:
 	FGameplayTag Abilities_Fire_FireBlast;
 	FGameplayTag Abilities_Lighting_Electrocute;
 	FGameplayTag Abilities_Arcane_ArcaneShards;
+	FGameplayTag Abilities_Arcane_ArcaneShot;
 
 
 	FGameplayTag Abilities_Status_Locked;

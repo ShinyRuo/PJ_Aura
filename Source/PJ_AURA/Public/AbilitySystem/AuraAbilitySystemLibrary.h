@@ -204,5 +204,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (DefaultToSelf = "WorldContextObject"))
 	static ULootTiers* GetLootTiers(const UObject* WorldContextObject);
 
+	UFUNCTION(BlueprintCallable, Category = "Debug", meta = (DefaultToSelf = "WorldContextObject"))
+	static void PlayerLevelUpCommand(const UObject* WorldContextObject, int32 LevelUpCounts);
 
 };

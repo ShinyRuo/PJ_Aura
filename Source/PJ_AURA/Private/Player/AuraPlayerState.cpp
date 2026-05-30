@@ -5,6 +5,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Game/LoadScreenSaveGame.h"
+#include "GameFramework/Character.h"
 #include "Inventory/InventoryComponent.h"
 #include "Net/UnrealNetwork.h"
 
@@ -126,6 +127,18 @@ void AAuraPlayerState::LoadInventory(const ULoadScreenSaveGame* SaveData) const
 	InventoryComponent->InventoryHeight = SaveData->SavedInventory.InventoryHeight;
 	InventoryComponent->OnRep_InventorySize();
 	InventoryComponent->LoadItemSlots(SaveData->SavedInventory);
+}
+
+void AAuraPlayerState::RequestLevelUpForDebug()
+{
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	if ( ASC)
+	{
+		if (UAuraAttributeSet* AS = Cast<UAuraAttributeSet>(GetAttributeSet()))
+		{
+			AS->DoPlayerLevelUp(Cast<ACharacter>(ASC->GetAvatarActor()), GetPlayerLevel(), 1);
+		}
+	}
 }
 
 

@@ -24,6 +24,7 @@ function M:Construct()
     self:AddDebugButton("Print Aura Position", "DebugTestFun1")
     self:AddDebugButton("Spawn a Sword on the floor", "DebugTestFun2")
     self:AddDebugButton("Spawn a Shield on the floor", "DebugTestFun3")
+    self:AddDebugButton("LevelUp", "DebugTestFun4")
 
 end
 
@@ -50,6 +51,13 @@ function M:DebugTestFun3()
         local Location = PlayerController.Pawn:K2_GetActorLocation()
         Location.X = Location.X + 10
         UE.UAuraAbilitySystemLibrary.SpawnAItemOnTheFloor(self,Location,"CelticShield",1)
+    end
+end
+
+function M:DebugTestFun4()
+    local PlayerController = UE.UGameplayStatics.GetPlayerController(self, 0)
+    if PlayerController and PlayerController.Pawn then
+        UE.UAuraAbilitySystemLibrary.PlayerLevelUpCommand(self,1)
     end
 end
 

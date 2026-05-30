@@ -74,6 +74,11 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	Widget->AddToViewport();
 }
 
+UAuraUserWidget* AAuraHUD::GetOverlayWidget() const
+{
+		return OverlayWidget;
+}
+
 
 UAuraUserWidget* AAuraHUD::GetOrCreateWidget(const FName& WidgetName, TSubclassOf<UAuraUserWidget> WidgetClass, int32 ZOrder)
 {

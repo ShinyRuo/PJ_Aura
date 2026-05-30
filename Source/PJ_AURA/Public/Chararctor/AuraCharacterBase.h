@@ -36,6 +36,8 @@ public:
 
 	virtual void Die(const FVector& DeathImpulse) override;
 
+	/// @brief 处理死亡事件
+	/// @param DeathImpulse 死亡冲量
 	UFUNCTION(NetMulticast,Reliable)
 	virtual void MulticastHandleDeath(const FVector& DeathImpulse);
 

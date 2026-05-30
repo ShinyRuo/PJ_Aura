@@ -247,6 +247,27 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Properties
 	}
 }
 
+void UAuraAttributeSet::DoPlayerLevelUp( ACharacter* Character, const int32 CurrentLevel, const int32 NumLevelUps)
+{
+	IPlayerInterface::Execute_AddToPlayerLevel(Character, NumLevelUps);
+
+	for (int32 i = 0; i <NumLevelUps ; ++i)
+	{
+		const int32 AttributePointsRewards = IPlayerInterface::Execute_GetAttributePointsRewards(Character, CurrentLevel + i);
+		const int32 SpellPointsRewards = IPlayerInterface::Execute_GetSpellPointsRewards(Character, CurrentLevel + i);
+		IPlayerInterface::Execute_AddToAttributePoints(Character, AttributePointsRewards);
+		IPlayerInterface::Execute_AddToSpellPoints(Character, SpellPointsRewards);
+	}
+			
+	SetVigor(GetVigor());
+	SetIntelligence(GetIntelligence());//用来触发MaxHealth 与 MaxMana 的MMC 
+
+	SetHealth(GetMaxHealth());
+	SetMana(GetMaxMana());
+
+	IPlayerInterface::Execute_LevelUp(Character);
+}
+
 void UAuraAttributeSet::HandleIncomingExp(const FEffectProperties& Properties)
 {
 	const float LocalIncomingExp = GetIncomingExp();
@@ -261,24 +282,7 @@ void UAuraAttributeSet::HandleIncomingExp(const FEffectProperties& Properties)
 
 		if (NumLevelUps > 0)
 		{
-			IPlayerInterface::Execute_AddToPlayerLevel(Properties.SourceCharacter, NumLevelUps);
-
-			for (int32 i = 0; i <NumLevelUps ; ++i)
-			{
-				const int32 AttributePointsRewards = IPlayerInterface::Execute_GetAttributePointsRewards(Properties.SourceCharacter, CurrentLevel + i);
-				const int32 SpellPointsRewards = IPlayerInterface::Execute_GetSpellPointsRewards(Properties.SourceCharacter, CurrentLevel + i);
-				IPlayerInterface::Execute_AddToAttributePoints(Properties.SourceCharacter, AttributePointsRewards);
-				IPlayerInterface::Execute_AddToSpellPoints(Properties.SourceCharacter, SpellPointsRewards);
-			}
-			
-
-			SetVigor(GetVigor());
-			SetIntelligence(GetIntelligence());//用来触发MaxHealth 与 MaxMana 的MMC 
-
-			SetHealth(GetMaxHealth());
-			SetMana(GetMaxMana());
-
-			IPlayerInterface::Execute_LevelUp(Properties.SourceCharacter);
+			DoPlayerLevelUp(Properties.SourceCharacter, CurrentLevel, NumLevelUps);
 
 		}
 		IPlayerInterface::Execute_AddToExp(Properties.SourceCharacter, LocalIncomingExp);

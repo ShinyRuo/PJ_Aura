@@ -59,6 +59,8 @@ public:
 	void SaveInventory(ULoadScreenSaveGame* SaveData) const;
 	void LoadInventory(const ULoadScreenSaveGame* SaveData) const;
 
+	void RequestLevelUpForDebug();
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

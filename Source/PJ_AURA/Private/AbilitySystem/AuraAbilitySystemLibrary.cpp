@@ -7,11 +7,14 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
+#include "llimits.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 #include "Actor/PickUpItem.h"
 #include "Components/SlateWrapperTypes.h"
 #include "Game/AuraGameModeBase.h"
 #include "Game/ItemManager.h"
 #include "Game/LoadScreenSaveGame.h"
+#include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/AuraPlayerState.h"
@@ -628,6 +631,16 @@ ULootTiers* UAuraAbilitySystemLibrary::GetLootTiers(const UObject* WorldContextO
 	return  GameMode->LootTiers;
 }
 
+void UAuraAbilitySystemLibrary::PlayerLevelUpCommand(const UObject* WorldContextObject, int32 LevelUpCounts)
+{
+	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
+	{
+		if (AAuraPlayerState* PS = PC->GetPlayerState<AAuraPlayerState>())
+		{
+			PS->RequestLevelUpForDebug();
+		}
+	}
+}
 
 
 FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const FDamageEffectParams& EffectParam)

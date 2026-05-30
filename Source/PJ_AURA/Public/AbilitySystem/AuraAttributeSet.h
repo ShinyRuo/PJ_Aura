@@ -227,7 +227,7 @@ public:
 	FGameplayAttributeData IncomingExp;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingExp);
 
-
+	void DoPlayerLevelUp(ACharacter* Character, int32 CurrentLevel, int32 NumLevelUps);
 
 private:
 	void SetEffectProperties(const  FGameplayEffectModCallbackData& Data, FEffectProperties& Props)const;

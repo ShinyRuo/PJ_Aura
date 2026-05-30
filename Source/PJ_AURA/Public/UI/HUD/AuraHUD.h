@@ -34,6 +34,9 @@ public:
 
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 
+	UFUNCTION(BlueprintCallable)
+	UAuraUserWidget* GetOverlayWidget() const;
+
 	/*
 	 * UI Pool
 	 */

@@ -66,6 +66,8 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	//我选择在server执行 然后rep所有属性到client
 	// todo load saved data here
 	LoadProgress();
+
+	Client_ProcessedBy();
 }
 
 void AAuraCharacter::LoadProgress()
@@ -540,6 +542,12 @@ void AAuraCharacter::OnEquipmentUpdate_ApplyEffectModifiers()
 		}
 	}
 }
+
+void AAuraCharacter::Client_ProcessedBy_Implementation()
+{
+	Client_OnProcessedBy();
+}
+
 void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
